@@ -2,7 +2,7 @@
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
   
-  <groupId>com.agisoft.metashape</groupId>
+  <groupId>com.agisoft</groupId>
   <artifactId>metashape</artifactId>
   <packaging>jar</packaging>
   <version>1.6.5</version>
@@ -14,6 +14,12 @@
     <maven.compiler.release>11</maven.compiler.release>
     <maven.compiler.source>11</maven.compiler.source>
     <maven.compiler.target>11</maven.compiler.target>
+    
+    <maven.plugin.compiler.version>3.8.1</maven.plugin.compiler.version>
+    <maven.plugin.deploy.version>3.1.1</maven.plugin.deploy.version>
+    <maven.plugin.javadoc.version>3.1.1</maven.plugin.javadoc.version>
+    <maven.plugin.release.version>3.0.0-M1</maven.plugin.release.version>
+    <maven.plugin.source.version>3.2.0</maven.plugin.source.version>
   </properties>
   
   <dependencies>
@@ -31,7 +37,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.0</version>
+        <version>${maven.plugin.compiler.version}</version>
         <configuration>
           <release>${maven.compiler.release}</release>
           <source>${maven.compiler.source}</source>
@@ -44,7 +50,7 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-source-plugin</artifactId>
-		<version>3.0.1</version>
+		<version>${maven.plugin.source.version}</version>
 		
 		<configuration>
           <excludes>
@@ -62,11 +68,30 @@
         </executions>
       </plugin>
       
-      <!-- Generate javadoc -->
+           <!-- Generate apidoc jar during package phase 
+           equivalent to maven javadoc:jar -->
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-javadoc-plugin</artifactId>
-        <version>3.1.1</version>
+		<version>${maven.plugin.javadoc.version}</version>
+		
+		<!-- Embedding Latex formulas within javadoc using MathJax-->
+		<configuration>
+
+          <additionalJOptions>
+            <additionalJOption>--allow-script-in-comments</additionalJOption>
+          </additionalJOptions>
+          <header>'&lt;script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"&gt;&lt;/script&gt;'</header>
+        </configuration>  
+        
+        <executions>
+          <execution>
+            <id>attach-javadocs</id>
+            <goals>
+              <goal>jar</goal>
+            </goals>
+          </execution>
+        </executions>
       </plugin>
     </plugins>
   </build>
