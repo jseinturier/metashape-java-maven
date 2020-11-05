@@ -31,6 +31,14 @@
     </dependency>
   </dependencies>
   
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Agisoft Metachape(c) Java Wrapper Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/jseinturier/maven</url>
+    </repository>
+ </distributionManagement>
+  
   <build>
     <plugins>  
         <!--  Compile sources -->
