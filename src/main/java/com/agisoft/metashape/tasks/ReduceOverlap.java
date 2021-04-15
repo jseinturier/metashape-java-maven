@@ -60,20 +60,6 @@ public class ReduceOverlap extends Task {
   }
 
   /**
-   *  Sensor key. Default: -1
-   */
-  public void setSensor(int value) {
-    TasksJNI.ReduceOverlap_setSensor(swigCPtr, this, value);
-  }
-
-  /**
-   *  Sensor key. Default: -1
-   */
-  public int getSensor() {
-    return TasksJNI.ReduceOverlap_getSensor(swigCPtr, this);
-  }
-
-  /**
    *  Focus on model selection. Default: false
    */
   public void setUseSelection(boolean value) {

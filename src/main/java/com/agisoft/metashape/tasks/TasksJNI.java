@@ -1083,8 +1083,6 @@ public class TasksJNI {
   public final static native long new_ReduceOverlap();
   public final static native void ReduceOverlap_setOverlap(long jarg1, ReduceOverlap jarg1_, int jarg2);
   public final static native int ReduceOverlap_getOverlap(long jarg1, ReduceOverlap jarg1_);
-  public final static native void ReduceOverlap_setSensor(long jarg1, ReduceOverlap jarg1_, int jarg2);
-  public final static native int ReduceOverlap_getSensor(long jarg1, ReduceOverlap jarg1_);
   public final static native void ReduceOverlap_setUseSelection(long jarg1, ReduceOverlap jarg1_, boolean jarg2);
   public final static native boolean ReduceOverlap_getUseSelection(long jarg1, ReduceOverlap jarg1_);
   public final static native void delete_ReduceOverlap(long jarg1);
