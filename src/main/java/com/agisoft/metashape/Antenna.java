@@ -58,14 +58,14 @@ public class Antenna {
   }
 
   /**
-   *  Antenna coordinates or null.
+   *  Antenna coordinates, may be null.
    */
   public void setLocation(Vector3d location) {
     MetashapeJNI.Antenna_setLocation(swigCPtr, this, location == null ? 0 : Vector3d.getCPtr(location), location);
   }
 
   /**
-   *  Antenna coordinates or null.
+   *  Antenna coordinates, may be null.
    */
   public Vector3d getLocation() {
     long ptr = MetashapeJNI.Antenna_getLocation(swigCPtr, this);
@@ -75,14 +75,14 @@ public class Antenna {
   }
 
   /**
-   *  Antenna rotation angles or null.
+   *  Antenna rotation angles, may be null.
    */
   public void setRotation(Vector3d rotation) {
     MetashapeJNI.Antenna_setRotation(swigCPtr, this, rotation == null ? 0 : Vector3d.getCPtr(rotation), rotation);
   }
 
   /**
-   *  Antenna rotation angles or null.
+   *  Antenna rotation angles, may be null.
    */
   public Vector3d getRotation() {
     long ptr = MetashapeJNI.Antenna_getRotation(swigCPtr, this);

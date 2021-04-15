@@ -69,7 +69,7 @@ public class Elevation {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Elevation_getChunk(swigCPtr, this);

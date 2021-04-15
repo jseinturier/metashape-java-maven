@@ -154,14 +154,14 @@ public class AlignChunks extends Task {
   }
 
   /**
-   *  Alignment method. Default: 0
+   *  Alignment method (0 - point based, 1 - marker based, 2 - camera based). Default: 0
    */
   public void setMethod(int value) {
     TasksJNI.AlignChunks_setMethod(swigCPtr, this, value);
   }
 
   /**
-   *  Alignment method. Default: 0
+   *  Alignment method (0 - point based, 1 - marker based, 2 - camera based). Default: 0
    */
   public int getMethod() {
     return TasksJNI.AlignChunks_getMethod(swigCPtr, this);

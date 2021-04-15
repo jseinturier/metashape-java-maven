@@ -69,7 +69,7 @@ public class DepthMaps {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.DepthMaps_getChunk(swigCPtr, this);
@@ -93,14 +93,14 @@ public class DepthMaps {
   }
 
   /**
-   *  Depth map for the camera.
+   *  Depth map for the camera, may be null.
    */
   public void setDepthMap(int camera, DepthMap depth_map) {
     MetashapeJNI.DepthMaps_setDepthMap(swigCPtr, this, camera, depth_map == null ? 0 : DepthMap.getCPtr(depth_map), depth_map);
   }
 
   /**
-   *  Depth map for the camera.
+   *  Depth map for the camera, may be null.
    */
   public DepthMap getDepthMap(int camera) {
     long ptr = MetashapeJNI.DepthMaps_getDepthMap(swigCPtr, this, camera);

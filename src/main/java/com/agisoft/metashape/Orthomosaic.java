@@ -69,7 +69,7 @@ public class Orthomosaic {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Orthomosaic_getChunk(swigCPtr, this);

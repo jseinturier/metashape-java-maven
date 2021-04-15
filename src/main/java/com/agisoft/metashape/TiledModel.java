@@ -69,7 +69,7 @@ public class TiledModel {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.TiledModel_getChunk(swigCPtr, this);
@@ -114,10 +114,41 @@ public class TiledModel {
   }
 
   /**
+   *  4x4 tiled model transformation matrix.
+   */
+  public void setTransform(Matrix4x4d transform) {
+    MetashapeJNI.TiledModel_setTransform(swigCPtr, this, Matrix4x4d.getCPtr(transform), transform);
+  }
+
+  /**
+   *  4x4 tiled model transformation matrix.
+   */
+  public Matrix4x4d getTransform() {
+    return new Matrix4x4d(MetashapeJNI.TiledModel_getTransform(swigCPtr, this), true);
+  }
+
+  /**
+   *  Reference coordinate system, may be null.
+   */
+  public void setCoordinateSystem(CoordinateSystem crs) {
+    MetashapeJNI.TiledModel_setCoordinateSystem(swigCPtr, this, crs == null ? 0 : CoordinateSystem.getCPtr(crs), crs);
+  }
+
+  /**
+   *  Reference coordinate system, may be null.
+   */
+  public CoordinateSystem getCoordinateSystem() {
+    long ptr = MetashapeJNI.TiledModel_getCoordinateSystem(swigCPtr, this);
+    if (ptr == 0)
+        return null;
+    return new CoordinateSystem(ptr, true);
+  }
+
+  /**
    * Returns ray intersection with the tiled model.<br>
    * @param origin Ray origin.<br>
    * @param target Point on the ray.<br>
-   * @return Coordinates of the intersection point or null.
+   * @return Coordinates of the intersection point, may be null.
    */
   public Vector3d pickPoint(Vector3d origin, Vector3d target) {
     long ptr = MetashapeJNI.TiledModel_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);

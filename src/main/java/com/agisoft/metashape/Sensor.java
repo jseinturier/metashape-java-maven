@@ -115,14 +115,14 @@ public class Sensor {
     }
   
     /**
-     *  Sensor coordinates or null.
+     *  Sensor coordinates, may be null.
      */
     public void setLocation(Vector3d location) {
       MetashapeJNI.Sensor_Reference_setLocation(swigCPtr, this, location == null ? 0 : Vector3d.getCPtr(location), location);
     }
   
     /**
-     *  Sensor coordinates or null.
+     *  Sensor coordinates, may be null.
      */
     public Vector3d getLocation() {
       long ptr = MetashapeJNI.Sensor_Reference_getLocation(swigCPtr, this);
@@ -132,14 +132,14 @@ public class Sensor {
     }
   
     /**
-     *  Sensor rotation angles or null.
+     *  Sensor rotation angles, may be null.
      */
     public void setRotation(Vector3d rotation) {
       MetashapeJNI.Sensor_Reference_setRotation(swigCPtr, this, rotation == null ? 0 : Vector3d.getCPtr(rotation), rotation);
     }
   
     /**
-     *  Sensor rotation angles or null.
+     *  Sensor rotation angles, may be null.
      */
     public Vector3d getRotation() {
       long ptr = MetashapeJNI.Sensor_Reference_getRotation(swigCPtr, this);
@@ -149,14 +149,14 @@ public class Sensor {
     }
   
     /**
-     *  Sensor location accuracy or null.
+     *  Sensor location accuracy, may be null.
      */
     public void setLocationAccuracy(Vector3d accuracy) {
       MetashapeJNI.Sensor_Reference_setLocationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
     }
   
     /**
-     *  Sensor location accuracy or null.
+     *  Sensor location accuracy, may be null.
      */
     public Vector3d getLocationAccuracy() {
       long ptr = MetashapeJNI.Sensor_Reference_getLocationAccuracy(swigCPtr, this);
@@ -166,14 +166,14 @@ public class Sensor {
     }
   
     /**
-     *  Sensor rotation accuracy or null.
+     *  Sensor rotation accuracy, may be null.
      */
     public void setRotationAccuracy(Vector3d accuracy) {
       MetashapeJNI.Sensor_Reference_setRotationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
     }
   
     /**
-     *  Sensor rotation accuracy or null.
+     *  Sensor rotation accuracy, may be null.
      */
     public Vector3d getRotationAccuracy() {
       long ptr = MetashapeJNI.Sensor_Reference_getRotationAccuracy(swigCPtr, this);
@@ -192,7 +192,7 @@ public class Sensor {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Sensor_getChunk(swigCPtr, this);
@@ -265,14 +265,14 @@ public class Sensor {
   }
 
   /**
-   *  Custom calibration used as initial calibration during photo alignment or null.
+   *  Custom calibration used as initial calibration during photo alignment, may be null.
    */
   public void setUserCalib(Calibration calibration) {
     MetashapeJNI.Sensor_setUserCalib(swigCPtr, this, calibration == null ? 0 : Calibration.getCPtr(calibration), calibration);
   }
 
   /**
-   *  Custom calibration used as initial calibration during photo alignment or null.
+   *  Custom calibration used as initial calibration during photo alignment, may be null.
    */
   public Calibration getUserCalib() {
     long ptr = MetashapeJNI.Sensor_getUserCalib(swigCPtr, this);

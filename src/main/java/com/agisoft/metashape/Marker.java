@@ -101,14 +101,14 @@ public class Marker {
     }
   
     /**
-     *  Marker coordinates or null.
+     *  Marker coordinates, may be null.
      */
     public void setLocation(Vector3d location) {
       MetashapeJNI.Marker_Reference_setLocation(swigCPtr, this, location == null ? 0 : Vector3d.getCPtr(location), location);
     }
   
     /**
-     *  Marker coordinates or null.
+     *  Marker coordinates, may be null.
      */
     public Vector3d getLocation() {
       long ptr = MetashapeJNI.Marker_Reference_getLocation(swigCPtr, this);
@@ -118,14 +118,14 @@ public class Marker {
     }
   
     /**
-     *  Marker location accuracy or null.
+     *  Marker location accuracy, may be null.
      */
     public void setLocationAccuracy(Vector3d accuracy) {
       MetashapeJNI.Marker_Reference_setLocationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
     }
   
     /**
-     *  Marker location accuracy or null.
+     *  Marker location accuracy, may be null.
      */
     public Vector3d getLocationAccuracy() {
       long ptr = MetashapeJNI.Marker_Reference_getLocationAccuracy(swigCPtr, this);
@@ -206,7 +206,7 @@ public class Marker {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Marker_getChunk(swigCPtr, this);
@@ -260,7 +260,7 @@ public class Marker {
   /**
    * Set marker projection.<br>
    * @param camera Camera key.<br>
-   * @param projection Image coordinates or null.
+   * @param projection Image coordinates, may be null.
    */
   public void setProjection(int camera, Marker.Projection projection) {
     MetashapeJNI.Marker_setProjection(swigCPtr, this, camera, projection == null ? 0 : Marker.Projection.getCPtr(projection));
@@ -269,7 +269,7 @@ public class Marker {
   /**
    * Get marker projection.<br>
    * @param camera Camera key.<br>
-   * @return Image coordinates or null.
+   * @return Image coordinates, may be null.
    */
   public Marker.Projection getProjection(int camera) {
     long ptr = MetashapeJNI.Marker_getProjection(swigCPtr, this, camera);
@@ -279,7 +279,7 @@ public class Marker {
   }
 
   /**
-   *  Marker position in the current frame or null.
+   *  Marker position in the current frame, may be null.
    */
   public Vector3d getPosition() {
     long ptr = MetashapeJNI.Marker_getPosition(swigCPtr, this);

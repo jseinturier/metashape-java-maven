@@ -69,7 +69,7 @@ public class CameraGroup {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.CameraGroup_getChunk(swigCPtr, this);

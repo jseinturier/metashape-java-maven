@@ -210,6 +210,14 @@ public class MetashapeJNI {
   public final static native void delete_CoordinateSystem(long jarg1);
   public final static native long new_OrthoProjection__SWIG_0();
   public final static native long new_OrthoProjection__SWIG_1(long jarg1, OrthoProjection jarg1_);
+  public final static native void OrthoProjection_setCoordinateSystem(long jarg1, OrthoProjection jarg1_, long jarg2, CoordinateSystem jarg2_);
+  public final static native long OrthoProjection_getCoordinateSystem(long jarg1, OrthoProjection jarg1_);
+  public final static native void OrthoProjection_setTransform(long jarg1, OrthoProjection jarg1_, long jarg2, Matrix4x4d jarg2_);
+  public final static native long OrthoProjection_getTransform(long jarg1, OrthoProjection jarg1_);
+  public final static native void OrthoProjection_setType(long jarg1, OrthoProjection jarg1_, int jarg2);
+  public final static native int OrthoProjection_getType(long jarg1, OrthoProjection jarg1_);
+  public final static native void OrthoProjection_setRadius(long jarg1, OrthoProjection jarg1_, double jarg2);
+  public final static native double OrthoProjection_getRadius(long jarg1, OrthoProjection jarg1_);
   public final static native String OrthoProjection_getAuthority(long jarg1, OrthoProjection jarg1_);
   public final static native String OrthoProjection_getWkt(long jarg1, OrthoProjection jarg1_);
   public final static native String OrthoProjection_getProj4(long jarg1, OrthoProjection jarg1_);
@@ -367,6 +375,7 @@ public class MetashapeJNI {
   public final static native long Photo_getLayer(long jarg1, Photo jarg1_);
   public final static native void Photo_setMeta(long jarg1, Photo jarg1_, long jarg2, MetaData jarg2_);
   public final static native long Photo_getMeta(long jarg1, Photo jarg1_);
+  public final static native long Photo_loadImage(long jarg1, Photo jarg1_, String jarg2, int jarg3);
   public final static native long Photo_createThumbnail(long jarg1, Photo jarg1_, int jarg2, int jarg3);
   public final static native void delete_Photo(long jarg1);
   public final static native long new_Sensor(long jarg1, Sensor jarg1_);
@@ -485,6 +494,7 @@ public class MetashapeJNI {
   public final static native long Camera_project(long jarg1, Camera jarg1_, long jarg2, Vector3d jarg2_);
   public final static native long Camera_unproject__SWIG_0(long jarg1, Camera jarg1_, long jarg2, Vector2d jarg2_);
   public final static native long Camera_unproject__SWIG_1(long jarg1, Camera jarg1_, long jarg2, Vector3d jarg2_);
+  public final static native long Camera_loadImage(long jarg1, Camera jarg1_);
   public final static native long Camera_getReference(long jarg1, Camera jarg1_);
   public final static native void Camera_setReference(long jarg1, Camera jarg1_, long jarg2, Camera.Reference jarg2_);
   public final static native void Camera_setMeta(long jarg1, Camera jarg1_, long jarg2, MetaData jarg2_);
@@ -653,6 +663,10 @@ public class MetashapeJNI {
   public final static native String DenseCloud_getPath(long jarg1, DenseCloud jarg1_);
   public final static native void DenseCloud_setMeta(long jarg1, DenseCloud jarg1_, long jarg2, MetaData jarg2_);
   public final static native long DenseCloud_getMeta(long jarg1, DenseCloud jarg1_);
+  public final static native void DenseCloud_setTransform(long jarg1, DenseCloud jarg1_, long jarg2, Matrix4x4d jarg2_);
+  public final static native long DenseCloud_getTransform(long jarg1, DenseCloud jarg1_);
+  public final static native void DenseCloud_setCoordinateSystem(long jarg1, DenseCloud jarg1_, long jarg2, CoordinateSystem jarg2_);
+  public final static native long DenseCloud_getCoordinateSystem(long jarg1, DenseCloud jarg1_);
   public final static native long DenseCloud_pickPoint(long jarg1, DenseCloud jarg1_, long jarg2, Vector3d jarg2_, long jarg3, Vector3d jarg3_);
   public final static native void DenseCloud_compactPoints(long jarg1, DenseCloud jarg1_, Progress jarg2);
   public final static native void DenseCloud_removePoints(long jarg1, DenseCloud jarg1_, int[] jarg2, Progress jarg3);
@@ -729,6 +743,10 @@ public class MetashapeJNI {
   public final static native String TiledModel_getPath(long jarg1, TiledModel jarg1_);
   public final static native void TiledModel_setMeta(long jarg1, TiledModel jarg1_, long jarg2, MetaData jarg2_);
   public final static native long TiledModel_getMeta(long jarg1, TiledModel jarg1_);
+  public final static native void TiledModel_setTransform(long jarg1, TiledModel jarg1_, long jarg2, Matrix4x4d jarg2_);
+  public final static native long TiledModel_getTransform(long jarg1, TiledModel jarg1_);
+  public final static native void TiledModel_setCoordinateSystem(long jarg1, TiledModel jarg1_, long jarg2, CoordinateSystem jarg2_);
+  public final static native long TiledModel_getCoordinateSystem(long jarg1, TiledModel jarg1_);
   public final static native long TiledModel_pickPoint(long jarg1, TiledModel jarg1_, long jarg2, Vector3d jarg2_, long jarg3, Vector3d jarg3_);
   public final static native long TiledModel_renderPreview(long jarg1, TiledModel jarg1_, long jarg2, long jarg3, long jarg4, Matrix4x4d jarg4_, Progress jarg5);
   public final static native void delete_TiledModel(long jarg1);
@@ -907,6 +925,7 @@ public class MetashapeJNI {
   public final static native boolean Chunk_hasElevation(long jarg1, Chunk jarg1_);
   public final static native boolean Chunk_hasOrthomosaic(long jarg1, Chunk jarg1_);
   public final static native boolean Chunk_hasShapes(long jarg1, Chunk jarg1_);
+  public final static native void Chunk_setPointCloud(long jarg1, Chunk jarg1_, long jarg2, PointCloud jarg2_);
   public final static native long Chunk_getPointCloud(long jarg1, Chunk jarg1_);
   public final static native long Chunk_getDenseCloud(long jarg1, Chunk jarg1_);
   public final static native long Chunk_getDepthMaps(long jarg1, Chunk jarg1_);
@@ -914,6 +933,7 @@ public class MetashapeJNI {
   public final static native long Chunk_getTiledModel(long jarg1, Chunk jarg1_);
   public final static native long Chunk_getElevation(long jarg1, Chunk jarg1_);
   public final static native long Chunk_getOrthomosaic(long jarg1, Chunk jarg1_);
+  public final static native void Chunk_setShapes(long jarg1, Chunk jarg1_, long jarg2, Shapes jarg2_);
   public final static native long Chunk_getShapes(long jarg1, Chunk jarg1_);
   public final static native void Chunk_removePointCloud(long jarg1, Chunk jarg1_);
   public final static native void Chunk_removeDenseCloud(long jarg1, Chunk jarg1_);

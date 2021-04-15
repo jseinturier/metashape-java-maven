@@ -10,8 +10,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * This class enable to check the availability of Metashape natives wraps. 
- * Before any use of metashape wrapper, a call to {@link #isAvailable() MetashapeNatives.isAvailable()} has to be performed 
+ * This class enable to check the availability of Metashape(c) natives wraps. 
+ * Before any use of Metashape(c) wrapper, a call to {@link #isAvailable() MetashapeNatives.isAvailable()} has to be performed 
  * in order to unpack and load the required libraries.<br><br>
  * Libraries are unpacked to the directory pointed by <code>System.getProperty("java.io.tmpdir")</code>. 
  * @author Julien Seinturier
@@ -20,11 +20,11 @@ public class MetashapeNatives {
 
 	private static boolean available = false;
 
-	private static String[] winX64Libs   = new String[] {"libgmp-10.dll", "libopenblas.dll", "metashape.dll"};
+	private static String[] linuxX64Libs = new String[] {"libgfortran.so.3", "libgmp.so.10", "libmetashape.so", "libmpfr.so.4", "libopenblas.so.0"};
+	private static String[] macosX64Libs = new String[] {"libgcc_s.1.dylib", "libgmp.10.dylib", "libgomp.1.dylib", "libmetashape.jnilib", "libstdc++.6.dylib"};
 	private static String[] winX32Libs   = new String[] {"libgmp-10.dll", "libopenblas.dll", "metashape.dll"};
-	private static String[] linuxX64Libs = new String[] {"libgfortran.so.3", "libgmp.so.10", "libmpfr.so.4", "libopenblas.so.0", "libmetashape.so"};
-	private static String[] macosX64Libs = new String[] {"libgcc_s.1.dylib", "libgmp.10.dylib", "libgomp.1.dylib", "libstdc++.6.dylib", "libmetashape.jnilib"};
-
+	private static String[] winX64Libs   = new String[] {"libgmp-10.dll", "libopenblas.dll", "metashape.dll"};
+	
 	{init();}
 
 	private static void init(){

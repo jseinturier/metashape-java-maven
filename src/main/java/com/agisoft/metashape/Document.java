@@ -127,7 +127,7 @@ public class Document {
   public int[] getChunkKeys() { return MetashapeJNI.Document_getChunkKeys(swigCPtr, this); }
 
   /**
-   * Chunk with specified key.
+   * Chunk with specified key, may be null.
    */
   public Chunk getChunk(int key) {
     long ptr = MetashapeJNI.Document_getChunk(swigCPtr, this, key);

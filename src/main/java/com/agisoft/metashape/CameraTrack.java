@@ -137,7 +137,7 @@ public class CameraTrack {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.CameraTrack_getChunk(swigCPtr, this);

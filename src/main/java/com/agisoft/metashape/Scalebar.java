@@ -101,28 +101,28 @@ public class Scalebar {
     }
   
     /**
-     *  Scale bar length or null.
+     *  Scale bar length, may be null.
      */
     public void setDistance(Double distance) {
       MetashapeJNI.Scalebar_Reference_setDistance(swigCPtr, this, distance);
     }
   
     /**
-     *  Scale bar length or null.
+     *  Scale bar length, may be null.
      */
     public Double getDistance() {
       return MetashapeJNI.Scalebar_Reference_getDistance(swigCPtr, this);
     }
   
     /**
-     *  Scale bar length accuracy or null.
+     *  Scale bar length accuracy, may be null.
      */
     public void setDistanceAccuracy(Double accuracy) {
       MetashapeJNI.Scalebar_Reference_setDistanceAccuracy(swigCPtr, this, accuracy);
     }
   
     /**
-     *  Scale bar length accuracy or null.
+     *  Scale bar length accuracy, may be null.
      */
     public Double getDistanceAccuracy() {
       return MetashapeJNI.Scalebar_Reference_getDistanceAccuracy(swigCPtr, this);
@@ -138,7 +138,7 @@ public class Scalebar {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Scalebar_getChunk(swigCPtr, this);

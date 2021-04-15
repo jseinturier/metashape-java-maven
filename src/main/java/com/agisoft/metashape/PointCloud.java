@@ -391,7 +391,7 @@ public class PointCloud {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.PointCloud_getChunk(swigCPtr, this);
@@ -422,14 +422,14 @@ public class PointCloud {
   }
 
   /**
-   *  List of tracks.
+   *  List of tracks, may be null.
    */
   public void setTracks(PointCloud.Tracks tracks) {
     MetashapeJNI.PointCloud_setTracks(swigCPtr, this, tracks == null ? 0 : PointCloud.Tracks.getCPtr(tracks));
   }
 
   /**
-   *  List of tracks.
+   *  List of tracks, may be null.
    */
   public PointCloud.Tracks getTracks() {
     long ptr = MetashapeJNI.PointCloud_getTracks(swigCPtr, this);
@@ -439,14 +439,14 @@ public class PointCloud {
   }
 
   /**
-   *  List of points.
+   *  List of points, may be null.
    */
   public void setPoints(PointCloud.Points points) {
     MetashapeJNI.PointCloud_setPoints(swigCPtr, this, points == null ? 0 : PointCloud.Points.getCPtr(points));
   }
 
   /**
-   *  List of points.
+   *  List of points, may be null.
    */
   public PointCloud.Points getPoints() {
     long ptr = MetashapeJNI.PointCloud_getPoints(swigCPtr, this);
@@ -456,14 +456,14 @@ public class PointCloud {
   }
 
   /**
-   *  Point projections for the camera.
+   *  Point projections for the camera, may be null.
    */
   public void setProjections(int camera, PointCloud.Projections projections) {
     MetashapeJNI.PointCloud_setProjections(swigCPtr, this, camera, projections == null ? 0 : PointCloud.Projections.getCPtr(projections));
   }
 
   /**
-   *  Point projections for the camera.
+   *  Point projections for the camera, may be null.
    */
   public PointCloud.Projections getProjections(int camera) {
     long ptr = MetashapeJNI.PointCloud_getProjections(swigCPtr, this, camera);
@@ -486,7 +486,7 @@ public class PointCloud {
    * Returns ray intersection with the sparse point cloud.<br>
    * @param origin Ray origin.<br>
    * @param target Point on the ray.<br>
-   * @return Coordinates of the intersection point or null.
+   * @return Coordinates of the intersection point, may be null.
    */
   public Vector3d pickPoint(Vector3d origin, Vector3d target) {
     long ptr = MetashapeJNI.PointCloud_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);

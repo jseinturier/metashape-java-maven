@@ -55,7 +55,7 @@ public class DepthMap {
   }
 
   /**
-   *  Depth map calibration.
+   *  Depth map calibration, may be null.
    */
   public Calibration getCalibration(int level) {
     long ptr = MetashapeJNI.DepthMap_getCalibration(swigCPtr, this, level);
@@ -72,7 +72,7 @@ public class DepthMap {
   }
 
   /**
-   *  Image object with depth map data.
+   *  Image object with depth map data, may be null.
    */
   public Image getImage(int level) {
     long ptr = MetashapeJNI.DepthMap_getImage(swigCPtr, this, level);

@@ -66,7 +66,7 @@ public class ScalebarGroup {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.ScalebarGroup_getChunk(swigCPtr, this);

@@ -44,6 +44,62 @@ public class OrthoProjection {
     this(MetashapeJNI.new_OrthoProjection__SWIG_1(OrthoProjection.getCPtr(crs), crs), true);
   }
 
+  /**
+   *  Base coordinate system.
+   */
+  public void setCoordinateSystem(CoordinateSystem crs) {
+    MetashapeJNI.OrthoProjection_setCoordinateSystem(swigCPtr, this, CoordinateSystem.getCPtr(crs), crs);
+  }
+
+  /**
+   *  Base coordinate system.
+   */
+  public CoordinateSystem getCoordinateSystem() {
+    return new CoordinateSystem(MetashapeJNI.OrthoProjection_getCoordinateSystem(swigCPtr, this), true);
+  }
+
+  /**
+   *  Ortho transformation matrix.
+   */
+  public void setTransform(Matrix4x4d transform) {
+    MetashapeJNI.OrthoProjection_setTransform(swigCPtr, this, Matrix4x4d.getCPtr(transform), transform);
+  }
+
+  /**
+   *  Ortho transformation matrix.
+   */
+  public Matrix4x4d getTransform() {
+    return new Matrix4x4d(MetashapeJNI.OrthoProjection_getTransform(swigCPtr, this), true);
+  }
+
+  /**
+   *  Projection type.
+   */
+  public void setType(OrthoProjection.Type type) {
+    MetashapeJNI.OrthoProjection_setType(swigCPtr, this, type.ordinal());
+  }
+
+  /**
+   *  Projection type.
+   */
+  public OrthoProjection.Type getType() {
+    return OrthoProjection.Type.class.getEnumConstants()[MetashapeJNI.OrthoProjection_getType(swigCPtr, this)];
+  }
+
+  /**
+   *  Cylindrical projection radius.
+   */
+  public void setRadius(double radius) {
+    MetashapeJNI.OrthoProjection_setRadius(swigCPtr, this, radius);
+  }
+
+  /**
+   *  Cylindrical projection radius.
+   */
+  public double getRadius() {
+    return MetashapeJNI.OrthoProjection_getRadius(swigCPtr, this);
+  }
+
   public String getAuthority() {
     return MetashapeJNI.OrthoProjection_getAuthority(swigCPtr, this);
   }
@@ -81,6 +137,11 @@ public class OrthoProjection {
    */
   public static Vector3d transform(Vector3d point, OrthoProjection source, OrthoProjection target) {
     return new Vector3d(MetashapeJNI.OrthoProjection_transform(Vector3d.getCPtr(point), point, OrthoProjection.getCPtr(source), source, OrthoProjection.getCPtr(target), target), true);
+  }
+
+  public enum Type {
+    Planar,
+    Cylindrical;
   }
 
 }

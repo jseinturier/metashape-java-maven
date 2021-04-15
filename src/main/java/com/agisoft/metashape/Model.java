@@ -507,7 +507,7 @@ public class Model {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.Model_getChunk(swigCPtr, this);
@@ -536,7 +536,7 @@ public class Model {
   public Model.Texture[] getTextures() { return Model.Texture.cArrayWrap(MetashapeJNI.Model_getTextures(swigCPtr, this), true); }
 
   /**
-   *  Active texture of a given type.
+   *  Active texture of a given type, may be null.
    */
   public Model.Texture getActiveTexture(Model.TextureType type) {
     long ptr = MetashapeJNI.Model_getActiveTexture(swigCPtr, this, type.ordinal());
@@ -546,14 +546,14 @@ public class Model {
   }
 
   /**
-   *  Model mesh.
+   *  Model mesh, may be null.
    */
   public void setMesh(Model.Mesh mesh) {
     MetashapeJNI.Model_setMesh(swigCPtr, this, mesh == null ? 0 : Model.Mesh.getCPtr(mesh));
   }
 
   /**
-   *  Model mesh.
+   *  Model mesh, may be null.
    */
   public Model.Mesh getMesh() {
     long ptr = MetashapeJNI.Model_getMesh(swigCPtr, this);
@@ -587,7 +587,7 @@ public class Model {
    * Returns ray intersection with the model surface.<br>
    * @param origin Ray origin.<br>
    * @param target Point on the ray.<br>
-   * @return Coordinates of the intersection point or null.
+   * @return Coordinates of the intersection point, may be null.
    */
   public Vector3d pickPoint(Vector3d origin, Vector3d target) {
     long ptr = MetashapeJNI.Model_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);

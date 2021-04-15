@@ -66,7 +66,7 @@ public class MarkerGroup {
   }
 
   /**
-   *  Chunk container.
+   *  Chunk container, may be null.
    */
   public Chunk getChunk() {
     long ptr = MetashapeJNI.MarkerGroup_getChunk(swigCPtr, this);

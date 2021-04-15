@@ -48,14 +48,14 @@ public class Transform {
   }
 
   /**
-   *  Rotation component or null.
+   *  Rotation component, may be null.
    */
   public void setRotation(Matrix3x3d rotation) {
     MetashapeJNI.Transform_setRotation(swigCPtr, this, rotation == null ? 0 : Matrix3x3d.getCPtr(rotation), rotation);
   }
 
   /**
-   *  Rotation component or null.
+   *  Rotation component, may be null.
    */
   public Matrix3x3d getRotation() {
     long ptr = MetashapeJNI.Transform_getRotation(swigCPtr, this);
@@ -65,14 +65,14 @@ public class Transform {
   }
 
   /**
-   *  Translation component or null.
+   *  Translation component, may be null.
    */
   public void setTranslation(Vector3d translation) {
     MetashapeJNI.Transform_setTranslation(swigCPtr, this, translation == null ? 0 : Vector3d.getCPtr(translation), translation);
   }
 
   /**
-   *  Translation component or null.
+   *  Translation component, may be null.
    */
   public Vector3d getTranslation() {
     long ptr = MetashapeJNI.Transform_getTranslation(swigCPtr, this);
@@ -82,14 +82,14 @@ public class Transform {
   }
 
   /**
-   *  Scale component or null.
+   *  Scale component, may be null.
    */
   public void setScale(Double scale) {
     MetashapeJNI.Transform_setScale(swigCPtr, this, scale);
   }
 
   /**
-   *  Scale component or null.
+   *  Scale component, may be null.
    */
   public Double getScale() {
     return MetashapeJNI.Transform_getScale(swigCPtr, this);

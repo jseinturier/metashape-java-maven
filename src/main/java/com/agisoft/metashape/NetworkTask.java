@@ -73,19 +73,23 @@ public class NetworkTask {
   }
 
   /**
-   *  List of supported parameter names.
+   *  List of configured parameter names.
    */
   public String[] getParameterNames() { return MetashapeJNI.NetworkTask_getParameterNames(swigCPtr, this); }
 
   /**
-   * Set parameter value.
+   * Set parameter value.<br>
+   * @param name Parameter name.<br>
+   * @param value Parameter value, null removes parameter.
    */
   public void setParameter(String name, Variant value) {
     MetashapeJNI.NetworkTask_setParameter(swigCPtr, this, name, value == null ? 0 : Variant.getCPtr(value), value);
   }
 
   /**
-   * Get parameter value.
+   * Get parameter value.<br>
+   * @param name Parameter name.<br>
+   * @return Parameter value, null if parameter does not exist.
    */
   public Variant getParameter(String name) {
     long ptr = MetashapeJNI.NetworkTask_getParameter(swigCPtr, this, name);

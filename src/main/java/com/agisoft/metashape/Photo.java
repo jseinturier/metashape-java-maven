@@ -90,9 +90,21 @@ public class Photo {
   }
 
   /**
+   * Load image data.<br>
+   * @return Image data, may be null.
+   */
+  public Image loadImage(String channels, DataType data_type) {
+    long ptr = MetashapeJNI.Photo_loadImage(swigCPtr, this, channels, data_type.ordinal());
+    if (ptr == 0)
+        return null;
+    return new Image(ptr, true);
+  }
+
+  /**
    * Create new thumbnail with specified dimensions.<br>
    * @param width Thumbnail width.<br>
-   * @param height Thumbnail height.
+   * @param height Thumbnail height.<br>
+   * @return Thumbnail image, may be null.
    */
   public Image createThumbnail(int width, int height) {
     long ptr = MetashapeJNI.Photo_createThumbnail(swigCPtr, this, width, height);

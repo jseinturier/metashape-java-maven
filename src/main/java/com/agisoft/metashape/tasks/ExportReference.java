@@ -88,14 +88,14 @@ public class ExportReference extends Task {
   }
 
   /**
-   *  Items to export in CSV format. Default: ReferenceItems.0
+   *  Items to export in CSV format. Default: ReferenceItems.ReferenceItemsCameras
    */
   public void setItems(ReferenceItems value) {
     TasksJNI.ExportReference_setItems(swigCPtr, this, value.ordinal());
   }
 
   /**
-   *  Items to export in CSV format. Default: ReferenceItems.0
+   *  Items to export in CSV format. Default: ReferenceItems.ReferenceItemsCameras
    */
   public ReferenceItems getItems() {
     return ReferenceItems.class.getEnumConstants()[TasksJNI.ExportReference_getItems(swigCPtr, this)];
@@ -113,6 +113,20 @@ public class ExportReference extends Task {
    */
   public String getPath() {
     return TasksJNI.ExportReference_getPath(swigCPtr, this);
+  }
+
+  /**
+   *  Number of digits after the decimal point (for CSV format). Default: 6
+   */
+  public void setPrecision(int value) {
+    TasksJNI.ExportReference_setPrecision(swigCPtr, this, value);
+  }
+
+  /**
+   *  Number of digits after the decimal point (for CSV format). Default: 6
+   */
+  public int getPrecision() {
+    return TasksJNI.ExportReference_getPrecision(swigCPtr, this);
   }
 
 }
