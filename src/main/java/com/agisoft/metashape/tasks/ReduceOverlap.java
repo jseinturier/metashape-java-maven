@@ -46,31 +46,31 @@ public class ReduceOverlap extends Task {
   }
 
   /**
-   *  Maximum cameras to use. Default: 0
-   */
-  public void setMaxCameras(int value) {
-    TasksJNI.ReduceOverlap_setMaxCameras(swigCPtr, this, value);
-  }
-
-  /**
-   *  Maximum cameras to use. Default: 0
-   */
-  public int getMaxCameras() {
-    return TasksJNI.ReduceOverlap_getMaxCameras(swigCPtr, this);
-  }
-
-  /**
-   *  Overlap level. Default: 30
+   *  Target number of cameras observing each point of the surface. Default: 3
    */
   public void setOverlap(int value) {
     TasksJNI.ReduceOverlap_setOverlap(swigCPtr, this, value);
   }
 
   /**
-   *  Overlap level. Default: 30
+   *  Target number of cameras observing each point of the surface. Default: 3
    */
   public int getOverlap() {
     return TasksJNI.ReduceOverlap_getOverlap(swigCPtr, this);
+  }
+
+  /**
+   *  Sensor key. Default: -1
+   */
+  public void setSensor(int value) {
+    TasksJNI.ReduceOverlap_setSensor(swigCPtr, this, value);
+  }
+
+  /**
+   *  Sensor key. Default: -1
+   */
+  public int getSensor() {
+    return TasksJNI.ReduceOverlap_getSensor(swigCPtr, this);
   }
 
   /**

@@ -417,14 +417,6 @@ public class NetworkClient {
       return MetashapeJNI.NetworkClient_BatchStatus_uuid_get(swigCPtr, this);
     }
   
-    public void setUsername(String value) {
-      MetashapeJNI.NetworkClient_BatchStatus_username_set(swigCPtr, this, value);
-    }
-  
-    public String getUsername() {
-      return MetashapeJNI.NetworkClient_BatchStatus_username_get(swigCPtr, this);
-    }
-  
     public void setMeta(MetaData value) {
       MetashapeJNI.NetworkClient_BatchStatus_meta_set(swigCPtr, this, MetaData.getCPtr(value), value);
     }
@@ -574,14 +566,6 @@ public class NetworkClient {
   
     public String getUuid() {
       return MetashapeJNI.NetworkClient_BatchItem_uuid_get(swigCPtr, this);
-    }
-  
-    public void setUsername(String value) {
-      MetashapeJNI.NetworkClient_BatchItem_username_set(swigCPtr, this, value);
-    }
-  
-    public String getUsername() {
-      return MetashapeJNI.NetworkClient_BatchItem_username_get(swigCPtr, this);
     }
   
     public void setMeta(MetaData value) {

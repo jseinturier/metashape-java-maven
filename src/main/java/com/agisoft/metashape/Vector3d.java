@@ -36,6 +36,20 @@ public class Vector3d {
     }
   }
 
+  public static long[] cArrayUnwrap(Vector3d[] arrayWrapper) {
+    long[] cArray = new long[arrayWrapper.length];
+    for (int i=0; i<arrayWrapper.length; i++)
+      cArray[i] = Vector3d.getCPtr(arrayWrapper[i]);
+    return cArray;
+  }
+
+  public static Vector3d[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
+    Vector3d[] arrayWrapper = new Vector3d[cArray.length];
+    for (int i=0; i<cArray.length; i++)
+      arrayWrapper[i] = new Vector3d(cArray[i], cMemoryOwn);
+    return arrayWrapper;
+  }
+
   public Vector3d() {
     this(MetashapeJNI.new_Vector3d__SWIG_0(), true);
   }

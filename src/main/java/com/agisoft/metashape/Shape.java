@@ -62,20 +62,6 @@ public class Shape {
   }
 
   /**
-   *  Shape type.
-   */
-  public void setType(Shape.Type type) {
-    MetashapeJNI.Shape_setType(swigCPtr, this, type.ordinal());
-  }
-
-  /**
-   *  Shape type.
-   */
-  public Shape.Type getType() {
-    return Shape.Type.class.getEnumConstants()[MetashapeJNI.Shape_getType(swigCPtr, this)];
-  }
-
-  /**
    *  Shape boundary type.
    */
   public void setBoundaryType(Shape.BoundaryType type) {
@@ -131,40 +117,46 @@ public class Shape {
     return new ShapeGroup(MetashapeJNI.Shape_getGroup(swigCPtr, this), true);
   }
 
-  public void resize(long size) {
-    MetashapeJNI.Shape_resize(swigCPtr, this, size);
-  }
-
-  public long getSize() {
-    return MetashapeJNI.Shape_getSize(swigCPtr, this);
-  }
-
-  public void setVertex(long index, Vector3d vertex) {
-    MetashapeJNI.Shape_setVertex(swigCPtr, this, index, Vector3d.getCPtr(vertex), vertex);
-  }
-
-  public Vector3d getVertex(long index) {
-    return new Vector3d(MetashapeJNI.Shape_getVertex(swigCPtr, this, index), true);
+  /**
+   *  Attached shape state.
+   */
+  public boolean isAttached() {
+    return MetashapeJNI.Shape_isAttached(swigCPtr, this);
   }
 
   /**
-   *  Z enable flag.
+   *  True if shape has Z coordinate values.
    */
-  public void setZEnabled(boolean enabled) {
-    MetashapeJNI.Shape_setZEnabled(swigCPtr, this, enabled);
+  public boolean is3D() {
+    return MetashapeJNI.Shape_is3D(swigCPtr, this);
   }
 
   /**
-   *  Z enable flag.
+   *  Geometry for the non-attached shape.
    */
-  public boolean isZEnabled() {
-    return MetashapeJNI.Shape_isZEnabled(swigCPtr, this);
+  public void setGeometry(Geometry geometry) {
+    MetashapeJNI.Shape_setGeometry(swigCPtr, this, Geometry.getCPtr(geometry), geometry);
   }
 
-  public enum Type {
-    TypePoint,
-    TypePolyline,
-    TypePolygon;
+  /**
+   *  Geometry for the non-attached shape.
+   */
+  public Geometry getGeometry() {
+    return new Geometry(MetashapeJNI.Shape_getGeometry(swigCPtr, this), true);
+  }
+
+  /**
+   *  Geometry for the attached shape.
+   */
+  public void setAttachedGeometry(AttachedGeometry geometry) {
+    MetashapeJNI.Shape_setAttachedGeometry(swigCPtr, this, AttachedGeometry.getCPtr(geometry), geometry);
+  }
+
+  /**
+   *  Geometry for the attached shape.
+   */
+  public AttachedGeometry getAttachedGeometry() {
+    return new AttachedGeometry(MetashapeJNI.Shape_getAttachedGeometry(swigCPtr, this), true);
   }
 
   public enum BoundaryType {

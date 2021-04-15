@@ -130,6 +130,20 @@ public class BuildOrthomosaic extends Task {
   }
 
   /**
+   *  Enable ghosting filter. Default: false
+   */
+  public void setGhostingFilter(boolean value) {
+    TasksJNI.BuildOrthomosaic_setGhostingFilter(swigCPtr, this, value);
+  }
+
+  /**
+   *  Enable ghosting filter. Default: false
+   */
+  public boolean getGhostingFilter() {
+    return TasksJNI.BuildOrthomosaic_getGhostingFilter(swigCPtr, this);
+  }
+
+  /**
    *  Maximum workgroup size. Default: 100
    */
   public void setMaxWorkgroupSize(int value) {

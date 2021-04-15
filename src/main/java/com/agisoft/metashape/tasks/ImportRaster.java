@@ -60,6 +60,34 @@ public class ImportRaster extends Task {
   }
 
   /**
+   *  No-data value valid flag. Default: false
+   */
+  public void setHasNodataValue(boolean value) {
+    TasksJNI.ImportRaster_setHasNodataValue(swigCPtr, this, value);
+  }
+
+  /**
+   *  No-data value valid flag. Default: false
+   */
+  public boolean getHasNodataValue() {
+    return TasksJNI.ImportRaster_getHasNodataValue(swigCPtr, this);
+  }
+
+  /**
+   *  No-data value. Default: -32767.0
+   */
+  public void setNodataValue(double value) {
+    TasksJNI.ImportRaster_setNodataValue(swigCPtr, this, value);
+  }
+
+  /**
+   *  No-data value. Default: -32767.0
+   */
+  public double getNodataValue() {
+    return TasksJNI.ImportRaster_getNodataValue(swigCPtr, this);
+  }
+
+  /**
    *  Path to elevation model in GeoTIFF format.
    */
   public void setPath(String value) {

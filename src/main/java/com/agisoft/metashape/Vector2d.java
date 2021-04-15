@@ -36,6 +36,20 @@ public class Vector2d {
     }
   }
 
+  public static long[] cArrayUnwrap(Vector2d[] arrayWrapper) {
+    long[] cArray = new long[arrayWrapper.length];
+    for (int i=0; i<arrayWrapper.length; i++)
+      cArray[i] = Vector2d.getCPtr(arrayWrapper[i]);
+    return cArray;
+  }
+
+  public static Vector2d[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
+    Vector2d[] arrayWrapper = new Vector2d[cArray.length];
+    for (int i=0; i<cArray.length; i++)
+      arrayWrapper[i] = new Vector2d(cArray[i], cMemoryOwn);
+    return arrayWrapper;
+  }
+
   public Vector2d() {
     this(MetashapeJNI.new_Vector2d__SWIG_0(), true);
   }

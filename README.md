@@ -19,16 +19,16 @@ To import the library just add the following dependency to your maven project:
 <dependency>
   <groupId>com.agisoft</groupId>
   <artifactId>metashape</artifactId>
-  <version>1.6.6</version>
+  <version>1.7.0</version>
 </dependency>
 ```
 
 ### Standalone
-The library can be used as a standalone by downloading the [metashape-1.6.6.jar](https://github.com/jseinturier/metashape-java-maven/releases/download/v1.6.6/metashape-1.6.6.jar) jar and integrating it to the classpath. 
+The library can be used as a standalone by downloading the [metashape-1.7.0.jar](https://github.com/jseinturier/metashape-java-maven/releases/download/v1.7.0/metashape-1.7.0.jar) jar and integrating it to the classpath. 
 
 ## Usage
 The usage is strictly the same as the original distribution from Agisoft (underlying classes are not modified).
 
-Before the first use of any Agisoft Metashape Wrapper class, a call to `org.metashape.MetashapeNatives.isAvailable()` has to be perfoemed in order to unpack and load the required natives libraries.
+Before the first use of any Agisoft Metashape Wrapper class, a call to `org.metashape.MetashapeNatives.isAvailable()` has to be performed in order to unpack and load the required natives libraries.
 
 If you are experiencing a *No license for product (-1)* error, it is recommended to define the `agisoft_LICENSE` environment variable as a path to the license file containing folder.

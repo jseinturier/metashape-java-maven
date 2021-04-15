@@ -86,6 +86,20 @@ public class MatchPhotos extends Task {
   }
 
   /**
+   *  Exclude tie points which are stationary across images. Default: true
+   */
+  public void setFilterStationaryPoints(boolean value) {
+    TasksJNI.MatchPhotos_setFilterStationaryPoints(swigCPtr, this, value);
+  }
+
+  /**
+   *  Exclude tie points which are stationary across images. Default: true
+   */
+  public boolean getFilterStationaryPoints() {
+    return TasksJNI.MatchPhotos_getFilterStationaryPoints(swigCPtr, this);
+  }
+
+  /**
    *  Enable generic preselection. Default: true
    */
   public void setGenericPreselection(boolean value) {

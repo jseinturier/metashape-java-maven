@@ -46,6 +46,20 @@ public class PlanMission extends Task {
   }
 
   /**
+   *  Generate additional viewpoints to increase coverage. Default: true
+   */
+  public void setAttachViewpoints(boolean value) {
+    TasksJNI.PlanMission_setAttachViewpoints(swigCPtr, this, value);
+  }
+
+  /**
+   *  Generate additional viewpoints to increase coverage. Default: true
+   */
+  public boolean getAttachViewpoints() {
+    return TasksJNI.PlanMission_getAttachViewpoints(swigCPtr, this);
+  }
+
+  /**
    *  Image capture distance (m). Default: 20.0
    */
   public void setCaptureDistance(double value) {
@@ -57,6 +71,34 @@ public class PlanMission extends Task {
    */
   public double getCaptureDistance() {
     return TasksJNI.PlanMission_getCaptureDistance(swigCPtr, this);
+  }
+
+  /**
+   *  Ignore minimum waypoint spacing for additional viewpoints. Default: false
+   */
+  public void setGroupAttachedViewpoints(boolean value) {
+    TasksJNI.PlanMission_setGroupAttachedViewpoints(swigCPtr, this, value);
+  }
+
+  /**
+   *  Ignore minimum waypoint spacing for additional viewpoints. Default: false
+   */
+  public boolean getGroupAttachedViewpoints() {
+    return TasksJNI.PlanMission_getGroupAttachedViewpoints(swigCPtr, this);
+  }
+
+  /**
+   *  Cover surface with horizontal zigzags instead of vertical. Default: false
+   */
+  public void setHorizontalZigzags(boolean value) {
+    TasksJNI.PlanMission_setHorizontalZigzags(swigCPtr, this, value);
+  }
+
+  /**
+   *  Cover surface with horizontal zigzags instead of vertical. Default: false
+   */
+  public boolean getHorizontalZigzags() {
+    return TasksJNI.PlanMission_getHorizontalZigzags(swigCPtr, this);
   }
 
   /**
@@ -130,14 +172,14 @@ public class PlanMission extends Task {
   }
 
   /**
-   *  Overlap percent. Default: 70
+   *  Overlap percent. Default: 65
    */
   public void setOverlap(int value) {
     TasksJNI.PlanMission_setOverlap(swigCPtr, this, value);
   }
 
   /**
-   *  Overlap percent. Default: 70
+   *  Overlap percent. Default: 65
    */
   public int getOverlap() {
     return TasksJNI.PlanMission_getOverlap(swigCPtr, this);
