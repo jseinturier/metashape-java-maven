@@ -19,12 +19,12 @@ To import the library just add the following dependency to your maven project:
 <dependency>
   <groupId>com.agisoft</groupId>
   <artifactId>metashape</artifactId>
-  <version>1.7.1</version>
+  <version>1.7.2</version>
 </dependency>
 ```
 
 ### Standalone
-The library can be used as a standalone by downloading the [metashape-1.7.1.jar](https://github.com/jseinturier/metashape-java-maven/releases/download/v1.7.1/metashape-1.7.1.jar) jar and integrating it to the classpath. 
+The library can be used as a standalone by downloading the [metashape-1.7.2.jar](https://github.com/jseinturier/metashape-java-maven/releases/download/v1.7.2/metashape-1.7.2.jar) jar and integrating it to the classpath. 
 
 ## Usage
 The usage is strictly the same as the original distribution from Agisoft (underlying classes are not modified).

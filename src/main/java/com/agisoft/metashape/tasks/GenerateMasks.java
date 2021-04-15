@@ -72,6 +72,20 @@ public class GenerateMasks extends Task {
   public int[] getCameras() { return TasksJNI.GenerateMasks_getCameras(swigCPtr, this); }
 
   /**
+   *  Maximum depth of masked areas in meters (only if mask_defocus=False). Default: 3.4028234663852886e+38
+   */
+  public void setDepthThreshold(double value) {
+    TasksJNI.GenerateMasks_setDepthThreshold(swigCPtr, this, value);
+  }
+
+  /**
+   *  Maximum depth of masked areas in meters (only if mask_defocus=False). Default: 3.4028234663852886e+38
+   */
+  public double getDepthThreshold() {
+    return TasksJNI.GenerateMasks_getDepthThreshold(swigCPtr, this);
+  }
+
+  /**
    *  Extend masks to cover whole mesh (only if mask_defocus=True). Default: false
    */
   public void setFixCoverage(boolean value) {

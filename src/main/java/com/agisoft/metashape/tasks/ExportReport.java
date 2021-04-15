@@ -60,6 +60,20 @@ public class ExportReport extends Task {
   }
 
   /**
+   *  Include system information. Default: true
+   */
+  public void setIncludeSystemInfo(boolean value) {
+    TasksJNI.ExportReport_setIncludeSystemInfo(swigCPtr, this, value);
+  }
+
+  /**
+   *  Include system information. Default: true
+   */
+  public boolean getIncludeSystemInfo() {
+    return TasksJNI.ExportReport_getIncludeSystemInfo(swigCPtr, this);
+  }
+
+  /**
    *  Enable page numbers. Default: true
    */
   public void setPageNumbers(boolean value) {

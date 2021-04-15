@@ -114,6 +114,62 @@ public class BuildTiledModel extends Task {
   }
 
   /**
+   *  Merge tiled model flag. Default: false
+   */
+  public void setMerge(boolean value) {
+    TasksJNI.BuildTiledModel_setMerge(swigCPtr, this, value);
+  }
+
+  /**
+   *  Merge tiled model flag. Default: false
+   */
+  public boolean getMerge() {
+    return TasksJNI.BuildTiledModel_getMerge(swigCPtr, this);
+  }
+
+  /**
+   *  Operand asset key. Default: -1
+   */
+  public void setOperandAsset(int value) {
+    TasksJNI.BuildTiledModel_setOperandAsset(swigCPtr, this, value);
+  }
+
+  /**
+   *  Operand asset key. Default: -1
+   */
+  public int getOperandAsset() {
+    return TasksJNI.BuildTiledModel_getOperandAsset(swigCPtr, this);
+  }
+
+  /**
+   *  Operand chunk key. Default: -1
+   */
+  public void setOperandChunk(int value) {
+    TasksJNI.BuildTiledModel_setOperandChunk(swigCPtr, this, value);
+  }
+
+  /**
+   *  Operand chunk key. Default: -1
+   */
+  public int getOperandChunk() {
+    return TasksJNI.BuildTiledModel_getOperandChunk(swigCPtr, this);
+  }
+
+  /**
+   *  Operand frame key. Default: -1
+   */
+  public void setOperandFrame(int value) {
+    TasksJNI.BuildTiledModel_setOperandFrame(swigCPtr, this, value);
+  }
+
+  /**
+   *  Operand frame key. Default: -1
+   */
+  public int getOperandFrame() {
+    return TasksJNI.BuildTiledModel_getOperandFrame(swigCPtr, this);
+  }
+
+  /**
    *  Target model resolution in meters. Default: 0.0
    */
   public void setPixelSize(double value) {

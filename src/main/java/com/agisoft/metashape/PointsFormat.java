@@ -25,6 +25,7 @@ public enum PointsFormat {
   PointsFormatPTX,
   PointsFormatDXF,
   PointsFormatCesium,
-  PointsFormatPCD;
+  PointsFormatPCD,
+  PointsFormatSLPK;
 }
 

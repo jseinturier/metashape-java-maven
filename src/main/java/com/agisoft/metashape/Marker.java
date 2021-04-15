@@ -216,6 +216,20 @@ public class Marker {
   }
 
   /**
+   *  Marker type.
+   */
+  public void setType(Marker.Type type) {
+    MetashapeJNI.Marker_setType(swigCPtr, this, type.ordinal());
+  }
+
+  /**
+   *  Marker type.
+   */
+  public Marker.Type getType() {
+    return Marker.Type.class.getEnumConstants()[MetashapeJNI.Marker_getType(swigCPtr, this)];
+  }
+
+  /**
    *  Marker label.
    */
   public void setLabel(String label) {
@@ -319,6 +333,12 @@ public class Marker {
    */
   public MetaData getMeta() {
     return new MetaData(MetashapeJNI.Marker_getMeta(swigCPtr, this), true);
+  }
+
+  public enum Type {
+    TypeRegular,
+    TypeInternal,
+    TypeFiducial;
   }
 
 }

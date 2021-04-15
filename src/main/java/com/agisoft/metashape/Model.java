@@ -497,6 +497,27 @@ public class Model {
       return new Vector3uc(MetashapeJNI.Model_Mesh_getVertexColor(swigCPtr, this, index), true);
     }
   
+    /**
+     *  Returns true if model has UV coordinates.
+     */
+    public boolean hasUV() {
+      return MetashapeJNI.Model_Mesh_hasUV(swigCPtr, this);
+    }
+  
+    /**
+     *  Returns true if model has vertex colors.
+     */
+    public boolean hasVertexColors() {
+      return MetashapeJNI.Model_Mesh_hasVertexColors(swigCPtr, this);
+    }
+  
+    /**
+     *  Returns true if model has confidence values.
+     */
+    public boolean hasVertexConfidence() {
+      return MetashapeJNI.Model_Mesh_hasVertexConfidence(swigCPtr, this);
+    }
+  
   }
 
   /**
@@ -581,6 +602,41 @@ public class Model {
    */
   public MetaData getMeta() {
     return new MetaData(MetashapeJNI.Model_getMeta(swigCPtr, this), true);
+  }
+
+  /**
+   *  Face count.
+   */
+  public int getFaceCount() {
+    return MetashapeJNI.Model_getFaceCount(swigCPtr, this);
+  }
+
+  /**
+   *  Vertex count;
+   */
+  public int getVertexCount() {
+    return MetashapeJNI.Model_getVertexCount(swigCPtr, this);
+  }
+
+  /**
+   *  Returns true if model has UV coordinates.
+   */
+  public boolean hasUV() {
+    return MetashapeJNI.Model_hasUV(swigCPtr, this);
+  }
+
+  /**
+   *  Returns true if model has vertex colors.
+   */
+  public boolean hasVertexColors() {
+    return MetashapeJNI.Model_hasVertexColors(swigCPtr, this);
+  }
+
+  /**
+   *  Returns true if model has confidence values.
+   */
+  public boolean hasVertexConfidence() {
+    return MetashapeJNI.Model_hasVertexConfidence(swigCPtr, this);
   }
 
   /**

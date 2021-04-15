@@ -331,6 +331,23 @@ public class Sensor {
   }
 
   /**
+   *  Sensor master, may be null.
+   */
+  public void setMaster(Sensor sensor) {
+    MetashapeJNI.Sensor_setMaster(swigCPtr, this, sensor == null ? 0 : Sensor.getCPtr(sensor), sensor);
+  }
+
+  /**
+   *  Sensor master, may be null.
+   */
+  public Sensor getMaster() {
+    long ptr = MetashapeJNI.Sensor_getMaster(swigCPtr, this);
+    if (ptr == 0)
+        return null;
+    return new Sensor(ptr, true);
+  }
+
+  /**
    *  Sensor reference data.
    */
   public void setReference(Sensor.Reference reference) {

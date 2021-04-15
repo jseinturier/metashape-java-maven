@@ -205,6 +205,20 @@ public class Camera {
   }
 
   /**
+   *  Camera type.
+   */
+  public void setType(Camera.Type type) {
+    MetashapeJNI.Camera_setType(swigCPtr, this, type.ordinal());
+  }
+
+  /**
+   *  Camera type.
+   */
+  public Camera.Type getType() {
+    return Camera.Type.class.getEnumConstants()[MetashapeJNI.Camera_getType(swigCPtr, this)];
+  }
+
+  /**
    *  Camera label.
    */
   public void setLabel(String label) {
@@ -275,6 +289,23 @@ public class Camera {
     if (ptr == 0)
         return null;
     return new Sensor(ptr, true);
+  }
+
+  /**
+   *  Camera master, may be null.
+   */
+  public void setMaster(Camera camera) {
+    MetashapeJNI.Camera_setMaster(swigCPtr, this, camera == null ? 0 : Camera.getCPtr(camera), camera);
+  }
+
+  /**
+   *  Camera master, may be null.
+   */
+  public Camera getMaster() {
+    long ptr = MetashapeJNI.Camera_getMaster(swigCPtr, this);
+    if (ptr == 0)
+        return null;
+    return new Camera(ptr, true);
   }
 
   /**
@@ -447,6 +478,11 @@ public class Camera {
    */
   public MetaData getMeta() {
     return new MetaData(MetashapeJNI.Camera_getMeta(swigCPtr, this), true);
+  }
+
+  public enum Type {
+    TypeRegular,
+    TypeKeyframe;
   }
 
 }

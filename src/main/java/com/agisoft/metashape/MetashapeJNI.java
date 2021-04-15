@@ -413,6 +413,8 @@ public class MetashapeJNI {
   public final static native double Sensor_getPixelHeight(long jarg1, Sensor jarg1_);
   public final static native void Sensor_setFocalLength(long jarg1, Sensor jarg1_, double jarg2);
   public final static native double Sensor_getFocalLength(long jarg1, Sensor jarg1_);
+  public final static native void Sensor_setMaster(long jarg1, Sensor jarg1_, long jarg2, Sensor jarg2_);
+  public final static native long Sensor_getMaster(long jarg1, Sensor jarg1_);
   public final static native void Sensor_setReference(long jarg1, Sensor jarg1_, long jarg2, Sensor.Reference jarg2_);
   public final static native long Sensor_getReference(long jarg1, Sensor jarg1_);
   public final static native void Sensor_setAntenna(long jarg1, Sensor jarg1_, long jarg2, Antenna jarg2_);
@@ -465,6 +467,8 @@ public class MetashapeJNI {
   public final static native void delete_Camera_Reference(long jarg1);
   public final static native int Camera_getKey(long jarg1, Camera jarg1_);
   public final static native long Camera_getChunk(long jarg1, Camera jarg1_);
+  public final static native void Camera_setType(long jarg1, Camera jarg1_, int jarg2);
+  public final static native int Camera_getType(long jarg1, Camera jarg1_);
   public final static native void Camera_setLabel(long jarg1, Camera jarg1_, String jarg2);
   public final static native String Camera_getLabel(long jarg1, Camera jarg1_);
   public final static native void Camera_setEnabled(long jarg1, Camera jarg1_, boolean jarg2);
@@ -475,6 +479,8 @@ public class MetashapeJNI {
   public final static native int Camera_getOrientation(long jarg1, Camera jarg1_);
   public final static native void Camera_setSensor(long jarg1, Camera jarg1_, long jarg2, Sensor jarg2_);
   public final static native long Camera_getSensor(long jarg1, Camera jarg1_);
+  public final static native void Camera_setMaster(long jarg1, Camera jarg1_, long jarg2, Camera jarg2_);
+  public final static native long Camera_getMaster(long jarg1, Camera jarg1_);
   public final static native void Camera_setGroup(long jarg1, Camera jarg1_, long jarg2, CameraGroup jarg2_);
   public final static native long Camera_getGroup(long jarg1, Camera jarg1_);
   public final static native void Camera_setPhoto(long jarg1, Camera jarg1_, long jarg2, Photo jarg2_);
@@ -520,6 +526,8 @@ public class MetashapeJNI {
   public final static native void delete_Marker_Projection(long jarg1);
   public final static native int Marker_getKey(long jarg1, Marker jarg1_);
   public final static native long Marker_getChunk(long jarg1, Marker jarg1_);
+  public final static native void Marker_setType(long jarg1, Marker jarg1_, int jarg2);
+  public final static native int Marker_getType(long jarg1, Marker jarg1_);
   public final static native void Marker_setLabel(long jarg1, Marker jarg1_, String jarg2);
   public final static native String Marker_getLabel(long jarg1, Marker jarg1_);
   public final static native void Marker_setEnabled(long jarg1, Marker jarg1_, boolean jarg2);
@@ -719,6 +727,9 @@ public class MetashapeJNI {
   public final static native long Model_Mesh_getVertex(long jarg1, Model.Mesh jarg1_, int jarg2);
   public final static native void Model_Mesh_setVertexColor(long jarg1, Model.Mesh jarg1_, int jarg2, long jarg3, Vector3uc jarg3_);
   public final static native long Model_Mesh_getVertexColor(long jarg1, Model.Mesh jarg1_, int jarg2);
+  public final static native boolean Model_Mesh_hasUV(long jarg1, Model.Mesh jarg1_);
+  public final static native boolean Model_Mesh_hasVertexColors(long jarg1, Model.Mesh jarg1_);
+  public final static native boolean Model_Mesh_hasVertexConfidence(long jarg1, Model.Mesh jarg1_);
   public final static native void delete_Model_Mesh(long jarg1);
   public final static native int Model_getKey(long jarg1, Model jarg1_);
   public final static native long Model_getChunk(long jarg1, Model jarg1_);
@@ -731,6 +742,11 @@ public class MetashapeJNI {
   public final static native String Model_getPath(long jarg1, Model jarg1_);
   public final static native void Model_setMeta(long jarg1, Model jarg1_, long jarg2, MetaData jarg2_);
   public final static native long Model_getMeta(long jarg1, Model jarg1_);
+  public final static native int Model_getFaceCount(long jarg1, Model jarg1_);
+  public final static native int Model_getVertexCount(long jarg1, Model jarg1_);
+  public final static native boolean Model_hasUV(long jarg1, Model jarg1_);
+  public final static native boolean Model_hasVertexColors(long jarg1, Model jarg1_);
+  public final static native boolean Model_hasVertexConfidence(long jarg1, Model jarg1_);
   public final static native long Model_pickPoint(long jarg1, Model jarg1_, long jarg2, Vector3d jarg2_, long jarg3, Vector3d jarg3_);
   public final static native long Model_renderPreview(long jarg1, Model jarg1_, long jarg2, long jarg3, long jarg4, Matrix4x4d jarg4_, Progress jarg5);
   public final static native void delete_Model(long jarg1);
