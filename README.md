@@ -12,7 +12,7 @@ To import the library just add the following dependency to your maven project:
 <repository>
   <id>jorigin</id>
   <name>jorigin-maven</name>
-  <url>http://maven.jorigin.org</url>
+  <url>https://maven.jorigin.org</url>
 </repository>
 
 <!-- The Agisoft Metashape Java  Wrapper -->
