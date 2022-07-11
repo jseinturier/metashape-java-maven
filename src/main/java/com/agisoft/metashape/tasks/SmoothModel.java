@@ -74,6 +74,20 @@ public class SmoothModel extends Task {
   }
 
   /**
+   *  Preserve edges. Default: false
+   */
+  public void setPreserveEdges(boolean value) {
+    TasksJNI.SmoothModel_setPreserveEdges(swigCPtr, this, value);
+  }
+
+  /**
+   *  Preserve edges. Default: false
+   */
+  public boolean getPreserveEdges() {
+    return TasksJNI.SmoothModel_getPreserveEdges(swigCPtr, this);
+  }
+
+  /**
    *  Smoothing strength. Default: 3.0
    */
   public void setStrength(double value) {

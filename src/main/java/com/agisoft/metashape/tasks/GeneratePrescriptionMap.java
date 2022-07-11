@@ -48,16 +48,28 @@ public class GeneratePrescriptionMap extends Task {
   /**
    *  Boundary shape group. Default: -1
    */
-  public void setBoundary(int value) {
-    TasksJNI.GeneratePrescriptionMap_setBoundary(swigCPtr, this, value);
+  public void setBoundaryShapeGroup(int value) {
+    TasksJNI.GeneratePrescriptionMap_setBoundaryShapeGroup(swigCPtr, this, value);
   }
 
   /**
    *  Boundary shape group. Default: -1
    */
-  public int getBoundary() {
-    return TasksJNI.GeneratePrescriptionMap_getBoundary(swigCPtr, this);
+  public int getBoundaryShapeGroup() {
+    return TasksJNI.GeneratePrescriptionMap_getBoundaryShapeGroup(swigCPtr, this);
   }
+
+  /**
+   *  Classification breakpoints.
+   */
+  public void setBreakpoints(double[] value) {
+    TasksJNI.GeneratePrescriptionMap_setBreakpoints(swigCPtr, this, value);
+  }
+
+  /**
+   *  Classification breakpoints.
+   */
+  public double[] getBreakpoints() { return TasksJNI.GeneratePrescriptionMap_getBreakpoints(swigCPtr, this); }
 
   /**
    *  Step of prescription grid, meters. Default: 1.0
@@ -74,73 +86,43 @@ public class GeneratePrescriptionMap extends Task {
   }
 
   /**
-   *  Number of clusters. Default: 4
+   *  Number of classes. Default: 4
    */
-  public void setClusterCount(int value) {
-    TasksJNI.GeneratePrescriptionMap_setClusterCount(swigCPtr, this, value);
+  public void setClassCount(int value) {
+    TasksJNI.GeneratePrescriptionMap_setClassCount(swigCPtr, this, value);
   }
 
   /**
-   *  Number of clusters. Default: 4
+   *  Number of classes. Default: 4
    */
-  public int getClusterCount() {
-    return TasksJNI.GeneratePrescriptionMap_getClusterCount(swigCPtr, this);
+  public int getClassCount() {
+    return TasksJNI.GeneratePrescriptionMap_getClassCount(swigCPtr, this);
   }
 
   /**
-   *  Index values clustering method. Default: ClusteringMethod.ClusteringMethodJenksNaturalBreaks
+   *  Index values classification method. Default: ClassificationMethod.JenksNaturalBreaksClassification
    */
-  public void setClusteringMethod(ClusteringMethod value) {
-    TasksJNI.GeneratePrescriptionMap_setClusteringMethod(swigCPtr, this, value.ordinal());
+  public void setClassificationMethod(ClassificationMethod value) {
+    TasksJNI.GeneratePrescriptionMap_setClassificationMethod(swigCPtr, this, value.ordinal());
   }
 
   /**
-   *  Index values clustering method. Default: ClusteringMethod.ClusteringMethodJenksNaturalBreaks
+   *  Index values classification method. Default: ClassificationMethod.JenksNaturalBreaksClassification
    */
-  public ClusteringMethod getClusteringMethod() {
-    return ClusteringMethod.class.getEnumConstants()[TasksJNI.GeneratePrescriptionMap_getClusteringMethod(swigCPtr, this)];
+  public ClassificationMethod getClassificationMethod() {
+    return ClassificationMethod.class.getEnumConstants()[TasksJNI.GeneratePrescriptionMap_getClassificationMethod(swigCPtr, this)];
   }
 
   /**
-   *  Grid azimuth, degrees. Default: 0.0
+   *  Fertilizer rate for each class.
    */
-  public void setGridAzimuth(double value) {
-    TasksJNI.GeneratePrescriptionMap_setGridAzimuth(swigCPtr, this, value);
+  public void setRates(double[] value) {
+    TasksJNI.GeneratePrescriptionMap_setRates(swigCPtr, this, value);
   }
 
   /**
-   *  Grid azimuth, degrees. Default: 0.0
+   *  Fertilizer rate for each class.
    */
-  public double getGridAzimuth() {
-    return TasksJNI.GeneratePrescriptionMap_getGridAzimuth(swigCPtr, this);
-  }
-
-  /**
-   *  Maximum value of index range. Default: 1.0
-   */
-  public void setMaxValue(double value) {
-    TasksJNI.GeneratePrescriptionMap_setMaxValue(swigCPtr, this, value);
-  }
-
-  /**
-   *  Maximum value of index range. Default: 1.0
-   */
-  public double getMaxValue() {
-    return TasksJNI.GeneratePrescriptionMap_getMaxValue(swigCPtr, this);
-  }
-
-  /**
-   *  Minimum value of index range. Default: 0.0
-   */
-  public void setMinValue(double value) {
-    TasksJNI.GeneratePrescriptionMap_setMinValue(swigCPtr, this, value);
-  }
-
-  /**
-   *  Minimum value of index range. Default: 0.0
-   */
-  public double getMinValue() {
-    return TasksJNI.GeneratePrescriptionMap_getMinValue(swigCPtr, this);
-  }
+  public double[] getRates() { return TasksJNI.GeneratePrescriptionMap_getRates(swigCPtr, this); }
 
 }

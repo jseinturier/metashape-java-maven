@@ -86,14 +86,14 @@ public class BuildDepthMaps extends Task {
   }
 
   /**
-   *  Maximum number of neighbor images to use for depth map generation. Default: -1
+   *  Maximum number of neighbor images to use for depth map generation. Default: 40
    */
   public void setMaxNeighbors(int value) {
     TasksJNI.BuildDepthMaps_setMaxNeighbors(swigCPtr, this, value);
   }
 
   /**
-   *  Maximum number of neighbor images to use for depth map generation. Default: -1
+   *  Maximum number of neighbor images to use for depth map generation. Default: 40
    */
   public int getMaxNeighbors() {
     return TasksJNI.BuildDepthMaps_getMaxNeighbors(swigCPtr, this);

@@ -85,8 +85,12 @@ public class Camera {
       }
     }
   
+    public Reference() {
+      this(MetashapeJNI.new_Camera_Reference__SWIG_0(), true);
+    }
+  
     public Reference(Camera.Reference reference) {
-      this(MetashapeJNI.new_Camera_Reference(Camera.Reference.getCPtr(reference), reference), true);
+      this(MetashapeJNI.new_Camera_Reference__SWIG_1(Camera.Reference.getCPtr(reference), reference), true);
     }
   
     /**

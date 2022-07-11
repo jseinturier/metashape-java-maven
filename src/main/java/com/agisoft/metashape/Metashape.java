@@ -45,6 +45,20 @@ public class Metashape {
   }
 
   /**
+   *  Network data root path.
+   */
+  public static String getNetworkPath() {
+    return MetashapeJNI.getNetworkPath();
+  }
+
+  /**
+   *  Network data root path.
+   */
+  public static void setNetworkPath(String path) {
+    MetashapeJNI.setNetworkPath(path);
+  }
+
+  /**
    *  Calls malloc_trim on Linux (does nothing on other OS)
    */
   public static void releaseFreeMemory() {

@@ -82,8 +82,12 @@ public class Marker {
       }
     }
   
+    public Reference() {
+      this(MetashapeJNI.new_Marker_Reference__SWIG_0(), true);
+    }
+  
     public Reference(Marker.Reference reference) {
-      this(MetashapeJNI.new_Marker_Reference(Marker.Reference.getCPtr(reference), reference), true);
+      this(MetashapeJNI.new_Marker_Reference__SWIG_1(Marker.Reference.getCPtr(reference), reference), true);
     }
   
     /**

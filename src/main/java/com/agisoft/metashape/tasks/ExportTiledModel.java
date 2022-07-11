@@ -102,14 +102,14 @@ public class ExportTiledModel extends Task {
   }
 
   /**
-   *  Enable mesh compression (Cesium format only). Default: false
+   *  Enable mesh compression (Cesium format only). Default: true
    */
   public void setModelCompression(boolean value) {
     TasksJNI.ExportTiledModel_setModelCompression(swigCPtr, this, value);
   }
 
   /**
-   *  Enable mesh compression (Cesium format only). Default: false
+   *  Enable mesh compression (Cesium format only). Default: true
    */
   public boolean getModelCompression() {
     return TasksJNI.ExportTiledModel_getModelCompression(swigCPtr, this);

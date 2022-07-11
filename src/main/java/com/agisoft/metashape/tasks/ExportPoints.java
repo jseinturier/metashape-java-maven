@@ -142,14 +142,14 @@ public class ExportPoints extends Task {
   }
 
   /**
-   *  Enable compression (Cesium format only). Default: false
+   *  Enable compression (Cesium format only). Default: true
    */
   public void setCompression(boolean value) {
     TasksJNI.ExportPoints_setCompression(swigCPtr, this, value);
   }
 
   /**
-   *  Enable compression (Cesium format only). Default: false
+   *  Enable compression (Cesium format only). Default: true
    */
   public boolean getCompression() {
     return TasksJNI.ExportPoints_getCompression(swigCPtr, this);

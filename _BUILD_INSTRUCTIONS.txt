@@ -20,3 +20,42 @@
   - Using https://emn178.github.io/online-tools/md5_checksum.html for MD5
   
 7. Upload to repository
+
+8. Publish a new release:
+
+  Tag: vX.Y.Z
+
+  Title: Agisoft Metashape Wrapper Java X.Y.Z
+  
+  Text:
+  
+The Agisoft Metashape(c) X.Y.Z Java wrapper.
+
+Agisoft Metashape(c) wrapper jar can be integrated to Maven projects or can be used as standalone jar.
+
+## Integration
+
+### Maven
+To import the library just add the following dependency to your maven project:
+```xml
+
+<!-- JOrigin repository -->          
+<repository>
+  <id>jorigin</id>
+  <name>jorigin-maven</name>
+  <url>https://maven.jorigin.org</url>
+</repository>
+
+<!-- The Agisoft Metashape Java  Wrapper -->
+<dependency>
+  <groupId>com.agisoft</groupId>
+  <artifactId>metashape</artifactId>
+  <version>X.Y.Z</version>
+</dependency>
+```
+
+### Standalone
+The library can be used as a standalone by downloading the [metashape-X.Y.Z.jar](https://github.com/jseinturier/metashape-java-maven/releases/download/vX.Y.Z/metashape-X.Y.Z.jar) jar and integrating it to the classpath. 
+
+## Usage
+Integrate the jar to your project and make a call to ``org.metashape.MetashapeNatives.isAvailable()`` to check if the Agisoft Metashape(c) native wrapping is enabled.

@@ -86,14 +86,14 @@ public class GenerateMasks extends Task {
   }
 
   /**
-   *  Extend masks to cover whole mesh (only if mask_defocus=True). Default: false
+   *  Extend masks to cover whole mesh (only if mask_defocus=True). Default: true
    */
   public void setFixCoverage(boolean value) {
     TasksJNI.GenerateMasks_setFixCoverage(swigCPtr, this, value);
   }
 
   /**
-   *  Extend masks to cover whole mesh (only if mask_defocus=True). Default: false
+   *  Extend masks to cover whole mesh (only if mask_defocus=True). Default: true
    */
   public boolean getFixCoverage() {
     return TasksJNI.GenerateMasks_getFixCoverage(swigCPtr, this);

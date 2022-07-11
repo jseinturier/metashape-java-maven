@@ -5,7 +5,7 @@
   <groupId>com.agisoft</groupId>
   <artifactId>metashape</artifactId>
   <packaging>jar</packaging>
-  <version>1.7.3</version>
+  <version>1.7.4</version>
   <name>Metashape-java</name>
   <url>http://maven.apache.org</url>
   

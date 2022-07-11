@@ -82,8 +82,12 @@ public class Scalebar {
       }
     }
   
+    public Reference() {
+      this(MetashapeJNI.new_Scalebar_Reference__SWIG_0(), true);
+    }
+  
     public Reference(Scalebar.Reference reference) {
-      this(MetashapeJNI.new_Scalebar_Reference(Scalebar.Reference.getCPtr(reference), reference), true);
+      this(MetashapeJNI.new_Scalebar_Reference__SWIG_1(Scalebar.Reference.getCPtr(reference), reference), true);
     }
   
     /**

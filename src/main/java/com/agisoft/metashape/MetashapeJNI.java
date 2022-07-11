@@ -14,6 +14,8 @@ public class MetashapeJNI {
   public final static native void setGpuMask(long jarg1);
   public final static native boolean isCpuEnabled();
   public final static native void setCpuEnabled(boolean jarg1);
+  public final static native String getNetworkPath();
+  public final static native void setNetworkPath(String jarg1);
   public final static native void releaseFreeMemory();
   public final static native long new_Vector2d__SWIG_0();
   public final static native long new_Vector2d__SWIG_1(double jarg1, double jarg2);
@@ -384,7 +386,8 @@ public class MetashapeJNI {
   public final static native long Photo_createThumbnail(long jarg1, Photo jarg1_, int jarg2, int jarg3);
   public final static native void delete_Photo(long jarg1);
   public final static native long new_Sensor(long jarg1, Sensor jarg1_);
-  public final static native long new_Sensor_Reference(long jarg1, Sensor.Reference jarg1_);
+  public final static native long new_Sensor_Reference__SWIG_0();
+  public final static native long new_Sensor_Reference__SWIG_1(long jarg1, Sensor.Reference jarg1_);
   public final static native void Sensor_Reference_setLocationEnabled(long jarg1, Sensor.Reference jarg1_, boolean jarg2);
   public final static native boolean Sensor_Reference_isLocationEnabled(long jarg1, Sensor.Reference jarg1_);
   public final static native void Sensor_Reference_setRotationEnabled(long jarg1, Sensor.Reference jarg1_, boolean jarg2);
@@ -457,7 +460,8 @@ public class MetashapeJNI {
   public final static native boolean ScalebarGroup_isSelected(long jarg1, ScalebarGroup jarg1_);
   public final static native void delete_ScalebarGroup(long jarg1);
   public final static native long new_Camera(long jarg1, Camera jarg1_);
-  public final static native long new_Camera_Reference(long jarg1, Camera.Reference jarg1_);
+  public final static native long new_Camera_Reference__SWIG_0();
+  public final static native long new_Camera_Reference__SWIG_1(long jarg1, Camera.Reference jarg1_);
   public final static native void Camera_Reference_setLocationEnabled(long jarg1, Camera.Reference jarg1_, boolean jarg2);
   public final static native boolean Camera_Reference_isLocationEnabled(long jarg1, Camera.Reference jarg1_);
   public final static native void Camera_Reference_setRotationEnabled(long jarg1, Camera.Reference jarg1_, boolean jarg2);
@@ -513,7 +517,8 @@ public class MetashapeJNI {
   public final static native long Camera_getMeta(long jarg1, Camera jarg1_);
   public final static native void delete_Camera(long jarg1);
   public final static native long new_Marker(long jarg1, Marker jarg1_);
-  public final static native long new_Marker_Reference(long jarg1, Marker.Reference jarg1_);
+  public final static native long new_Marker_Reference__SWIG_0();
+  public final static native long new_Marker_Reference__SWIG_1(long jarg1, Marker.Reference jarg1_);
   public final static native void Marker_Reference_setEnabled(long jarg1, Marker.Reference jarg1_, boolean jarg2);
   public final static native boolean Marker_Reference_isEnabled(long jarg1, Marker.Reference jarg1_);
   public final static native void Marker_Reference_setLocation(long jarg1, Marker.Reference jarg1_, long jarg2, Vector3d jarg2_);
@@ -550,7 +555,8 @@ public class MetashapeJNI {
   public final static native long Marker_getMeta(long jarg1, Marker jarg1_);
   public final static native void delete_Marker(long jarg1);
   public final static native long new_Scalebar(long jarg1, Scalebar jarg1_);
-  public final static native long new_Scalebar_Reference(long jarg1, Scalebar.Reference jarg1_);
+  public final static native long new_Scalebar_Reference__SWIG_0();
+  public final static native long new_Scalebar_Reference__SWIG_1(long jarg1, Scalebar.Reference jarg1_);
   public final static native void Scalebar_Reference_setEnabled(long jarg1, Scalebar.Reference jarg1_, boolean jarg2);
   public final static native boolean Scalebar_Reference_isEnabled(long jarg1, Scalebar.Reference jarg1_);
   public final static native void Scalebar_Reference_setDistance(long jarg1, Scalebar.Reference jarg1_, Double jarg2);
@@ -1110,6 +1116,7 @@ public class MetashapeJNI {
   public final static native long[] NetworkClient_TaskStatus_log_get(long jarg1, NetworkClient.TaskStatus jarg1_);
   public final static native long new_NetworkClient_TaskStatus();
   public final static native void delete_NetworkClient_TaskStatus(long jarg1);
+  public final static native void NetworkClient_BatchStatus_update(long jarg1, NetworkClient.BatchStatus jarg1_, long jarg2, NetworkClient.BatchStatus jarg2_);
   public final static native void NetworkClient_BatchStatus_path_set(long jarg1, NetworkClient.BatchStatus jarg1_, String jarg2);
   public final static native String NetworkClient_BatchStatus_path_get(long jarg1, NetworkClient.BatchStatus jarg1_);
   public final static native void NetworkClient_BatchStatus_uuid_set(long jarg1, NetworkClient.BatchStatus jarg1_, String jarg2);
@@ -1118,6 +1125,8 @@ public class MetashapeJNI {
   public final static native long NetworkClient_BatchStatus_meta_get(long jarg1, NetworkClient.BatchStatus jarg1_);
   public final static native void NetworkClient_BatchStatus_status_set(long jarg1, NetworkClient.BatchStatus jarg1_, int jarg2);
   public final static native int NetworkClient_BatchStatus_status_get(long jarg1, NetworkClient.BatchStatus jarg1_);
+  public final static native void NetworkClient_BatchStatus_paused_set(long jarg1, NetworkClient.BatchStatus jarg1_, boolean jarg2);
+  public final static native boolean NetworkClient_BatchStatus_paused_get(long jarg1, NetworkClient.BatchStatus jarg1_);
   public final static native void NetworkClient_BatchStatus_priority_set(long jarg1, NetworkClient.BatchStatus jarg1_, int jarg2);
   public final static native int NetworkClient_BatchStatus_priority_get(long jarg1, NetworkClient.BatchStatus jarg1_);
   public final static native void NetworkClient_BatchStatus_timeStarted_set(long jarg1, NetworkClient.BatchStatus jarg1_, long jarg2);
@@ -1146,6 +1155,8 @@ public class MetashapeJNI {
   public final static native long NetworkClient_BatchItem_meta_get(long jarg1, NetworkClient.BatchItem jarg1_);
   public final static native void NetworkClient_BatchItem_status_set(long jarg1, NetworkClient.BatchItem jarg1_, int jarg2);
   public final static native int NetworkClient_BatchItem_status_get(long jarg1, NetworkClient.BatchItem jarg1_);
+  public final static native void NetworkClient_BatchItem_paused_set(long jarg1, NetworkClient.BatchItem jarg1_, boolean jarg2);
+  public final static native boolean NetworkClient_BatchItem_paused_get(long jarg1, NetworkClient.BatchItem jarg1_);
   public final static native void NetworkClient_BatchItem_priority_set(long jarg1, NetworkClient.BatchItem jarg1_, int jarg2);
   public final static native int NetworkClient_BatchItem_priority_get(long jarg1, NetworkClient.BatchItem jarg1_);
   public final static native void NetworkClient_BatchItem_nodeLimit_set(long jarg1, NetworkClient.BatchItem jarg1_, int jarg2);
@@ -1186,12 +1197,14 @@ public class MetashapeJNI {
   public final static native String NetworkClient_NodeItem_hostaddr_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native void NetworkClient_NodeItem_hostname_set(long jarg1, NetworkClient.NodeItem jarg1_, String jarg2);
   public final static native String NetworkClient_NodeItem_hostname_get(long jarg1, NetworkClient.NodeItem jarg1_);
-  public final static native void NetworkClient_NodeItem_node_id_set(long jarg1, NetworkClient.NodeItem jarg1_, long jarg2);
-  public final static native long NetworkClient_NodeItem_node_id_get(long jarg1, NetworkClient.NodeItem jarg1_);
+  public final static native void NetworkClient_NodeItem_nodeId_set(long jarg1, NetworkClient.NodeItem jarg1_, long jarg2);
+  public final static native long NetworkClient_NodeItem_nodeId_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native void NetworkClient_NodeItem_version_set(long jarg1, NetworkClient.NodeItem jarg1_, String jarg2);
   public final static native String NetworkClient_NodeItem_version_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native void NetworkClient_NodeItem_status_set(long jarg1, NetworkClient.NodeItem jarg1_, int jarg2);
   public final static native int NetworkClient_NodeItem_status_get(long jarg1, NetworkClient.NodeItem jarg1_);
+  public final static native void NetworkClient_NodeItem_paused_set(long jarg1, NetworkClient.NodeItem jarg1_, boolean jarg2);
+  public final static native boolean NetworkClient_NodeItem_paused_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native void NetworkClient_NodeItem_priority_set(long jarg1, NetworkClient.NodeItem jarg1_, int jarg2);
   public final static native int NetworkClient_NodeItem_priority_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native void NetworkClient_NodeItem_timeConnected_set(long jarg1, NetworkClient.NodeItem jarg1_, long jarg2);
@@ -1224,12 +1237,14 @@ public class MetashapeJNI {
   public final static native long NetworkClient_NodeItem_resourceUsage_get(long jarg1, NetworkClient.NodeItem jarg1_);
   public final static native long new_NetworkClient_NodeItem();
   public final static native void delete_NetworkClient_NodeItem(long jarg1);
+  public final static native void NetworkClient_BatchList_update(long jarg1, NetworkClient.BatchList jarg1_, long jarg2, NetworkClient.BatchList jarg2_);
   public final static native void NetworkClient_BatchList_items_set(long jarg1, NetworkClient.BatchList jarg1_, long[] jarg2);
   public final static native long[] NetworkClient_BatchList_items_get(long jarg1, NetworkClient.BatchList jarg1_);
   public final static native void NetworkClient_BatchList_nextRevision_set(long jarg1, NetworkClient.BatchList jarg1_, long jarg2);
   public final static native long NetworkClient_BatchList_nextRevision_get(long jarg1, NetworkClient.BatchList jarg1_);
   public final static native long new_NetworkClient_BatchList();
   public final static native void delete_NetworkClient_BatchList(long jarg1);
+  public final static native void NetworkClient_NodeList_update(long jarg1, NetworkClient.NodeList jarg1_, long jarg2, NetworkClient.NodeList jarg2_);
   public final static native void NetworkClient_NodeList_items_set(long jarg1, NetworkClient.NodeList jarg1_, long[] jarg2);
   public final static native long[] NetworkClient_NodeList_items_get(long jarg1, NetworkClient.NodeList jarg1_);
   public final static native void NetworkClient_NodeList_nextRevision_set(long jarg1, NetworkClient.NodeList jarg1_, long jarg2);

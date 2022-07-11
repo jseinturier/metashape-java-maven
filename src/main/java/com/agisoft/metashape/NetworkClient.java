@@ -409,6 +409,10 @@ public class NetworkClient {
       }
     }
   
+    public void update(NetworkClient.BatchStatus update) {
+      MetashapeJNI.NetworkClient_BatchStatus_update(swigCPtr, this, NetworkClient.BatchStatus.getCPtr(update), update);
+    }
+  
     public void setPath(String value) {
       MetashapeJNI.NetworkClient_BatchStatus_path_set(swigCPtr, this, value);
     }
@@ -440,6 +444,14 @@ public class NetworkClient {
   
     public NetworkClient.Status getStatus() {
       return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_BatchStatus_status_get(swigCPtr, this)];
+    }
+  
+    public void setPaused(boolean value) {
+      MetashapeJNI.NetworkClient_BatchStatus_paused_set(swigCPtr, this, value);
+    }
+  
+    public boolean getPaused() {
+      return MetashapeJNI.NetworkClient_BatchStatus_paused_get(swigCPtr, this);
     }
   
     public void setPriority(int value) {
@@ -591,6 +603,14 @@ public class NetworkClient {
   
     public NetworkClient.Status getStatus() {
       return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_BatchItem_status_get(swigCPtr, this)];
+    }
+  
+    public void setPaused(boolean value) {
+      MetashapeJNI.NetworkClient_BatchItem_paused_set(swigCPtr, this, value);
+    }
+  
+    public boolean getPaused() {
+      return MetashapeJNI.NetworkClient_BatchItem_paused_get(swigCPtr, this);
     }
   
     public void setPriority(int value) {
@@ -816,12 +836,12 @@ public class NetworkClient {
       return MetashapeJNI.NetworkClient_NodeItem_hostname_get(swigCPtr, this);
     }
   
-    public void setNode_id(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_node_id_set(swigCPtr, this, value);
+    public void setNodeId(long value) {
+      MetashapeJNI.NetworkClient_NodeItem_nodeId_set(swigCPtr, this, value);
     }
   
-    public long getNode_id() {
-      return MetashapeJNI.NetworkClient_NodeItem_node_id_get(swigCPtr, this);
+    public long getNodeId() {
+      return MetashapeJNI.NetworkClient_NodeItem_nodeId_get(swigCPtr, this);
     }
   
     public void setVersion(String value) {
@@ -838,6 +858,14 @@ public class NetworkClient {
   
     public NetworkClient.Status getStatus() {
       return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_NodeItem_status_get(swigCPtr, this)];
+    }
+  
+    public void setPaused(boolean value) {
+      MetashapeJNI.NetworkClient_NodeItem_paused_set(swigCPtr, this, value);
+    }
+  
+    public boolean getPaused() {
+      return MetashapeJNI.NetworkClient_NodeItem_paused_get(swigCPtr, this);
     }
   
     public void setPriority(int value) {
@@ -996,6 +1024,10 @@ public class NetworkClient {
       }
     }
   
+    public void update(NetworkClient.BatchList update) {
+      MetashapeJNI.NetworkClient_BatchList_update(swigCPtr, this, NetworkClient.BatchList.getCPtr(update), update);
+    }
+  
     public void setItems(NetworkClient.BatchItem[] value) {
       MetashapeJNI.NetworkClient_BatchList_items_set(swigCPtr, this, NetworkClient.BatchItem.cArrayUnwrap(value));
     }
@@ -1044,6 +1076,10 @@ public class NetworkClient {
       }
     }
   
+    public void update(NetworkClient.NodeList update) {
+      MetashapeJNI.NetworkClient_NodeList_update(swigCPtr, this, NetworkClient.NodeList.getCPtr(update), update);
+    }
+  
     public void setItems(NetworkClient.NodeItem[] value) {
       MetashapeJNI.NetworkClient_NodeList_items_set(swigCPtr, this, NetworkClient.NodeItem.cArrayUnwrap(value));
     }
@@ -1083,7 +1119,7 @@ public class NetworkClient {
   /**
    * Create new batch.<br>
    * @param path Project path relative to root folder.<br>
-   * @param tasks Project path relative to root folder.<br>
+   * @param tasks List of processing tasks to execute.<br>
    * @param meta Batch metadata.<br>
    * @return Batch id.
    */
@@ -1285,7 +1321,8 @@ public class NetworkClient {
     StatusCompleted,
     StatusPaused,
     StatusAborted,
-    StatusReady;
+    StatusReady,
+    StatusOffline;
   }
 
 }

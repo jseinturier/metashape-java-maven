@@ -8,6 +8,8 @@
 
 package com.agisoft.metashape.tasks;
 
+import com.agisoft.metashape.*;
+
 /**
  * Task class containing processing parameters.
  */

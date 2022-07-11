@@ -82,8 +82,12 @@ public class Sensor {
       }
     }
   
+    public Reference() {
+      this(MetashapeJNI.new_Sensor_Reference__SWIG_0(), true);
+    }
+  
     public Reference(Sensor.Reference reference) {
-      this(MetashapeJNI.new_Sensor_Reference(Sensor.Reference.getCPtr(reference), reference), true);
+      this(MetashapeJNI.new_Sensor_Reference__SWIG_1(Sensor.Reference.getCPtr(reference), reference), true);
     }
   
     /**
