@@ -24,6 +24,9 @@ public enum ModelFormat {
   ModelFormatSTL,
   ModelFormatDXF_3DF,
   ModelFormatTLS,
-  ModelFormatABC;
+  ModelFormatABC,
+  ModelFormatOSGB,
+  ModelFormatOSGT,
+  ModelFormatLandXML;
 }
 

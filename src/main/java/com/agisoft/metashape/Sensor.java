@@ -401,4 +401,11 @@ public class Sensor {
     return new MetaData(MetashapeJNI.Sensor_getMeta(swigCPtr, this), true);
   }
 
+  /**
+   *  Make this sensor master in the multi-camera system.
+   */
+  public void makeMaster() {
+    MetashapeJNI.Sensor_makeMaster(swigCPtr, this);
+  }
+
 }

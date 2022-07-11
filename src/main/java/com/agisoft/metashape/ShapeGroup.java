@@ -109,4 +109,18 @@ public class ShapeGroup {
     return MetashapeJNI.ShapeGroup_isSelected(swigCPtr, this);
   }
 
+  /**
+   *  Shape group meta data.
+   */
+  public void setMeta(MetaData meta) {
+    MetashapeJNI.ShapeGroup_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  }
+
+  /**
+   *  Shape group meta data.
+   */
+  public MetaData getMeta() {
+    return new MetaData(MetashapeJNI.ShapeGroup_getMeta(swigCPtr, this), true);
+  }
+
 }

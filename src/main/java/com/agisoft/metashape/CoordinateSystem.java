@@ -101,6 +101,41 @@ public class CoordinateSystem {
   }
 
   /**
+   * Construct geographic coordinate system using coordinate system datum.<br>
+   * @return Geographic coordinate system, may be null.
+   */
+  public CoordinateSystem makeGeographic() {
+    long ptr = MetashapeJNI.CoordinateSystem_makeGeographic(swigCPtr, this);
+    if (ptr == 0)
+        return null;
+    return new CoordinateSystem(ptr, true);
+  }
+
+  /**
+   * Construct geocentric coordinate system using coordinate system datum.<br>
+   * @return Geocentric coordinate system, may be null.
+   */
+  public CoordinateSystem makeGeocentric() {
+    long ptr = MetashapeJNI.CoordinateSystem_makeGeocentric(swigCPtr, this);
+    if (ptr == 0)
+        return null;
+    return new CoordinateSystem(ptr, true);
+  }
+
+  /**
+   * Coordinate transformation from source to target coordinate system datum.<br>
+   * @param source Source coordinate system.<br>
+   * @param target Target coordinate system.<br>
+   * @return Transformation matrix, may be null.
+   */
+  public static Matrix4x4d datumTransform(CoordinateSystem source, CoordinateSystem target) {
+    long ptr = MetashapeJNI.CoordinateSystem_datumTransform(CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target);
+    if (ptr == 0)
+        return null;
+    return new Matrix4x4d(ptr, true);
+  }
+
+  /**
    * Transform point coordinates between coordinate systems.<br>
    * @param point Point coordinates.<br>
    * @param source Source coordinate system.<br>
@@ -109,6 +144,17 @@ public class CoordinateSystem {
    */
   public static Vector3d transform(Vector3d point, CoordinateSystem source, CoordinateSystem target) {
     return new Vector3d(MetashapeJNI.CoordinateSystem_transform(Vector3d.getCPtr(point), point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target), true);
+  }
+
+  /**
+   * Local approximation of coordinate transformation from source to target coordinate system at the given point.<br>
+   * @param point Point coordinates.<br>
+   * @param source Source coordinate system.<br>
+   * @param target Target coordinate system.<br>
+   * @return Transformation matrix.
+   */
+  public static Matrix4x4d transformationMatrix(Vector3d point, CoordinateSystem source, CoordinateSystem target) {
+    return new Matrix4x4d(MetashapeJNI.CoordinateSystem_transformationMatrix(Vector3d.getCPtr(point), point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target), true);
   }
 
   /**

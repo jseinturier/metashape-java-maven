@@ -13,10 +13,9 @@ import com.agisoft.metashape.Metashape;
 public class MetashapeCheck {
 
 	/**
-	 * The main method
-	 * @param args the main method arguments
+	 * Run the check method.
 	 */
-	public static void main(String[] args) {
+	public static void check() {
 		
 		boolean available = MetashapeNatives.isAvailable();
 		

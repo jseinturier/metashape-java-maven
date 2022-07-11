@@ -142,6 +142,20 @@ public class ExportPoints extends Task {
   }
 
   /**
+   *  Enable compression (Cesium format only). Default: false
+   */
+  public void setCompression(boolean value) {
+    TasksJNI.ExportPoints_setCompression(swigCPtr, this, value);
+  }
+
+  /**
+   *  Enable compression (Cesium format only). Default: false
+   */
+  public boolean getCompression() {
+    return TasksJNI.ExportPoints_getCompression(swigCPtr, this);
+  }
+
+  /**
    *  Output coordinate system.
    */
   public void setCRS(CoordinateSystem value) {

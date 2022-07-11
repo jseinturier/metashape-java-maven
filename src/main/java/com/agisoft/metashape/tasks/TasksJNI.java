@@ -661,6 +661,8 @@ public class TasksJNI {
   public final static native boolean ExportPoints_getColorsRgb8Bit(long jarg1, ExportPoints jarg1_);
   public final static native void ExportPoints_setComment(long jarg1, ExportPoints jarg1_, String jarg2);
   public final static native String ExportPoints_getComment(long jarg1, ExportPoints jarg1_);
+  public final static native void ExportPoints_setCompression(long jarg1, ExportPoints jarg1_, boolean jarg2);
+  public final static native boolean ExportPoints_getCompression(long jarg1, ExportPoints jarg1_);
   public final static native void ExportPoints_setCRS(long jarg1, ExportPoints jarg1_, long jarg2, CoordinateSystem jarg2_);
   public final static native long ExportPoints_getCRS(long jarg1, ExportPoints jarg1_);
   public final static native void ExportPoints_setFormat(long jarg1, ExportPoints jarg1_, int jarg2);
@@ -833,6 +835,8 @@ public class TasksJNI {
   public final static native int ExportTiledModel_getFormat(long jarg1, ExportTiledModel jarg1_);
   public final static native void ExportTiledModel_setImageCompression(long jarg1, ExportTiledModel jarg1_, long jarg2, ImageCompression jarg2_);
   public final static native long ExportTiledModel_getImageCompression(long jarg1, ExportTiledModel jarg1_);
+  public final static native void ExportTiledModel_setModelCompression(long jarg1, ExportTiledModel jarg1_, boolean jarg2);
+  public final static native boolean ExportTiledModel_getModelCompression(long jarg1, ExportTiledModel jarg1_);
   public final static native void ExportTiledModel_setModelFormat(long jarg1, ExportTiledModel jarg1_, int jarg2);
   public final static native int ExportTiledModel_getModelFormat(long jarg1, ExportTiledModel jarg1_);
   public final static native void ExportTiledModel_setPath(long jarg1, ExportTiledModel jarg1_, String jarg2);
@@ -905,6 +909,8 @@ public class TasksJNI {
   public final static native long new_ImportModel();
   public final static native void ImportModel_setCRS(long jarg1, ImportModel jarg1_, long jarg2, CoordinateSystem jarg2_);
   public final static native long ImportModel_getCRS(long jarg1, ImportModel jarg1_);
+  public final static native void ImportModel_setDecodeUdim(long jarg1, ImportModel jarg1_, boolean jarg2);
+  public final static native boolean ImportModel_getDecodeUdim(long jarg1, ImportModel jarg1_);
   public final static native void ImportModel_setFormat(long jarg1, ImportModel jarg1_, int jarg2);
   public final static native int ImportModel_getFormat(long jarg1, ImportModel jarg1_);
   public final static native void ImportModel_setPath(long jarg1, ImportModel jarg1_, String jarg2);
@@ -1013,6 +1019,8 @@ public class TasksJNI {
   public final static native boolean MatchPhotos_getKeepKeypoints(long jarg1, MatchPhotos jarg1_);
   public final static native void MatchPhotos_setKeypointLimit(long jarg1, MatchPhotos jarg1_, int jarg2);
   public final static native int MatchPhotos_getKeypointLimit(long jarg1, MatchPhotos jarg1_);
+  public final static native void MatchPhotos_setKeypointLimitPerMpx(long jarg1, MatchPhotos jarg1_, int jarg2);
+  public final static native int MatchPhotos_getKeypointLimitPerMpx(long jarg1, MatchPhotos jarg1_);
   public final static native void MatchPhotos_setMaskTiepoints(long jarg1, MatchPhotos jarg1_, boolean jarg2);
   public final static native boolean MatchPhotos_getMaskTiepoints(long jarg1, MatchPhotos jarg1_);
   public final static native void MatchPhotos_setMaxWorkgroupSize(long jarg1, MatchPhotos jarg1_, int jarg2);

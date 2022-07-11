@@ -1,0 +1,22 @@
+1. Edit pom.xml
+  1.1. Update Metashape version at line 8
+
+2. Edit README.MD
+
+  2.1. Update Metashape version at line 22 (Maven sample)
+  2.2. Update Metashape version at line 27 for the 3 occurences
+  
+3. Update natives libs from original metashape java wrapper to src/main/resources/natives
+
+4. Ensure that all the native libraries are listed for all systems within src/main/java/org/metashape/MetashapeNatives.java
+
+5. Generate jar using
+  - mvn clean
+  - mvn package
+  - mvn install
+  
+6. Sign the installed jars and pom:
+  - Using https://emn178.github.io/online-tools/sha1_checksum.html for SHA1
+  - Using https://emn178.github.io/online-tools/md5_checksum.html for MD5
+  
+7. Upload to repository

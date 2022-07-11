@@ -44,64 +44,69 @@ public class Variant {
     this(MetashapeJNI.new_Variant__SWIG_1(Variant.getCPtr(variant), variant), true);
   }
 
-  public Variant(byte value) {
+  public Variant(boolean value) {
     this(MetashapeJNI.new_Variant__SWIG_2(value), true);
   }
 
-  public Variant(short value) {
+  public Variant(byte value) {
     this(MetashapeJNI.new_Variant__SWIG_3(value), true);
   }
 
-  public Variant(int value) {
+  public Variant(short value) {
     this(MetashapeJNI.new_Variant__SWIG_4(value), true);
   }
 
-  public Variant(long value) {
+  public Variant(int value) {
     this(MetashapeJNI.new_Variant__SWIG_5(value), true);
   }
 
-  public Variant(float value) {
+  public Variant(long value) {
     this(MetashapeJNI.new_Variant__SWIG_6(value), true);
   }
 
-  public Variant(double value) {
+  public Variant(float value) {
     this(MetashapeJNI.new_Variant__SWIG_7(value), true);
   }
 
-  public Variant(String value) {
+  public Variant(double value) {
     this(MetashapeJNI.new_Variant__SWIG_8(value), true);
   }
 
-  public Variant(byte[] value) {
+  public Variant(String value) {
     this(MetashapeJNI.new_Variant__SWIG_9(value), true);
   }
 
-  public Variant(short[] value) {
+  public Variant(byte[] value) {
     this(MetashapeJNI.new_Variant__SWIG_10(value), true);
   }
 
-  public Variant(int[] value) {
+  public Variant(short[] value) {
     this(MetashapeJNI.new_Variant__SWIG_11(value), true);
   }
 
-  public Variant(long[] value) {
+  public Variant(int[] value) {
     this(MetashapeJNI.new_Variant__SWIG_12(value), true);
   }
 
-  public Variant(float[] value) {
+  public Variant(long[] value) {
     this(MetashapeJNI.new_Variant__SWIG_13(value), true);
   }
 
-  public Variant(double[] value) {
+  public Variant(float[] value) {
     this(MetashapeJNI.new_Variant__SWIG_14(value), true);
   }
 
-  public Variant(String[] value) {
+  public Variant(double[] value) {
     this(MetashapeJNI.new_Variant__SWIG_15(value), true);
+  }
+
+  public Variant(String[] value) {
+    this(MetashapeJNI.new_Variant__SWIG_16(value), true);
   }
 
   public enum Type {
     Invalid,
+    Bool,
     Char,
     Short,
     Int,

@@ -60,6 +60,20 @@ public class ImportModel extends Task {
   }
 
   /**
+   *  Load UDIM texture layout. Default: true
+   */
+  public void setDecodeUdim(boolean value) {
+    TasksJNI.ImportModel_setDecodeUdim(swigCPtr, this, value);
+  }
+
+  /**
+   *  Load UDIM texture layout. Default: true
+   */
+  public boolean getDecodeUdim() {
+    return TasksJNI.ImportModel_getDecodeUdim(swigCPtr, this);
+  }
+
+  /**
    *  Model format. Default: ModelFormat.ModelFormatNone
    */
   public void setFormat(ModelFormat value) {

@@ -13,6 +13,8 @@ public enum TiledModelFormat {
   TiledModelFormatLOD,
   TiledModelFormatZIP,
   TiledModelFormatCesium,
-  TiledModelFormatSLPK;
+  TiledModelFormatSLPK,
+  TiledModelFormatOSGB,
+  TiledModelFormatOSGT;
 }
 

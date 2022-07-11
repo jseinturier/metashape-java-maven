@@ -156,6 +156,20 @@ public class MatchPhotos extends Task {
   }
 
   /**
+   *  Key point limit per megapixel. Default: 1000
+   */
+  public void setKeypointLimitPerMpx(int value) {
+    TasksJNI.MatchPhotos_setKeypointLimitPerMpx(swigCPtr, this, value);
+  }
+
+  /**
+   *  Key point limit per megapixel. Default: 1000
+   */
+  public int getKeypointLimitPerMpx() {
+    return TasksJNI.MatchPhotos_getKeypointLimitPerMpx(swigCPtr, this);
+  }
+
+  /**
    *  Apply mask filter to tie points. Default: true
    */
   public void setMaskTiepoints(boolean value) {

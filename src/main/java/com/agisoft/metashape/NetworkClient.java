@@ -313,6 +313,14 @@ public class NetworkClient {
       return MetashapeJNI.NetworkClient_TaskStatus_timeLeft_get(swigCPtr, this);
     }
   
+    public void setProcessingTime(double value) {
+      MetashapeJNI.NetworkClient_TaskStatus_processingTime_set(swigCPtr, this, value);
+    }
+  
+    public double getProcessingTime() {
+      return MetashapeJNI.NetworkClient_TaskStatus_processingTime_get(swigCPtr, this);
+    }
+  
     public void setItemsTotal(int value) {
       MetashapeJNI.NetworkClient_TaskStatus_itemsTotal_set(swigCPtr, this, value);
     }

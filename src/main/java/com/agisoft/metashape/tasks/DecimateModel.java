@@ -8,8 +8,6 @@
 
 package com.agisoft.metashape.tasks;
 
-import com.agisoft.metashape.*;
-
 /**
  * Task class containing processing parameters.
  */
@@ -25,7 +23,6 @@ public class DecimateModel extends Task {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
-  @SuppressWarnings("deprecation")
   protected void finalize() {
     delete();
   }
