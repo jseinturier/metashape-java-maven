@@ -10,18 +10,20 @@
 
 4. Ensure that all the native libraries are listed for all systems within src/main/java/org/metashape/MetashapeNatives.java
 
-5. Generate jar using
+5. Replace src/main/java/com folder by the one extracted from Metashape source jar
+
+6. Generate jar using
   - mvn clean
   - mvn package
   - mvn install
   
-6. Sign the installed jars and pom:
+7. Sign the installed jars and pom:
   - Using https://emn178.github.io/online-tools/sha1_checksum.html for SHA1
   - Using https://emn178.github.io/online-tools/md5_checksum.html for MD5
   
-7. Upload to repository
+8. Upload to repository
 
-8. Publish a new release:
+9. Publish a new release:
 
   Tag: vX.Y.Z
 

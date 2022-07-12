@@ -14,6 +14,8 @@ public enum DataSource {
   ModelData,
   TiledModelData,
   ElevationData,
-  OrthomosaicData;
+  OrthomosaicData,
+  DepthMapsData,
+  ImagesData;
 }
 
