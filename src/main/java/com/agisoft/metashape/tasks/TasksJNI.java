@@ -357,6 +357,8 @@ public class TasksJNI {
   public final static native long new_ClassifyGroundPoints();
   public final static native void ClassifyGroundPoints_setCellSize(long jarg1, ClassifyGroundPoints jarg1_, double jarg2);
   public final static native double ClassifyGroundPoints_getCellSize(long jarg1, ClassifyGroundPoints jarg1_);
+  public final static native void ClassifyGroundPoints_setErosionRadius(long jarg1, ClassifyGroundPoints jarg1_, double jarg2);
+  public final static native double ClassifyGroundPoints_getErosionRadius(long jarg1, ClassifyGroundPoints jarg1_);
   public final static native void ClassifyGroundPoints_setMaxAngle(long jarg1, ClassifyGroundPoints jarg1_, double jarg2);
   public final static native double ClassifyGroundPoints_getMaxAngle(long jarg1, ClassifyGroundPoints jarg1_);
   public final static native void ClassifyGroundPoints_setMaxDistance(long jarg1, ClassifyGroundPoints jarg1_, double jarg2);

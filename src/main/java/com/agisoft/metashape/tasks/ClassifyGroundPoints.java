@@ -60,6 +60,20 @@ public class ClassifyGroundPoints extends Task {
   }
 
   /**
+   *  Erosion radius (meters). Default: 0.0
+   */
+  public void setErosionRadius(double value) {
+    TasksJNI.ClassifyGroundPoints_setErosionRadius(swigCPtr, this, value);
+  }
+
+  /**
+   *  Erosion radius (meters). Default: 0.0
+   */
+  public double getErosionRadius() {
+    return TasksJNI.ClassifyGroundPoints_getErosionRadius(swigCPtr, this);
+  }
+
+  /**
    *  Maximum angle (degrees). Default: 15.0
    */
   public void setMaxAngle(double value) {
