@@ -61,3 +61,7 @@ The library can be used as a standalone by downloading the [metashape-X.Y.Z.jar]
 
 ## Usage
 Integrate the jar to your project and make a call to ``org.metashape.MetashapeNatives.isAvailable()`` to check if the Agisoft Metashape(c) native wrapping is enabled.
+
+If you are experiencing a *No license for product (-1)* error, it is recommended to define an `agisoft_LICENSE` environment variable that points to the folder where Agisoft Metashape(c) license file (default `rlm_roam.lic` or other `.lic` file) is stored. By default this folder is:
+- `C:\Program Files\Agisoft\Metashape Pro` on windows x64
+- `C:\Program Files (x86)\Agisoft\Metashape Pro` on windows x32

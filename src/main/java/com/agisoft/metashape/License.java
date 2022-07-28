@@ -12,33 +12,6 @@ package com.agisoft.metashape;
  * License tools.
  */
 public class License {
-  private transient long swigCPtr;
-  protected transient boolean swigCMemOwn;
-
-  public License(long cPtr, boolean cMemoryOwn) {
-    swigCMemOwn = cMemoryOwn;
-    swigCPtr = cPtr;
-  }
-
-  public static long getCPtr(License obj) {
-    return (obj == null) ? 0 : obj.swigCPtr;
-  }
-
-  @SuppressWarnings("deprecation")
-  protected void finalize() {
-    delete();
-  }
-
-  public synchronized void delete() {
-    if (swigCPtr != 0) {
-      if (swigCMemOwn) {
-        swigCMemOwn = false;
-        MetashapeJNI.delete_License(swigCPtr);
-      }
-      swigCPtr = 0;
-    }
-  }
-
   /**
    *  Get activation status.
    */
@@ -72,10 +45,6 @@ public class License {
    */
   public static String deactivateOffline() {
     return MetashapeJNI.License_deactivateOffline();
-  }
-
-  public License() {
-    this(MetashapeJNI.new_License(), true);
   }
 
 }

@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
- * Sparse point cloud.
+ * Tie point cloud.
  */
-public class PointCloud {
+public class PointCloud implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public PointCloud(long cPtr, boolean cMemoryOwn) {
+  protected PointCloud(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(PointCloud obj) {
+  protected static long getCPtr(PointCloud obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,6 +43,111 @@ public class PointCloud {
     }
   }
 
+  @Override
+  public void close() {
+    delete();
+  }
+
+  static public class Track {
+
+    private Color color;
+
+    public Track() {
+      color = new Color();
+    }
+
+    public void setColor(Color value) {
+      this.color = value;
+    }
+
+    public Color getColor() {
+      return color;
+    }
+
+  }
+
+  static public class Point {
+
+    private Vector coord;
+    private long track_id;
+    private boolean selected;
+    private boolean valid;
+
+    public Point() {
+      coord = new Vector(0, 0, 0);
+      track_id = 0;
+      selected = false;
+      valid = true;
+    }
+
+    public void setCoord(Vector coord) {
+      this.coord = coord;
+    }
+
+    public Vector getCoord() { return coord; }
+
+    public void setValid(boolean on) {
+      this.valid = on;
+    }
+
+    public boolean isValid() {
+      return valid;
+    }
+
+    public void setSelected(boolean on) {
+      this.selected = on;
+    }
+
+    public boolean isSelected() {
+      return selected;
+    }
+
+    public void setTrackId(long track_id) {
+      this.track_id = track_id;
+    }
+
+    public long getTrackId() {
+      return track_id;
+    }
+
+  }
+
+  static public class Projection {
+
+    private Vector coord;
+    private float size;
+    private long track_id;
+
+    public Projection() {
+      coord = new Vector(0, 0);
+      size = 1;
+      track_id = 0;
+    }
+
+    public void setCoord(Vector coord) {
+      this.coord = coord;
+    }
+
+    public Vector getCoord() { return coord; }
+
+    public void setSize(float size) {
+      this.size = size;
+    }
+
+    public float getSize() {
+      return size;
+    }
+
+    public void setTrackId(long track_id) {
+      this.track_id = track_id;
+    }
+
+    public long getTrackId() {
+      return track_id;
+    }
+
+  }
+
   public PointCloud() {
     this(MetashapeJNI.new_PointCloud__SWIG_0(), true);
   }
@@ -47,185 +156,16 @@ public class PointCloud {
     this(MetashapeJNI.new_PointCloud__SWIG_1(PointCloud.getCPtr(point_cloud), point_cloud), true);
   }
 
-  static public class Track {
+  static public class Tracks implements AutoCloseable {
     private transient long swigCPtr;
     protected transient boolean swigCMemOwn;
   
-    public Track(long cPtr, boolean cMemoryOwn) {
+    protected Tracks(long cPtr, boolean cMemoryOwn) {
       swigCMemOwn = cMemoryOwn;
       swigCPtr = cPtr;
     }
   
-    public static long getCPtr(Track obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_PointCloud_Track(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public void setColor(Vector3uc value) {
-      MetashapeJNI.PointCloud_Track_color_set(swigCPtr, this, Vector3uc.getCPtr(value), value);
-    }
-  
-    public Vector3uc getColor() {
-      long cPtr = MetashapeJNI.PointCloud_Track_color_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new Vector3uc(cPtr, false);
-    }
-  
-    public Track() {
-      this(MetashapeJNI.new_PointCloud_Track(), true);
-    }
-  
-  }
-
-  static public class Point {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Point(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Point obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_PointCloud_Point(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public void setPoint(Vector3d value) {
-      MetashapeJNI.PointCloud_Point_point_set(swigCPtr, this, Vector3d.getCPtr(value), value);
-    }
-  
-    public Vector3d getPoint() {
-      long cPtr = MetashapeJNI.PointCloud_Point_point_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new Vector3d(cPtr, false);
-    }
-  
-    public void setW(float value) {
-      MetashapeJNI.PointCloud_Point_w_set(swigCPtr, this, value);
-    }
-  
-    public float getW() {
-      return MetashapeJNI.PointCloud_Point_w_get(swigCPtr, this);
-    }
-  
-    public void setFlags(long value) {
-      MetashapeJNI.PointCloud_Point_flags_set(swigCPtr, this, value);
-    }
-  
-    public long getFlags() {
-      return MetashapeJNI.PointCloud_Point_flags_get(swigCPtr, this);
-    }
-  
-    public void setId(long value) {
-      MetashapeJNI.PointCloud_Point_id_set(swigCPtr, this, value);
-    }
-  
-    public long getId() {
-      return MetashapeJNI.PointCloud_Point_id_get(swigCPtr, this);
-    }
-  
-    public Point() {
-      this(MetashapeJNI.new_PointCloud_Point(), true);
-    }
-  
-  }
-
-  static public class Projection {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Projection(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Projection obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_PointCloud_Projection(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public void setPoint(Vector2d value) {
-      MetashapeJNI.PointCloud_Projection_point_set(swigCPtr, this, Vector2d.getCPtr(value), value);
-    }
-  
-    public Vector2d getPoint() {
-      long cPtr = MetashapeJNI.PointCloud_Projection_point_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new Vector2d(cPtr, false);
-    }
-  
-    public void setSize(float value) {
-      MetashapeJNI.PointCloud_Projection_size_set(swigCPtr, this, value);
-    }
-  
-    public float getSize() {
-      return MetashapeJNI.PointCloud_Projection_size_get(swigCPtr, this);
-    }
-  
-    public void setId(long value) {
-      MetashapeJNI.PointCloud_Projection_id_set(swigCPtr, this, value);
-    }
-  
-    public long getId() {
-      return MetashapeJNI.PointCloud_Projection_id_get(swigCPtr, this);
-    }
-  
-    public Projection() {
-      this(MetashapeJNI.new_PointCloud_Projection(), true);
-    }
-  
-  }
-
-  static public class Tracks {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Tracks(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Tracks obj) {
+    protected static long getCPtr(Tracks obj) {
       return (obj == null) ? 0 : obj.swigCPtr;
     }
   
@@ -242,6 +182,11 @@ public class PointCloud {
         }
         swigCPtr = 0;
       }
+    }
+  
+    @Override
+    public void close() {
+      delete();
     }
   
     public Tracks() {
@@ -265,25 +210,23 @@ public class PointCloud {
     }
   
     public void set(long index, PointCloud.Track track) {
-      MetashapeJNI.PointCloud_Tracks_set(swigCPtr, this, index, PointCloud.Track.getCPtr(track), track);
+      MetashapeJNI.PointCloud_Tracks_set(swigCPtr, this, index, track);
     }
   
-    public PointCloud.Track get(long index) {
-      return new PointCloud.Track(MetashapeJNI.PointCloud_Tracks_get(swigCPtr, this, index), true);
-    }
+    public PointCloud.Track get(long index) { return MetashapeJNI.PointCloud_Tracks_get(swigCPtr, this, index); }
   
   }
 
-  static public class Points {
+  static public class Points implements AutoCloseable {
     private transient long swigCPtr;
     protected transient boolean swigCMemOwn;
   
-    public Points(long cPtr, boolean cMemoryOwn) {
+    protected Points(long cPtr, boolean cMemoryOwn) {
       swigCMemOwn = cMemoryOwn;
       swigCPtr = cPtr;
     }
   
-    public static long getCPtr(Points obj) {
+    protected static long getCPtr(Points obj) {
       return (obj == null) ? 0 : obj.swigCPtr;
     }
   
@@ -300,6 +243,11 @@ public class PointCloud {
         }
         swigCPtr = 0;
       }
+    }
+  
+    @Override
+    public void close() {
+      delete();
     }
   
     public Points() {
@@ -323,25 +271,23 @@ public class PointCloud {
     }
   
     public void set(long index, PointCloud.Point point) {
-      MetashapeJNI.PointCloud_Points_set(swigCPtr, this, index, PointCloud.Point.getCPtr(point), point);
+      MetashapeJNI.PointCloud_Points_set(swigCPtr, this, index, point);
     }
   
-    public PointCloud.Point get(long index) {
-      return new PointCloud.Point(MetashapeJNI.PointCloud_Points_get(swigCPtr, this, index), true);
-    }
+    public PointCloud.Point get(long index) { return MetashapeJNI.PointCloud_Points_get(swigCPtr, this, index); }
   
   }
 
-  static public class Projections {
+  static public class Projections implements AutoCloseable {
     private transient long swigCPtr;
     protected transient boolean swigCMemOwn;
   
-    public Projections(long cPtr, boolean cMemoryOwn) {
+    protected Projections(long cPtr, boolean cMemoryOwn) {
       swigCMemOwn = cMemoryOwn;
       swigCPtr = cPtr;
     }
   
-    public static long getCPtr(Projections obj) {
+    protected static long getCPtr(Projections obj) {
       return (obj == null) ? 0 : obj.swigCPtr;
     }
   
@@ -358,6 +304,11 @@ public class PointCloud {
         }
         swigCPtr = 0;
       }
+    }
+  
+    @Override
+    public void close() {
+      delete();
     }
   
     public Projections() {
@@ -381,23 +332,21 @@ public class PointCloud {
     }
   
     public void set(long index, PointCloud.Projection proj) {
-      MetashapeJNI.PointCloud_Projections_set(swigCPtr, this, index, PointCloud.Projection.getCPtr(proj), proj);
+      MetashapeJNI.PointCloud_Projections_set(swigCPtr, this, index, proj);
     }
   
-    public PointCloud.Projection get(long index) {
-      return new PointCloud.Projection(MetashapeJNI.PointCloud_Projections_get(swigCPtr, this, index), true);
-    }
+    public PointCloud.Projection get(long index) { return MetashapeJNI.PointCloud_Projections_get(swigCPtr, this, index); }
   
   }
 
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.PointCloud_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -410,66 +359,64 @@ public class PointCloud {
   /**
    *  Point cloud meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.PointCloud_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.PointCloud_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Point cloud meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.PointCloud_getMeta(swigCPtr, this), true);
+  public Map<String,String> getMeta() { return MetashapeJNI.PointCloud_getMeta(swigCPtr, this); }
+
+  /**
+   *  List of tracks, may be null.
+   */
+  public void setTracks(Optional<PointCloud.Tracks> tracks) {
+    MetashapeJNI.PointCloud_setTracks(swigCPtr, this, tracks.isPresent() ? PointCloud.Tracks.getCPtr(tracks.get()) : 0);
   }
 
   /**
    *  List of tracks, may be null.
    */
-  public void setTracks(PointCloud.Tracks tracks) {
-    MetashapeJNI.PointCloud_setTracks(swigCPtr, this, tracks == null ? 0 : PointCloud.Tracks.getCPtr(tracks));
-  }
-
-  /**
-   *  List of tracks, may be null.
-   */
-  public PointCloud.Tracks getTracks() {
+  public Optional<PointCloud.Tracks> getTracks() {
     long ptr = MetashapeJNI.PointCloud_getTracks(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new PointCloud.Tracks(ptr, true);
+        return Optional.empty();
+    return Optional.of(new PointCloud.Tracks(ptr, true));
   }
 
   /**
    *  List of points, may be null.
    */
-  public void setPoints(PointCloud.Points points) {
-    MetashapeJNI.PointCloud_setPoints(swigCPtr, this, points == null ? 0 : PointCloud.Points.getCPtr(points));
+  public void setPoints(Optional<PointCloud.Points> points) {
+    MetashapeJNI.PointCloud_setPoints(swigCPtr, this, points.isPresent() ? PointCloud.Points.getCPtr(points.get()) : 0);
   }
 
   /**
    *  List of points, may be null.
    */
-  public PointCloud.Points getPoints() {
+  public Optional<PointCloud.Points> getPoints() {
     long ptr = MetashapeJNI.PointCloud_getPoints(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new PointCloud.Points(ptr, true);
+        return Optional.empty();
+    return Optional.of(new PointCloud.Points(ptr, true));
   }
 
   /**
    *  Point projections for the camera, may be null.
    */
-  public void setProjections(int camera, PointCloud.Projections projections) {
-    MetashapeJNI.PointCloud_setProjections(swigCPtr, this, camera, projections == null ? 0 : PointCloud.Projections.getCPtr(projections));
+  public void setProjections(int camera, Optional<PointCloud.Projections> projections) {
+    MetashapeJNI.PointCloud_setProjections(swigCPtr, this, camera, projections.isPresent() ? PointCloud.Projections.getCPtr(projections.get()) : 0);
   }
 
   /**
    *  Point projections for the camera, may be null.
    */
-  public PointCloud.Projections getProjections(int camera) {
+  public Optional<PointCloud.Projections> getProjections(int camera) {
     long ptr = MetashapeJNI.PointCloud_getProjections(swigCPtr, this, camera);
     if (ptr == 0)
-        return null;
-    return new PointCloud.Projections(ptr, true);
+        return Optional.empty();
+    return Optional.of(new PointCloud.Projections(ptr, true));
   }
 
   public int[] getCameraKeys() { return MetashapeJNI.PointCloud_getCameraKeys(swigCPtr, this); }
@@ -483,17 +430,14 @@ public class PointCloud {
   }
 
   /**
-   * Returns ray intersection with the sparse point cloud.<br>
+   * Returns ray intersection with the tie point cloud.<br>
    * @param origin Ray origin.<br>
    * @param target Point on the ray.<br>
    * @return Coordinates of the intersection point, may be null.
    */
-  public Vector3d pickPoint(Vector3d origin, Vector3d target) {
-    long ptr = MetashapeJNI.PointCloud_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);
-    if (ptr == 0)
-        return null;
-    return new Vector3d(ptr, true);
-  }
+  public Optional<Vector> pickPoint(Vector origin, Vector target) {
+	Vector values = MetashapeJNI.PointCloud_pickPoint(swigCPtr, this, origin, target);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    * Generate point cloud preview image.<br>
@@ -503,8 +447,8 @@ public class PointCloud {
    * @param point_size Point size.<br>
    * @return Preview image.
    */
-  public Image renderPreview(long width, long height, Matrix4x4d transform, int point_size, Progress progress) {
-    return new Image(MetashapeJNI.PointCloud_renderPreview(swigCPtr, this, width, height, Matrix4x4d.getCPtr(transform), transform, point_size, progress), true);
+  public Image renderPreview(long width, long height, Matrix transform, int point_size, Progress progress) {
+    return new Image(MetashapeJNI.PointCloud_renderPreview(swigCPtr, this, width, height, transform, point_size, progress), true);
   }
 
 }

@@ -8,20 +8,27 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 /**
  * NetworkClient class provides access to the network processing server and allows<br>
  * to create and manage tasks.
  */
-public class NetworkClient {
+public class NetworkClient implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public NetworkClient(long cPtr, boolean cMemoryOwn) {
+  protected NetworkClient(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(NetworkClient obj) {
+  protected static long getCPtr(NetworkClient obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -40,1064 +47,914 @@ public class NetworkClient {
     }
   }
 
-  public NetworkClient() {
-    this(MetashapeJNI.new_NetworkClient(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   static public class LogRecord {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public LogRecord(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
+
+    private int type;
+    private String text;
+
+    public void setType(int type) {
+      this.type = type;
     }
-  
-    public static long getCPtr(LogRecord obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_LogRecord(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public static long[] cArrayUnwrap(NetworkClient.LogRecord[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = NetworkClient.LogRecord.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static NetworkClient.LogRecord[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      NetworkClient.LogRecord[] arrayWrapper = new NetworkClient.LogRecord[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new NetworkClient.LogRecord(cArray[i], cMemoryOwn);
-      return arrayWrapper;
-    }
-  
-    public void setType(int value) {
-      MetashapeJNI.NetworkClient_LogRecord_type_set(swigCPtr, this, value);
-    }
-  
+
     public int getType() {
-      return MetashapeJNI.NetworkClient_LogRecord_type_get(swigCPtr, this);
+      return this.type;
     }
-  
-    public void setText(String value) {
-      MetashapeJNI.NetworkClient_LogRecord_text_set(swigCPtr, this, value);
+
+    public void setText(String text) {
+      this.text = text;
     }
-  
+
     public String getText() {
-      return MetashapeJNI.NetworkClient_LogRecord_text_get(swigCPtr, this);
+      return text;
     }
-  
-    public LogRecord() {
-      this(MetashapeJNI.new_NetworkClient_LogRecord(), true);
-    }
-  
+
   }
 
   static public class ResourceRecord {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public ResourceRecord(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(ResourceRecord obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_ResourceRecord(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public static long[] cArrayUnwrap(NetworkClient.ResourceRecord[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = NetworkClient.ResourceRecord.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static NetworkClient.ResourceRecord[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      NetworkClient.ResourceRecord[] arrayWrapper = new NetworkClient.ResourceRecord[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new NetworkClient.ResourceRecord(cArray[i], cMemoryOwn);
-      return arrayWrapper;
-    }
-  
+
+    private double time;
+    private double ram_usage;
+    private double cpu_usage;
+
     public void setTime(double value) {
-      MetashapeJNI.NetworkClient_ResourceRecord_time_set(swigCPtr, this, value);
+      this.time = value;
     }
-  
+
     public double getTime() {
-      return MetashapeJNI.NetworkClient_ResourceRecord_time_get(swigCPtr, this);
+      return time;
     }
-  
+
     public void setRamUsage(double value) {
-      MetashapeJNI.NetworkClient_ResourceRecord_ramUsage_set(swigCPtr, this, value);
+      this.ram_usage = value;
     }
-  
+
     public double getRamUsage() {
-      return MetashapeJNI.NetworkClient_ResourceRecord_ramUsage_get(swigCPtr, this);
+      return ram_usage;
     }
-  
+
     public void setCpuUsage(double value) {
-      MetashapeJNI.NetworkClient_ResourceRecord_cpuUsage_set(swigCPtr, this, value);
+      this.cpu_usage = value;
     }
-  
+
     public double getCpuUsage() {
-      return MetashapeJNI.NetworkClient_ResourceRecord_cpuUsage_get(swigCPtr, this);
+      return cpu_usage;
     }
-  
-    public ResourceRecord() {
-      this(MetashapeJNI.new_NetworkClient_ResourceRecord(), true);
-    }
-  
+
   }
 
   static public class ServerInfo {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public ServerInfo(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(ServerInfo obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_ServerInfo(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private long time_started;
+    private String version;
+
     public void setTimeStarted(long value) {
-      MetashapeJNI.NetworkClient_ServerInfo_timeStarted_set(swigCPtr, this, value);
+      this.time_started = value;
     }
-  
+
     public long getTimeStarted() {
-      return MetashapeJNI.NetworkClient_ServerInfo_timeStarted_get(swigCPtr, this);
+      return time_started;
     }
-  
+
     public void setVersion(String value) {
-      MetashapeJNI.NetworkClient_ServerInfo_version_set(swigCPtr, this, value);
+      this.version = value;
     }
-  
+
     public String getVersion() {
-      return MetashapeJNI.NetworkClient_ServerInfo_version_get(swigCPtr, this);
+      return version;
     }
-  
-    public ServerInfo() {
-      this(MetashapeJNI.new_NetworkClient_ServerInfo(), true);
+
+  }
+
+  static public class ServerStatus {
+
+    private double ram_size;
+    private String master_hostaddr;
+    private int slave_count;
+    private int scheduling_mode;
+    private long next_revision;
+    private NetworkClient.LogRecord[] log;
+    private NetworkClient.ResourceRecord[] resource_usage;
+
+    public void setRamSize(double value) {
+      this.ram_size = value;
     }
-  
+
+    public double getRamSize() {
+      return ram_size;
+    }
+
+    public void setMasterHostaddr(String value) {
+      this.master_hostaddr = value;
+    }
+
+    public String getMasterHostaddr() {
+      return master_hostaddr;
+    }
+
+    public void setSlaveCount(int value) {
+      this.slave_count = value;
+    }
+
+    public int getSlaveCount() {
+      return slave_count;
+    }
+
+    public void setSchedulingMode(int value) {
+      this.scheduling_mode = value;
+    }
+
+    public int getSchedulingMode() {
+      return scheduling_mode;
+    }
+
+    public void setNextRevision(long value) {
+      this.next_revision = value;
+    }
+
+    public long getNextRevision() {
+      return next_revision;
+    }
+
+    public void setLog(NetworkClient.LogRecord[] value) {
+      this.log = value;
+    }
+
+    public NetworkClient.LogRecord[] getLog() { return log; }
+
+    public void setResourceUsage(NetworkClient.ResourceRecord[] value) {
+      this.resource_usage = value;
+    }
+
+    public NetworkClient.ResourceRecord[] getResourceUsage() { return resource_usage; }
+
   }
 
   static public class TaskStatus {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public TaskStatus(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
+
+    private NetworkTask task;
+    private NetworkClient.Status status;
+    private double progress;
+    private double time_elapsed;
+    private double time_left;
+    private double processing_time;
+    private int items_total;
+    private int items_done;
+    private int workitems_waiting;
+    private int workitems_working;
+    private int workitems_completed;
+    private int workitems_failed;
+    private NetworkClient.LogRecord[] log;
+
+    public void update(NetworkClient.TaskStatus update) {
+      this.task = update.task;
+      this.status = update.status;
+      this.progress = update.progress;
+      this.time_elapsed = update.time_elapsed;
+      this.time_left = update.time_left;
+      this.processing_time = update.processing_time;
+      this.items_total = update.items_total;
+      this.items_done = update.items_done;
+      this.workitems_waiting = update.workitems_waiting;
+      this.workitems_working = update.workitems_working;
+      this.workitems_completed = update.workitems_completed;
+      this.workitems_failed = update.workitems_failed;
+
+      NetworkClient.LogRecord[] new_log = new NetworkClient.LogRecord[this.log.length + update.log.length];
+      for (int k = 0; k < this.log.length; k++)
+        new_log[k] = this.log[k];
+      for (int k = 0; k < update.log.length; k++)
+        new_log[this.log.length + k] = update.log[k];
+      this.log = new_log;
     }
-  
-    public static long getCPtr(TaskStatus obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_TaskStatus(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public static long[] cArrayUnwrap(NetworkClient.TaskStatus[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = NetworkClient.TaskStatus.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static NetworkClient.TaskStatus[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      NetworkClient.TaskStatus[] arrayWrapper = new NetworkClient.TaskStatus[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new NetworkClient.TaskStatus(cArray[i], cMemoryOwn);
-      return arrayWrapper;
-    }
-  
+
     public void setTask(NetworkTask value) {
-      MetashapeJNI.NetworkClient_TaskStatus_task_set(swigCPtr, this, NetworkTask.getCPtr(value), value);
+      this.task = value;
     }
-  
-    public NetworkTask getTask() {
-      long cPtr = MetashapeJNI.NetworkClient_TaskStatus_task_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new NetworkTask(cPtr, false);
-    }
-  
+
+    public NetworkTask getTask() { return this.task; }
+
     public void setStatus(NetworkClient.Status value) {
-      MetashapeJNI.NetworkClient_TaskStatus_status_set(swigCPtr, this, value.ordinal());
+      this.status = value;
     }
-  
+
     public NetworkClient.Status getStatus() {
-      return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_TaskStatus_status_get(swigCPtr, this)];
+      return this.status;
     }
-  
+
     public void setProgress(double value) {
-      MetashapeJNI.NetworkClient_TaskStatus_progress_set(swigCPtr, this, value);
+      this.progress = value;
     }
-  
+
     public double getProgress() {
-      return MetashapeJNI.NetworkClient_TaskStatus_progress_get(swigCPtr, this);
+      return progress;
     }
-  
+
     public void setTimeElapsed(double value) {
-      MetashapeJNI.NetworkClient_TaskStatus_timeElapsed_set(swigCPtr, this, value);
+      this.time_elapsed = value;
     }
-  
+
     public double getTimeElapsed() {
-      return MetashapeJNI.NetworkClient_TaskStatus_timeElapsed_get(swigCPtr, this);
+      return time_elapsed;
     }
-  
+
     public void setTimeLeft(double value) {
-      MetashapeJNI.NetworkClient_TaskStatus_timeLeft_set(swigCPtr, this, value);
+      this.time_left = value;
     }
-  
+
     public double getTimeLeft() {
-      return MetashapeJNI.NetworkClient_TaskStatus_timeLeft_get(swigCPtr, this);
+      return time_left;
     }
-  
+
     public void setProcessingTime(double value) {
-      MetashapeJNI.NetworkClient_TaskStatus_processingTime_set(swigCPtr, this, value);
+      this.processing_time = value;
     }
-  
+
     public double getProcessingTime() {
-      return MetashapeJNI.NetworkClient_TaskStatus_processingTime_get(swigCPtr, this);
+      return processing_time;
     }
-  
+
     public void setItemsTotal(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_itemsTotal_set(swigCPtr, this, value);
+      this.items_total = value;
     }
-  
+
     public int getItemsTotal() {
-      return MetashapeJNI.NetworkClient_TaskStatus_itemsTotal_get(swigCPtr, this);
+      return items_total;
     }
-  
+
     public void setItemsDone(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_itemsDone_set(swigCPtr, this, value);
+      this.items_done = value;
     }
-  
+
     public int getItemsDone() {
-      return MetashapeJNI.NetworkClient_TaskStatus_itemsDone_get(swigCPtr, this);
+      return items_done;
     }
-  
+
     public void setWorkitemsWaiting(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_workitemsWaiting_set(swigCPtr, this, value);
+      this.workitems_waiting = value;
     }
-  
+
     public int getWorkitemsWaiting() {
-      return MetashapeJNI.NetworkClient_TaskStatus_workitemsWaiting_get(swigCPtr, this);
+      return workitems_waiting;
     }
-  
+
     public void setWorkitemsWorking(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_workitemsWorking_set(swigCPtr, this, value);
+      this.workitems_working = value;
     }
-  
+
     public int getWorkitemsWorking() {
-      return MetashapeJNI.NetworkClient_TaskStatus_workitemsWorking_get(swigCPtr, this);
+      return workitems_working;
     }
-  
+
     public void setWorkitemsCompleted(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_workitemsCompleted_set(swigCPtr, this, value);
+      this.workitems_completed = value;
     }
-  
+
     public int getWorkitemsCompleted() {
-      return MetashapeJNI.NetworkClient_TaskStatus_workitemsCompleted_get(swigCPtr, this);
+      return workitems_completed;
     }
-  
+
     public void setWorkitemsFailed(int value) {
-      MetashapeJNI.NetworkClient_TaskStatus_workitemsFailed_set(swigCPtr, this, value);
+      this.workitems_failed = value;
     }
-  
+
     public int getWorkitemsFailed() {
-      return MetashapeJNI.NetworkClient_TaskStatus_workitemsFailed_get(swigCPtr, this);
+      return workitems_failed;
     }
-  
+
     public void setLog(NetworkClient.LogRecord[] value) {
-      MetashapeJNI.NetworkClient_TaskStatus_log_set(swigCPtr, this, NetworkClient.LogRecord.cArrayUnwrap(value));
+      this.log = value;
     }
-  
-    public NetworkClient.LogRecord[] getLog() { return NetworkClient.LogRecord.cArrayWrap(MetashapeJNI.NetworkClient_TaskStatus_log_get(swigCPtr, this), false); }
-  
-    public TaskStatus() {
-      this(MetashapeJNI.new_NetworkClient_TaskStatus(), true);
-    }
-  
+
+    public NetworkClient.LogRecord[] getLog() { return log; }
+
   }
 
   static public class BatchStatus {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public BatchStatus(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(BatchStatus obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_BatchStatus(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private String path;
+    private String uuid;
+    private Map<String, String> meta;
+    private NetworkClient.Status status;
+    private boolean paused;
+    private int priority;
+    private int node_limit;
+    private long time_started;
+    private long time_finished;
+    private NetworkClient.TaskStatus[] tasks;
+    private long error_time;
+    private long error_node_id;
+    private String error_message;
+    private long next_revision;
+
     public void update(NetworkClient.BatchStatus update) {
-      MetashapeJNI.NetworkClient_BatchStatus_update(swigCPtr, this, NetworkClient.BatchStatus.getCPtr(update), update);
+      this.path = update.path;
+      this.uuid = update.uuid;
+      this.meta = update.meta;
+      this.status = update.status;
+      this.paused = update.paused;
+      this.priority = update.priority;
+      this.time_started = update.time_started;
+      this.time_finished = update.time_finished;
+      this.error_time = update.error_time;
+      this.error_node_id = update.error_node_id;
+      this.error_message = update.error_message;
+      this.next_revision = update.next_revision;
+
+      NetworkClient.TaskStatus[] new_tasks = new NetworkClient.TaskStatus[update.tasks.length];
+      for (int k = 0; k < update.tasks.length; k++) {
+        if (k < this.tasks.length) {
+          new_tasks[k] = this.tasks[k];
+          new_tasks[k].update(update.tasks[k]);
+        } else {
+          new_tasks[k] = update.tasks[k];
+        }
+      }
+      this.tasks = new_tasks;
     }
-  
+
     public void setPath(String value) {
-      MetashapeJNI.NetworkClient_BatchStatus_path_set(swigCPtr, this, value);
+      this.path = value;
     }
-  
+
     public String getPath() {
-      return MetashapeJNI.NetworkClient_BatchStatus_path_get(swigCPtr, this);
+      return path;
     }
-  
+
     public void setUuid(String value) {
-      MetashapeJNI.NetworkClient_BatchStatus_uuid_set(swigCPtr, this, value);
+      this.uuid = value;
     }
-  
+
     public String getUuid() {
-      return MetashapeJNI.NetworkClient_BatchStatus_uuid_get(swigCPtr, this);
+      return uuid;
     }
-  
-    public void setMeta(MetaData value) {
-      MetashapeJNI.NetworkClient_BatchStatus_meta_set(swigCPtr, this, MetaData.getCPtr(value), value);
+
+    public void setMeta(Map<String, String> value) {
+      this.meta = value;
     }
-  
-    public MetaData getMeta() {
-      long cPtr = MetashapeJNI.NetworkClient_BatchStatus_meta_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new MetaData(cPtr, false);
-    }
-  
+
+    public Map<String, String> getMeta() { return meta; }
+
     public void setStatus(NetworkClient.Status value) {
-      MetashapeJNI.NetworkClient_BatchStatus_status_set(swigCPtr, this, value.ordinal());
+      this.status = value;
     }
-  
+
     public NetworkClient.Status getStatus() {
-      return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_BatchStatus_status_get(swigCPtr, this)];
+      return status;
     }
-  
+
     public void setPaused(boolean value) {
-      MetashapeJNI.NetworkClient_BatchStatus_paused_set(swigCPtr, this, value);
+      this.paused = value;
     }
-  
+
     public boolean getPaused() {
-      return MetashapeJNI.NetworkClient_BatchStatus_paused_get(swigCPtr, this);
+      return paused;
     }
-  
+
     public void setPriority(int value) {
-      MetashapeJNI.NetworkClient_BatchStatus_priority_set(swigCPtr, this, value);
+      this.priority = value;
     }
-  
+
     public int getPriority() {
-      return MetashapeJNI.NetworkClient_BatchStatus_priority_get(swigCPtr, this);
+      return priority;
     }
-  
+
+    public void setNodeLimit(int value) {
+      this.node_limit = value;
+    }
+
+    public int getNodeLimit() {
+      return node_limit;
+    }
+
     public void setTimeStarted(long value) {
-      MetashapeJNI.NetworkClient_BatchStatus_timeStarted_set(swigCPtr, this, value);
+      this.time_started = value;
     }
-  
+
     public long getTimeStarted() {
-      return MetashapeJNI.NetworkClient_BatchStatus_timeStarted_get(swigCPtr, this);
+      return time_started;
     }
-  
+
     public void setTimeFinished(long value) {
-      MetashapeJNI.NetworkClient_BatchStatus_timeFinished_set(swigCPtr, this, value);
+      this.time_finished = value;
     }
-  
+
     public long getTimeFinished() {
-      return MetashapeJNI.NetworkClient_BatchStatus_timeFinished_get(swigCPtr, this);
+      return time_finished;
     }
-  
+
     public void setTasks(NetworkClient.TaskStatus[] value) {
-      MetashapeJNI.NetworkClient_BatchStatus_tasks_set(swigCPtr, this, NetworkClient.TaskStatus.cArrayUnwrap(value));
+      this.tasks = value;
     }
-  
-    public NetworkClient.TaskStatus[] getTasks() { return NetworkClient.TaskStatus.cArrayWrap(MetashapeJNI.NetworkClient_BatchStatus_tasks_get(swigCPtr, this), false); }
-  
+
+    public NetworkClient.TaskStatus[] getTasks() { return tasks; }
+
     public void setErrorTime(long value) {
-      MetashapeJNI.NetworkClient_BatchStatus_errorTime_set(swigCPtr, this, value);
+      this.error_time = value;
     }
-  
+
     public long getErrorTime() {
-      return MetashapeJNI.NetworkClient_BatchStatus_errorTime_get(swigCPtr, this);
+      return error_time;
     }
-  
+
     public void setErrorNodeId(long value) {
-      MetashapeJNI.NetworkClient_BatchStatus_errorNodeId_set(swigCPtr, this, value);
+      this.error_node_id = value;
     }
-  
+
     public long getErrorNodeId() {
-      return MetashapeJNI.NetworkClient_BatchStatus_errorNodeId_get(swigCPtr, this);
+      return error_node_id;
     }
-  
+
     public void setErrorMessage(String value) {
-      MetashapeJNI.NetworkClient_BatchStatus_errorMessage_set(swigCPtr, this, value);
+      this.error_message = value;
     }
-  
+
     public String getErrorMessage() {
-      return MetashapeJNI.NetworkClient_BatchStatus_errorMessage_get(swigCPtr, this);
+      return error_message;
     }
-  
+
     public void setNextRevision(long value) {
-      MetashapeJNI.NetworkClient_BatchStatus_nextRevision_set(swigCPtr, this, value);
+      this.next_revision = value;
     }
-  
+
     public long getNextRevision() {
-      return MetashapeJNI.NetworkClient_BatchStatus_nextRevision_get(swigCPtr, this);
+      return next_revision;
     }
-  
-    public BatchStatus() {
-      this(MetashapeJNI.new_NetworkClient_BatchStatus(), true);
-    }
-  
+
   }
 
   static public class BatchItem {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public BatchItem(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(BatchItem obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_BatchItem(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public static long[] cArrayUnwrap(NetworkClient.BatchItem[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = NetworkClient.BatchItem.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static NetworkClient.BatchItem[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      NetworkClient.BatchItem[] arrayWrapper = new NetworkClient.BatchItem[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new NetworkClient.BatchItem(cArray[i], cMemoryOwn);
-      return arrayWrapper;
-    }
-  
+
+    private long batch_id;
+    private String path;
+    private String uuid;
+    private Map<String, String> meta;
+    private NetworkClient.Status status;
+    private boolean paused;
+    private int priority;
+    private int node_limit;
+    private String node_version;
+    private long time_started;
+    private long time_finished;
+    private NetworkClient.TaskStatus task;
+
     public void setBatchId(long value) {
-      MetashapeJNI.NetworkClient_BatchItem_batchId_set(swigCPtr, this, value);
+      this.batch_id = value;
     }
-  
+
     public long getBatchId() {
-      return MetashapeJNI.NetworkClient_BatchItem_batchId_get(swigCPtr, this);
+      return batch_id;
     }
-  
+
     public void setPath(String value) {
-      MetashapeJNI.NetworkClient_BatchItem_path_set(swigCPtr, this, value);
+      this.path = value;
     }
-  
+
     public String getPath() {
-      return MetashapeJNI.NetworkClient_BatchItem_path_get(swigCPtr, this);
+      return path;
     }
-  
+
     public void setUuid(String value) {
-      MetashapeJNI.NetworkClient_BatchItem_uuid_set(swigCPtr, this, value);
+      this.uuid = value;
     }
-  
+
     public String getUuid() {
-      return MetashapeJNI.NetworkClient_BatchItem_uuid_get(swigCPtr, this);
+      return uuid;
     }
-  
-    public void setMeta(MetaData value) {
-      MetashapeJNI.NetworkClient_BatchItem_meta_set(swigCPtr, this, MetaData.getCPtr(value), value);
+
+    public void setMeta(Map<String, String> value) {
+      this.meta = value;
     }
-  
-    public MetaData getMeta() {
-      long cPtr = MetashapeJNI.NetworkClient_BatchItem_meta_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new MetaData(cPtr, false);
-    }
-  
+
+    public Map<String, String> getMeta() { return meta; }
+
     public void setStatus(NetworkClient.Status value) {
-      MetashapeJNI.NetworkClient_BatchItem_status_set(swigCPtr, this, value.ordinal());
+      this.status = value;
     }
-  
+
     public NetworkClient.Status getStatus() {
-      return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_BatchItem_status_get(swigCPtr, this)];
+      return status;
     }
-  
+
     public void setPaused(boolean value) {
-      MetashapeJNI.NetworkClient_BatchItem_paused_set(swigCPtr, this, value);
+      this.paused = value;
     }
-  
+
     public boolean getPaused() {
-      return MetashapeJNI.NetworkClient_BatchItem_paused_get(swigCPtr, this);
+      return paused;
     }
-  
+
     public void setPriority(int value) {
-      MetashapeJNI.NetworkClient_BatchItem_priority_set(swigCPtr, this, value);
+      this.priority = value;
     }
-  
+
     public int getPriority() {
-      return MetashapeJNI.NetworkClient_BatchItem_priority_get(swigCPtr, this);
+      return priority;
     }
-  
+
     public void setNodeLimit(int value) {
-      MetashapeJNI.NetworkClient_BatchItem_nodeLimit_set(swigCPtr, this, value);
+      this.node_limit = value;
     }
-  
+
     public int getNodeLimit() {
-      return MetashapeJNI.NetworkClient_BatchItem_nodeLimit_get(swigCPtr, this);
+      return node_limit;
     }
-  
+
     public void setNodeVersion(String value) {
-      MetashapeJNI.NetworkClient_BatchItem_nodeVersion_set(swigCPtr, this, value);
+      this.node_version = value;
     }
-  
+
     public String getNodeVersion() {
-      return MetashapeJNI.NetworkClient_BatchItem_nodeVersion_get(swigCPtr, this);
+      return node_version;
     }
-  
+
     public void setTimeStarted(long value) {
-      MetashapeJNI.NetworkClient_BatchItem_timeStarted_set(swigCPtr, this, value);
+      this.time_started = value;
     }
-  
+
     public long getTimeStarted() {
-      return MetashapeJNI.NetworkClient_BatchItem_timeStarted_get(swigCPtr, this);
+      return time_started;
     }
-  
+
     public void setTimeFinished(long value) {
-      MetashapeJNI.NetworkClient_BatchItem_timeFinished_set(swigCPtr, this, value);
+      this.time_finished = value;
     }
-  
+
     public long getTimeFinished() {
-      return MetashapeJNI.NetworkClient_BatchItem_timeFinished_get(swigCPtr, this);
+      return time_finished;
     }
-  
+
     public void setTask(NetworkClient.TaskStatus value) {
-      MetashapeJNI.NetworkClient_BatchItem_task_set(swigCPtr, this, NetworkClient.TaskStatus.getCPtr(value), value);
+      this.task = value;
     }
-  
+
     public NetworkClient.TaskStatus getTask() {
-      long cPtr = MetashapeJNI.NetworkClient_BatchItem_task_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new NetworkClient.TaskStatus(cPtr, false);
+      return task;
     }
-  
-    public BatchItem() {
-      this(MetashapeJNI.new_NetworkClient_BatchItem(), true);
-    }
-  
+
   }
 
   static public class NodeStatus {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public NodeStatus(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(NodeStatus obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_NodeStatus(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private String uuid;
+    private String hostname;
+    private String hostaddr;
+    private double ram_size;
+    private long gpu_mask;
+    private boolean cpu_enable;
+    private long next_revision;
+    private NetworkClient.LogRecord[] log;
+    private NetworkClient.ResourceRecord[] resource_usage;
+
     public void setUuid(String value) {
-      MetashapeJNI.NetworkClient_NodeStatus_uuid_set(swigCPtr, this, value);
+      this.uuid = value;
     }
-  
+
     public String getUuid() {
-      return MetashapeJNI.NetworkClient_NodeStatus_uuid_get(swigCPtr, this);
+      return uuid;
     }
-  
+
     public void setHostname(String value) {
-      MetashapeJNI.NetworkClient_NodeStatus_hostname_set(swigCPtr, this, value);
+      this.hostname = value;
     }
-  
+
     public String getHostname() {
-      return MetashapeJNI.NetworkClient_NodeStatus_hostname_get(swigCPtr, this);
+      return hostname;
     }
-  
+
     public void setHostaddr(String value) {
-      MetashapeJNI.NetworkClient_NodeStatus_hostaddr_set(swigCPtr, this, value);
+      this.hostaddr = value;
     }
-  
+
     public String getHostaddr() {
-      return MetashapeJNI.NetworkClient_NodeStatus_hostaddr_get(swigCPtr, this);
+      return hostaddr;
     }
-  
+
     public void setRamSize(double value) {
-      MetashapeJNI.NetworkClient_NodeStatus_ramSize_set(swigCPtr, this, value);
+      this.ram_size = value;
     }
-  
+
     public double getRamSize() {
-      return MetashapeJNI.NetworkClient_NodeStatus_ramSize_get(swigCPtr, this);
+      return ram_size;
     }
-  
+
     public void setGpuMask(long value) {
-      MetashapeJNI.NetworkClient_NodeStatus_gpuMask_set(swigCPtr, this, value);
+      this.gpu_mask = value;
     }
-  
+
     public long getGpuMask() {
-      return MetashapeJNI.NetworkClient_NodeStatus_gpuMask_get(swigCPtr, this);
+      return gpu_mask;
     }
-  
+
     public void setCpuEnable(boolean value) {
-      MetashapeJNI.NetworkClient_NodeStatus_cpuEnable_set(swigCPtr, this, value);
+      this.cpu_enable = value;
     }
-  
+
     public boolean getCpuEnable() {
-      return MetashapeJNI.NetworkClient_NodeStatus_cpuEnable_get(swigCPtr, this);
+      return cpu_enable;
     }
-  
+
     public void setNextRevision(long value) {
-      MetashapeJNI.NetworkClient_NodeStatus_nextRevision_set(swigCPtr, this, value);
+      this.next_revision = value;
     }
-  
+
     public long getNextRevision() {
-      return MetashapeJNI.NetworkClient_NodeStatus_nextRevision_get(swigCPtr, this);
+      return next_revision;
     }
-  
+
     public void setLog(NetworkClient.LogRecord[] value) {
-      MetashapeJNI.NetworkClient_NodeStatus_log_set(swigCPtr, this, NetworkClient.LogRecord.cArrayUnwrap(value));
+      this.log = value;
     }
-  
-    public NetworkClient.LogRecord[] getLog() { return NetworkClient.LogRecord.cArrayWrap(MetashapeJNI.NetworkClient_NodeStatus_log_get(swigCPtr, this), false); }
-  
+
+    public NetworkClient.LogRecord[] getLog() { return log; }
+
     public void setResourceUsage(NetworkClient.ResourceRecord[] value) {
-      MetashapeJNI.NetworkClient_NodeStatus_resourceUsage_set(swigCPtr, this, NetworkClient.ResourceRecord.cArrayUnwrap(value));
+      this.resource_usage = value;
     }
-  
-    public NetworkClient.ResourceRecord[] getResourceUsage() { return NetworkClient.ResourceRecord.cArrayWrap(MetashapeJNI.NetworkClient_NodeStatus_resourceUsage_get(swigCPtr, this), false); }
-  
-    public NodeStatus() {
-      this(MetashapeJNI.new_NetworkClient_NodeStatus(), true);
-    }
-  
+
+    public NetworkClient.ResourceRecord[] getResourceUsage() { return resource_usage; }
+
   }
 
   static public class NodeItem {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public NodeItem(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(NodeItem obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_NodeItem(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    public static long[] cArrayUnwrap(NetworkClient.NodeItem[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = NetworkClient.NodeItem.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static NetworkClient.NodeItem[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      NetworkClient.NodeItem[] arrayWrapper = new NetworkClient.NodeItem[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new NetworkClient.NodeItem(cArray[i], cMemoryOwn);
-      return arrayWrapper;
-    }
-  
+
+    private String uuid;
+    private String hostaddr;
+    private String hostname;
+    private long node_id;
+    private String version;
+    private NetworkClient.Status status;
+    private boolean paused;
+    private int priority;
+    private long time_connected;
+    private long time_disconnected;
+    private int capability;
+    private double ram_size;
+    private long gpu_mask;
+    private boolean cpu_enable;
+    private long batch_id;
+    private double progress;
+    private NetworkTask task;
+    private long error_count;
+    private long error_time;
+    private long error_batch_id;
+    private String error_message;
+    private NetworkClient.ResourceRecord resource_usage;
+
     public void setUuid(String value) {
-      MetashapeJNI.NetworkClient_NodeItem_uuid_set(swigCPtr, this, value);
+      this.uuid = value;
     }
-  
+
     public String getUuid() {
-      return MetashapeJNI.NetworkClient_NodeItem_uuid_get(swigCPtr, this);
+      return uuid;
     }
-  
+
     public void setHostaddr(String value) {
-      MetashapeJNI.NetworkClient_NodeItem_hostaddr_set(swigCPtr, this, value);
+      this.hostaddr = value;
     }
-  
+
     public String getHostaddr() {
-      return MetashapeJNI.NetworkClient_NodeItem_hostaddr_get(swigCPtr, this);
+      return hostaddr;
     }
-  
+
     public void setHostname(String value) {
-      MetashapeJNI.NetworkClient_NodeItem_hostname_set(swigCPtr, this, value);
+      this.hostname = value;
     }
-  
+
     public String getHostname() {
-      return MetashapeJNI.NetworkClient_NodeItem_hostname_get(swigCPtr, this);
+      return hostname;
     }
-  
+
     public void setNodeId(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_nodeId_set(swigCPtr, this, value);
+      this.node_id = value;
     }
-  
+
     public long getNodeId() {
-      return MetashapeJNI.NetworkClient_NodeItem_nodeId_get(swigCPtr, this);
+      return node_id;
     }
-  
+
     public void setVersion(String value) {
-      MetashapeJNI.NetworkClient_NodeItem_version_set(swigCPtr, this, value);
+      this.version = value;
     }
-  
+
     public String getVersion() {
-      return MetashapeJNI.NetworkClient_NodeItem_version_get(swigCPtr, this);
+      return version;
     }
-  
+
     public void setStatus(NetworkClient.Status value) {
-      MetashapeJNI.NetworkClient_NodeItem_status_set(swigCPtr, this, value.ordinal());
+      this.status = value;
     }
-  
+
     public NetworkClient.Status getStatus() {
-      return NetworkClient.Status.class.getEnumConstants()[MetashapeJNI.NetworkClient_NodeItem_status_get(swigCPtr, this)];
+      return status;
     }
-  
+
     public void setPaused(boolean value) {
-      MetashapeJNI.NetworkClient_NodeItem_paused_set(swigCPtr, this, value);
+      this.paused = value;
     }
-  
+
     public boolean getPaused() {
-      return MetashapeJNI.NetworkClient_NodeItem_paused_get(swigCPtr, this);
+      return paused;
     }
-  
+
     public void setPriority(int value) {
-      MetashapeJNI.NetworkClient_NodeItem_priority_set(swigCPtr, this, value);
+      this.priority = value;
     }
-  
+
     public int getPriority() {
-      return MetashapeJNI.NetworkClient_NodeItem_priority_get(swigCPtr, this);
+      return priority;
     }
-  
+
     public void setTimeConnected(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_timeConnected_set(swigCPtr, this, value);
+      this.time_connected = value;
     }
-  
+
     public long getTimeConnected() {
-      return MetashapeJNI.NetworkClient_NodeItem_timeConnected_get(swigCPtr, this);
+      return time_connected;
     }
-  
+
     public void setTimeDisconnected(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_timeDisconnected_set(swigCPtr, this, value);
+      this.time_disconnected = value;
     }
-  
+
     public long getTimeDisconnected() {
-      return MetashapeJNI.NetworkClient_NodeItem_timeDisconnected_get(swigCPtr, this);
+      return time_disconnected;
     }
-  
+
     public void setCapability(int value) {
-      MetashapeJNI.NetworkClient_NodeItem_capability_set(swigCPtr, this, value);
+      this.capability = value;
     }
-  
+
     public int getCapability() {
-      return MetashapeJNI.NetworkClient_NodeItem_capability_get(swigCPtr, this);
+      return capability;
     }
-  
+
     public void setRamSize(double value) {
-      MetashapeJNI.NetworkClient_NodeItem_ramSize_set(swigCPtr, this, value);
+      this.ram_size = value;
     }
-  
+
     public double getRamSize() {
-      return MetashapeJNI.NetworkClient_NodeItem_ramSize_get(swigCPtr, this);
+      return ram_size;
     }
-  
+
     public void setGpuMask(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_gpuMask_set(swigCPtr, this, value);
+      this.gpu_mask = value;
     }
-  
+
     public long getGpuMask() {
-      return MetashapeJNI.NetworkClient_NodeItem_gpuMask_get(swigCPtr, this);
+      return gpu_mask;
     }
-  
+
     public void setCpuEnable(boolean value) {
-      MetashapeJNI.NetworkClient_NodeItem_cpuEnable_set(swigCPtr, this, value);
+      this.cpu_enable = value;
     }
-  
+
     public boolean getCpuEnable() {
-      return MetashapeJNI.NetworkClient_NodeItem_cpuEnable_get(swigCPtr, this);
+      return cpu_enable;
     }
-  
+
     public void setBatchId(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_batchId_set(swigCPtr, this, value);
+      this.batch_id = value;
     }
-  
+
     public long getBatchId() {
-      return MetashapeJNI.NetworkClient_NodeItem_batchId_get(swigCPtr, this);
+      return batch_id;
     }
-  
+
     public void setProgress(double value) {
-      MetashapeJNI.NetworkClient_NodeItem_progress_set(swigCPtr, this, value);
+      this.progress = value;
     }
-  
+
     public double getProgress() {
-      return MetashapeJNI.NetworkClient_NodeItem_progress_get(swigCPtr, this);
+      return progress;
     }
-  
+
     public void setTask(NetworkTask value) {
-      MetashapeJNI.NetworkClient_NodeItem_task_set(swigCPtr, this, NetworkTask.getCPtr(value), value);
+      this.task = value;
     }
-  
-    public NetworkTask getTask() {
-      long cPtr = MetashapeJNI.NetworkClient_NodeItem_task_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new NetworkTask(cPtr, false);
-    }
-  
+
+    public NetworkTask getTask() { return task; }
+
     public void setErrorCount(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_errorCount_set(swigCPtr, this, value);
+      this.error_count = value;
     }
-  
+
     public long getErrorCount() {
-      return MetashapeJNI.NetworkClient_NodeItem_errorCount_get(swigCPtr, this);
+      return error_count;
     }
-  
+
     public void setErrorTime(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_errorTime_set(swigCPtr, this, value);
+      this.error_time = value;
     }
-  
+
     public long getErrorTime() {
-      return MetashapeJNI.NetworkClient_NodeItem_errorTime_get(swigCPtr, this);
+      return error_time;
     }
-  
+
     public void setErrorBatchId(long value) {
-      MetashapeJNI.NetworkClient_NodeItem_errorBatchId_set(swigCPtr, this, value);
+      this.error_batch_id = value;
     }
-  
+
     public long getErrorBatchId() {
-      return MetashapeJNI.NetworkClient_NodeItem_errorBatchId_get(swigCPtr, this);
+      return error_batch_id;
     }
-  
+
     public void setErrorMessage(String value) {
-      MetashapeJNI.NetworkClient_NodeItem_errorMessage_set(swigCPtr, this, value);
+      this.error_message = value;
     }
-  
+
     public String getErrorMessage() {
-      return MetashapeJNI.NetworkClient_NodeItem_errorMessage_get(swigCPtr, this);
+      return error_message;
     }
-  
+
     public void setResourceUsage(NetworkClient.ResourceRecord value) {
-      MetashapeJNI.NetworkClient_NodeItem_resourceUsage_set(swigCPtr, this, NetworkClient.ResourceRecord.getCPtr(value), value);
+      this.resource_usage = value;
     }
-  
-    public NetworkClient.ResourceRecord getResourceUsage() {
-      long cPtr = MetashapeJNI.NetworkClient_NodeItem_resourceUsage_get(swigCPtr, this);
-      return (cPtr == 0) ? null : new NetworkClient.ResourceRecord(cPtr, false);
-    }
-  
-    public NodeItem() {
-      this(MetashapeJNI.new_NetworkClient_NodeItem(), true);
-    }
-  
+
+    public NetworkClient.ResourceRecord getResourceUsage() { return resource_usage; }
+
   }
 
   static public class BatchList {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public BatchList(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(BatchList obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_BatchList(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private NetworkClient.BatchItem[] items;
+    private long next_revision;
+
     public void update(NetworkClient.BatchList update) {
-      MetashapeJNI.NetworkClient_BatchList_update(swigCPtr, this, NetworkClient.BatchList.getCPtr(update), update);
+      Map<Long, Integer> map = new HashMap<Long, Integer>();
+      for (int k = 0; k < items.length; k++)
+        map.put(items[k].getBatchId(), k);
+
+      List<NetworkClient.BatchItem> items = Arrays.asList(this.items);
+      for (int k = 0; k < update.items.length; k++) {
+        long batch_id = update.getItems()[k].getBatchId();
+        if (map.containsKey(batch_id))
+            items.set(map.get(batch_id), update.items[k]); else
+            items.add(update.items[k]);
+      }
+      this.items = items.toArray(new NetworkClient.BatchItem[0]);
+      next_revision = update.next_revision;
     }
-  
+
     public void setItems(NetworkClient.BatchItem[] value) {
-      MetashapeJNI.NetworkClient_BatchList_items_set(swigCPtr, this, NetworkClient.BatchItem.cArrayUnwrap(value));
+      this.items = value;
     }
-  
-    public NetworkClient.BatchItem[] getItems() { return NetworkClient.BatchItem.cArrayWrap(MetashapeJNI.NetworkClient_BatchList_items_get(swigCPtr, this), false); }
-  
+
+    public NetworkClient.BatchItem[] getItems() { return items; }
+
     public void setNextRevision(long value) {
-      MetashapeJNI.NetworkClient_BatchList_nextRevision_set(swigCPtr, this, value);
+      this.next_revision = value;
     }
-  
+
     public long getNextRevision() {
-      return MetashapeJNI.NetworkClient_BatchList_nextRevision_get(swigCPtr, this);
+      return next_revision;
     }
-  
-    public BatchList() {
-      this(MetashapeJNI.new_NetworkClient_BatchList(), true);
-    }
-  
+
   }
 
   static public class NodeList {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public NodeList(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(NodeList obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_NetworkClient_NodeList(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private NetworkClient.NodeItem[] items;
+    private long next_revision;
+
     public void update(NetworkClient.NodeList update) {
-      MetashapeJNI.NetworkClient_NodeList_update(swigCPtr, this, NetworkClient.NodeList.getCPtr(update), update);
+      Map<Long, Integer> map = new HashMap<Long, Integer>();
+      for (int k = 0; k < items.length; k++)
+        map.put(items[k].getNodeId(), k);
+
+      List<NetworkClient.NodeItem> items = Arrays.asList(this.items);
+      for (int k = 0; k < update.items.length; k++) {
+        long node_id = update.getItems()[k].getNodeId();
+        if (map.containsKey(node_id))
+            items.set(map.get(node_id), update.items[k]); else
+            items.add(update.items[k]);
+      }
+      this.items = items.toArray(new NetworkClient.NodeItem[0]);
+      next_revision = update.next_revision;
     }
-  
+
     public void setItems(NetworkClient.NodeItem[] value) {
-      MetashapeJNI.NetworkClient_NodeList_items_set(swigCPtr, this, NetworkClient.NodeItem.cArrayUnwrap(value));
+      this.items = value;
     }
-  
-    public NetworkClient.NodeItem[] getItems() { return NetworkClient.NodeItem.cArrayWrap(MetashapeJNI.NetworkClient_NodeList_items_get(swigCPtr, this), false); }
-  
+
+    public NetworkClient.NodeItem[] getItems() { return items; }
+
     public void setNextRevision(long value) {
-      MetashapeJNI.NetworkClient_NodeList_nextRevision_set(swigCPtr, this, value);
+      this.next_revision = value;
     }
-  
+
     public long getNextRevision() {
-      return MetashapeJNI.NetworkClient_NodeList_nextRevision_get(swigCPtr, this);
+      return next_revision;
     }
-  
-    public NodeList() {
-      this(MetashapeJNI.new_NetworkClient_NodeList(), true);
-    }
-  
+
+  }
+
+  public NetworkClient() {
+    this(MetashapeJNI.new_NetworkClient(), true);
   }
 
   /**
@@ -1123,8 +980,8 @@ public class NetworkClient {
    * @param meta Batch metadata.<br>
    * @return Batch id.
    */
-  public int createBatch(String path, NetworkTask[] tasks, MetaData meta) {
-    return MetashapeJNI.NetworkClient_createBatch(swigCPtr, this, path, NetworkTask.cArrayUnwrap(tasks), MetaData.getCPtr(meta), meta);
+  public int createBatch(String path, NetworkTask[] tasks, Map<String,String> meta) {
+    return MetashapeJNI.NetworkClient_createBatch(swigCPtr, this, path, tasks, meta);
   }
 
   /**
@@ -1137,27 +994,20 @@ public class NetworkClient {
   }
 
   /**
-   * Pause batch.<br>
-   * @param batch_id Batch id.
-   */
-  public void pauseBatch(int batch_id) {
-    MetashapeJNI.NetworkClient_pauseBatch(swigCPtr, this, batch_id);
-  }
-
-  /**
-   * Resume batch.<br>
-   * @param batch_id Batch id.
-   */
-  public void resumeBatch(int batch_id) {
-    MetashapeJNI.NetworkClient_resumeBatch(swigCPtr, this, batch_id);
-  }
-
-  /**
    * Abort batch.<br>
    * @param batch_id Batch id.
    */
   public void abortBatch(int batch_id) {
     MetashapeJNI.NetworkClient_abortBatch(swigCPtr, this, batch_id);
+  }
+
+  /**
+   * Set batch paused state.<br>
+   * @param batch_id Batch id.<br>
+   * @param paused Paused state.
+   */
+  public void setBatchPaused(int batch_id, boolean paused) {
+    MetashapeJNI.NetworkClient_setBatchPaused(swigCPtr, this, batch_id, paused);
   }
 
   /**
@@ -1179,22 +1029,6 @@ public class NetworkClient {
   }
 
   /**
-   * Pause node.<br>
-   * @param node_id Node id.
-   */
-  public void pauseNode(int node_id) {
-    MetashapeJNI.NetworkClient_pauseNode(swigCPtr, this, node_id);
-  }
-
-  /**
-   * Resume node.<br>
-   * @param node_id Node id.
-   */
-  public void resumeNode(int node_id) {
-    MetashapeJNI.NetworkClient_resumeNode(swigCPtr, this, node_id);
-  }
-
-  /**
    * Abort node.<br>
    * @param node_id Node id.
    */
@@ -1208,6 +1042,15 @@ public class NetworkClient {
    */
   public void quitNode(int node_id) {
     MetashapeJNI.NetworkClient_quitNode(swigCPtr, this, node_id);
+  }
+
+  /**
+   * Set node paused state.<br>
+   * @param node_id Node id.<br>
+   * @param paused Paused state.
+   */
+  public void setNodePaused(int node_id, boolean paused) {
+    MetashapeJNI.NetworkClient_setNodePaused(swigCPtr, this, node_id, paused);
   }
 
   /**
@@ -1249,9 +1092,14 @@ public class NetworkClient {
   /**
    * Get server information.
    */
-  public NetworkClient.ServerInfo getServerInfo() {
-    return new NetworkClient.ServerInfo(MetashapeJNI.NetworkClient_getServerInfo(swigCPtr, this), true);
-  }
+  public NetworkClient.ServerInfo getServerInfo() { return MetashapeJNI.NetworkClient_getServerInfo(swigCPtr, this); }
+
+  /**
+   * Get server status.<br>
+   * @param revision First revision to get.<br>
+   * @return Server status.
+   */
+  public NetworkClient.ServerStatus getServerStatus(long revision) { return MetashapeJNI.NetworkClient_getServerStatus(swigCPtr, this, revision); }
 
   /**
    * Set master server.
@@ -1266,9 +1114,7 @@ public class NetworkClient {
    * @param revision First revision to get.<br>
    * @return Batch status.
    */
-  public NetworkClient.BatchStatus getBatchStatus(int batch_id, long revision) {
-    return new NetworkClient.BatchStatus(MetashapeJNI.NetworkClient_getBatchStatus(swigCPtr, this, batch_id, revision), true);
-  }
+  public NetworkClient.BatchStatus getBatchStatus(int batch_id, long revision) { return MetashapeJNI.NetworkClient_getBatchStatus(swigCPtr, this, batch_id, revision); }
 
   /**
    * Get node status.<br>
@@ -1276,27 +1122,21 @@ public class NetworkClient {
    * @param revision First revision to get.<br>
    * @return Node status.
    */
-  public NetworkClient.NodeStatus getNodeStatus(int node_id, long revision) {
-    return new NetworkClient.NodeStatus(MetashapeJNI.NetworkClient_getNodeStatus(swigCPtr, this, node_id, revision), true);
-  }
+  public NetworkClient.NodeStatus getNodeStatus(int node_id, long revision) { return MetashapeJNI.NetworkClient_getNodeStatus(swigCPtr, this, node_id, revision); }
 
   /**
    * Get list of batches.<br>
    * @param revision First revision to get.<br>
    * @return List of batches.
    */
-  public NetworkClient.BatchList getBatchList(long revision) {
-    return new NetworkClient.BatchList(MetashapeJNI.NetworkClient_getBatchList(swigCPtr, this, revision), true);
-  }
+  public NetworkClient.BatchList getBatchList(long revision) { return MetashapeJNI.NetworkClient_getBatchList(swigCPtr, this, revision); }
 
   /**
    * Get list of nodes.<br>
    * @param revision: First revision to get.<br>
    * @return List of nodes.
    */
-  public NetworkClient.NodeList getNodeList(long revision) {
-    return new NetworkClient.NodeList(MetashapeJNI.NetworkClient_getNodeList(swigCPtr, this, revision), true);
-  }
+  public NetworkClient.NodeList getNodeList(long revision) { return MetashapeJNI.NetworkClient_getNodeList(swigCPtr, this, revision); }
 
   /**
    * Dump current state of batches.<br>
@@ -1319,7 +1159,6 @@ public class NetworkClient {
     StatusPending,
     StatusInProgress,
     StatusCompleted,
-    StatusPaused,
     StatusAborted,
     StatusReady,
     StatusOffline;

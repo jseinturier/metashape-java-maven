@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Camera track.
  */
-public class CameraTrack {
+public class CameraTrack implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public CameraTrack(long cPtr, boolean cMemoryOwn) {
+  protected CameraTrack(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(CameraTrack obj) {
+  protected static long getCPtr(CameraTrack obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class CameraTrack {
     }
   }
 
-  public static long[] cArrayUnwrap(CameraTrack[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = CameraTrack.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static CameraTrack[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    CameraTrack[] arrayWrapper = new CameraTrack[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new CameraTrack(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public CameraTrack() {
-    this(MetashapeJNI.new_CameraTrack__SWIG_0(), true);
-  }
-
-  public CameraTrack(CameraTrack group) {
-    this(MetashapeJNI.new_CameraTrack__SWIG_1(CameraTrack.getCPtr(group), group), true);
+  public CameraTrack(CameraTrack camera_track) {
+    this(MetashapeJNI.new_CameraTrack(CameraTrack.getCPtr(camera_track), camera_track), true);
   }
 
   /**
@@ -139,25 +130,23 @@ public class CameraTrack {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.CameraTrack_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
    *  Camera track meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.CameraTrack_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.CameraTrack_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Camera track meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.CameraTrack_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.CameraTrack_getMeta(swigCPtr, this); }
 
 }

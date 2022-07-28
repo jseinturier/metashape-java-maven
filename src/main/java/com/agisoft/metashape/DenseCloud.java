@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Dense point cloud.
  */
-public class DenseCloud {
+public class DenseCloud implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public DenseCloud(long cPtr, boolean cMemoryOwn) {
+  protected DenseCloud(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(DenseCloud obj) {
+  protected static long getCPtr(DenseCloud obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class DenseCloud {
     }
   }
 
-  public static long[] cArrayUnwrap(DenseCloud[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = DenseCloud.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static DenseCloud[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    DenseCloud[] arrayWrapper = new DenseCloud[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new DenseCloud(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public DenseCloud() {
-    this(MetashapeJNI.new_DenseCloud__SWIG_0(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   public DenseCloud(DenseCloud dense_cloud) {
-    this(MetashapeJNI.new_DenseCloud__SWIG_1(DenseCloud.getCPtr(dense_cloud), dense_cloud), true);
+    this(MetashapeJNI.new_DenseCloud(DenseCloud.getCPtr(dense_cloud), dense_cloud), true);
   }
 
   /**
@@ -71,11 +62,11 @@ public class DenseCloud {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.DenseCloud_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -102,46 +93,42 @@ public class DenseCloud {
   /**
    *  Dense cloud meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.DenseCloud_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.DenseCloud_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Dense cloud meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.DenseCloud_getMeta(swigCPtr, this), true);
+  public Map<String,String> getMeta() { return MetashapeJNI.DenseCloud_getMeta(swigCPtr, this); }
+
+  /**
+   *  4x4 dense cloud transformation matrix.
+   */
+  public void setTransform(Matrix transform) {
+    MetashapeJNI.DenseCloud_setTransform(swigCPtr, this, transform);
   }
 
   /**
    *  4x4 dense cloud transformation matrix.
    */
-  public void setTransform(Matrix4x4d transform) {
-    MetashapeJNI.DenseCloud_setTransform(swigCPtr, this, Matrix4x4d.getCPtr(transform), transform);
-  }
+  public Matrix getTransform() { return MetashapeJNI.DenseCloud_getTransform(swigCPtr, this); }
 
   /**
-   *  4x4 dense cloud transformation matrix.
+   *  Reference coordinate system, may be null.
    */
-  public Matrix4x4d getTransform() {
-    return new Matrix4x4d(MetashapeJNI.DenseCloud_getTransform(swigCPtr, this), true);
+  public void setCoordinateSystem(Optional<CoordinateSystem> crs) {
+    MetashapeJNI.DenseCloud_setCoordinateSystem(swigCPtr, this, crs.isPresent() ? CoordinateSystem.getCPtr(crs.get()) : 0);
   }
 
   /**
    *  Reference coordinate system, may be null.
    */
-  public void setCoordinateSystem(CoordinateSystem crs) {
-    MetashapeJNI.DenseCloud_setCoordinateSystem(swigCPtr, this, crs == null ? 0 : CoordinateSystem.getCPtr(crs), crs);
-  }
-
-  /**
-   *  Reference coordinate system, may be null.
-   */
-  public CoordinateSystem getCoordinateSystem() {
+  public Optional<CoordinateSystem> getCoordinateSystem() {
     long ptr = MetashapeJNI.DenseCloud_getCoordinateSystem(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
@@ -150,12 +137,9 @@ public class DenseCloud {
    * @param target Point on the ray.<br>
    * @return Coordinates of the intersection point, may be null.
    */
-  public Vector3d pickPoint(Vector3d origin, Vector3d target) {
-    long ptr = MetashapeJNI.DenseCloud_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);
-    if (ptr == 0)
-        return null;
-    return new Vector3d(ptr, true);
-  }
+  public Optional<Vector> pickPoint(Vector origin, Vector target) {
+	Vector values = MetashapeJNI.DenseCloud_pickPoint(swigCPtr, this, origin, target);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    * Permanently removes deleted points from dense cloud.<br>
@@ -201,8 +185,8 @@ public class DenseCloud {
    * @param point_size Point size.<br>
    * @return Preview image.
    */
-  public Image renderPreview(long width, long height, Matrix4x4d transform, int point_size, Progress progress) {
-    return new Image(MetashapeJNI.DenseCloud_renderPreview(swigCPtr, this, width, height, Matrix4x4d.getCPtr(transform), transform, point_size, progress), true);
+  public Image renderPreview(long width, long height, Matrix transform, int point_size, Progress progress) {
+    return new Image(MetashapeJNI.DenseCloud_renderPreview(swigCPtr, this, width, height, transform, point_size, progress), true);
   }
 
 }

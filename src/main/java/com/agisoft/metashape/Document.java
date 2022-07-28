@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Document {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Document implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Document(long cPtr, boolean cMemoryOwn) {
+  protected Document(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Document obj) {
+  protected static long getCPtr(Document obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -34,6 +38,11 @@ public class Document {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public Document() {
@@ -68,13 +77,20 @@ public class Document {
   /**
    * Save project.<br>
    * @param path Path to the file.<br>
-   * @param chunk_keys List of chunks to be saved.<br>
-   * @param compression Project compression level.<br>
-   * @param absolute_paths Store absolute image paths.<br>
    * @param progress Progress callback.
    */
-  public void save(String path, int[] chunk_keys, int compression, boolean absolute_paths, Progress progress) {
-    MetashapeJNI.Document_save(swigCPtr, this, path, chunk_keys, compression, absolute_paths, progress);
+  public void save(String path, Progress progress) {
+    MetashapeJNI.Document_save__SWIG_0(swigCPtr, this, path, progress);
+  }
+
+  /**
+   * Save some chunks from the project.<br>
+   * @param path Path to the file.<br>
+   * @param chunk_keys List of chunks to be saved.<br>
+   * @param progress Progress callback.
+   */
+  public void save(String path, int[] chunk_keys, Progress progress) {
+    MetashapeJNI.Document_save__SWIG_1(swigCPtr, this, path, chunk_keys, progress);
   }
 
   /**
@@ -119,7 +135,7 @@ public class Document {
   /**
    * @return List of chunks in the document.
    */
-  public Chunk[] getChunks() { return Chunk.cArrayWrap(MetashapeJNI.Document_getChunks(swigCPtr, this), true); }
+  public Chunk[] getChunks() { return SwigHelpers.cArrayWrap(MetashapeJNI.Document_getChunks(swigCPtr, this), true, Chunk.class); }
 
   /**
    * List of chunk keys in the document.
@@ -129,11 +145,11 @@ public class Document {
   /**
    * Chunk with specified key, may be null.
    */
-  public Chunk getChunk(int key) {
+  public Optional<Chunk> getChunk(int key) {
     long ptr = MetashapeJNI.Document_getChunk(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -169,15 +185,13 @@ public class Document {
   /**
    * Set project meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Document_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Document_setMeta(swigCPtr, this, meta);
   }
 
   /**
    * Get project meta data
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Document_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Document_getMeta(swigCPtr, this); }
 
 }

@@ -8,20 +8,24 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Calibration object contains camera calibration information including image size,<br>
  * focal length, principal point coordinates and distortion coefficients.
  */
-public class Calibration {
+public class Calibration implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Calibration(long cPtr, boolean cMemoryOwn) {
+  protected Calibration(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Calibration obj) {
+  protected static long getCPtr(Calibration obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -38,6 +42,11 @@ public class Calibration {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public Calibration() {
@@ -276,15 +285,13 @@ public class Calibration {
    *  RPC model.
    */
   public void setRPCModel(RPCModel rpc) {
-    MetashapeJNI.Calibration_setRPCModel(swigCPtr, this, RPCModel.getCPtr(rpc), rpc);
+    MetashapeJNI.Calibration_setRPCModel(swigCPtr, this, rpc);
   }
 
   /**
    *  RPC model.
    */
-  public RPCModel getRPCModel() {
-    return new RPCModel(MetashapeJNI.Calibration_getRPCModel(swigCPtr, this), true);
-  }
+  public RPCModel getRPCModel() { return MetashapeJNI.Calibration_getRPCModel(swigCPtr, this); }
 
   /**
    * Save calibration to file.<br>
@@ -296,8 +303,8 @@ public class Calibration {
    * @param cx X principal point coordinate (Grid calibration format only).<br>
    * @param cy Y principal point coordinate (Grid calibration format only).
    */
-  public void save(String path, CalibrationFormat format, String label, Vector2d pixel_size, double focal_length, double cx, double cy) {
-    MetashapeJNI.Calibration_save(swigCPtr, this, path, format.ordinal(), label, Vector2d.getCPtr(pixel_size), pixel_size, focal_length, cx, cy);
+  public void save(String path, CalibrationFormat format, String label, Vector pixel_size, double focal_length, double cx, double cy) {
+    MetashapeJNI.Calibration_save(swigCPtr, this, path, format.ordinal(), label, pixel_size, focal_length, cx, cy);
   }
 
   /**
@@ -314,18 +321,14 @@ public class Calibration {
    * @param point Coordinates of the point to be projected.<br>
    * @return 2D projected point coordinates.
    */
-  public Vector2d project(Vector3d point) {
-    return new Vector2d(MetashapeJNI.Calibration_project(swigCPtr, this, Vector3d.getCPtr(point), point), true);
-  }
+  public Vector project(Vector point) { return MetashapeJNI.Calibration_project(swigCPtr, this, point); }
 
   /**
    * Return direction corresponding to the image point.<br>
    * @param point Pixel coordinates of the point.<br>
    * @return 3D vector in the camera coordinate system.
    */
-  public Vector3d unproject(Vector2d point) {
-    return new Vector3d(MetashapeJNI.Calibration_unproject(swigCPtr, this, Vector2d.getCPtr(point), point), true);
-  }
+  public Vector unproject(Vector point) { return MetashapeJNI.Calibration_unproject(swigCPtr, this, point); }
 
   /**
    * Return projection error.<br>
@@ -333,9 +336,7 @@ public class Calibration {
    * @param proj Pixel coordinates of the point.<br>
    * @return 2D projection error.
    */
-  public Vector2d getError(Vector3d point, Vector2d proj) {
-    return new Vector2d(MetashapeJNI.Calibration_getError(swigCPtr, this, Vector3d.getCPtr(point), point, Vector2d.getCPtr(proj), proj), true);
-  }
+  public Vector getError(Vector point, Vector proj) { return MetashapeJNI.Calibration_getError(swigCPtr, this, point, proj); }
 
   public enum Type {
     TypeFrame,

@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Geometry definition.
  */
-public class Geometry {
+public class Geometry implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Geometry(long cPtr, boolean cMemoryOwn) {
+  protected Geometry(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Geometry obj) {
+  protected static long getCPtr(Geometry obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,18 +43,9 @@ public class Geometry {
     }
   }
 
-  public static long[] cArrayUnwrap(Geometry[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Geometry.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Geometry[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Geometry[] arrayWrapper = new Geometry[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Geometry(cArray[i], cMemoryOwn);
-    return arrayWrapper;
+  @Override
+  public void close() {
+    delete();
   }
 
   public Geometry() {
@@ -69,23 +64,23 @@ public class Geometry {
     return Geometry.Type.class.getEnumConstants()[MetashapeJNI.Geometry_getType(swigCPtr, this)];
   }
 
-  public void setVertices(Vector3d[] vertices) {
-    MetashapeJNI.Geometry_setVertices(swigCPtr, this, Vector3d.cArrayUnwrap(vertices));
+  public void setVertices(Vector[] vertices) {
+    MetashapeJNI.Geometry_setVertices(swigCPtr, this, vertices);
   }
 
-  public Vector3d[] getVertices() { return Vector3d.cArrayWrap(MetashapeJNI.Geometry_getVertices(swigCPtr, this), true); }
+  public Vector[] getVertices() { return MetashapeJNI.Geometry_getVertices(swigCPtr, this); }
 
-  public void setVertices2D(Vector2d[] vertices) {
-    MetashapeJNI.Geometry_setVertices2D(swigCPtr, this, Vector2d.cArrayUnwrap(vertices));
+  public void setVertices2D(Vector[] vertices) {
+    MetashapeJNI.Geometry_setVertices2D(swigCPtr, this, vertices);
   }
 
-  public Vector2d[] getVertices2D() { return Vector2d.cArrayWrap(MetashapeJNI.Geometry_getVertices2D(swigCPtr, this), true); }
+  public Vector[] getVertices2D() { return MetashapeJNI.Geometry_getVertices2D(swigCPtr, this); }
 
   public void setGeometries(Geometry[] geometries) {
-    MetashapeJNI.Geometry_setGeometries(swigCPtr, this, Geometry.cArrayUnwrap(geometries));
+    MetashapeJNI.Geometry_setGeometries(swigCPtr, this, SwigHelpers.cArrayUnwrap(geometries, Geometry.class));
   }
 
-  public Geometry[] getGeometries() { return Geometry.cArrayWrap(MetashapeJNI.Geometry_getGeometries(swigCPtr, this), true); }
+  public Geometry[] getGeometries() { return SwigHelpers.cArrayWrap(MetashapeJNI.Geometry_getGeometries(swigCPtr, this), true, Geometry.class); }
 
   public void set3D(boolean state) {
     MetashapeJNI.Geometry_set3D(swigCPtr, this, state);
@@ -95,56 +90,56 @@ public class Geometry {
     return MetashapeJNI.Geometry_is3D(swigCPtr, this);
   }
 
-  public static Geometry makePoint(Vector3d point, boolean is_3d) {
-    return new Geometry(MetashapeJNI.Geometry_makePoint__SWIG_0(Vector3d.getCPtr(point), point, is_3d), true);
+  public static Geometry makePoint(Vector point, boolean is_3d) {
+    return new Geometry(MetashapeJNI.Geometry_makePoint__SWIG_0(point, is_3d), true);
   }
 
-  public static Geometry makePoint(Vector3d point) {
-    return new Geometry(MetashapeJNI.Geometry_makePoint__SWIG_1(Vector3d.getCPtr(point), point), true);
+  public static Geometry makePoint(Vector point) {
+    return new Geometry(MetashapeJNI.Geometry_makePoint__SWIG_1(point), true);
   }
 
-  public static Geometry makeLineString(Vector3d[] vertices, boolean is_3d) {
-    return new Geometry(MetashapeJNI.Geometry_makeLineString__SWIG_0(Vector3d.cArrayUnwrap(vertices), is_3d), true);
+  public static Geometry makeLineString(Vector[] vertices, boolean is_3d) {
+    return new Geometry(MetashapeJNI.Geometry_makeLineString__SWIG_0(vertices, is_3d), true);
   }
 
-  public static Geometry makeLineString(Vector3d[] vertices) {
-    return new Geometry(MetashapeJNI.Geometry_makeLineString__SWIG_1(Vector3d.cArrayUnwrap(vertices)), true);
+  public static Geometry makeLineString(Vector[] vertices) {
+    return new Geometry(MetashapeJNI.Geometry_makeLineString__SWIG_1(vertices), true);
   }
 
-  public static Geometry makePolygon(Vector3d[] exterior_ring, boolean is_3d) {
-    return new Geometry(MetashapeJNI.Geometry_makePolygon__SWIG_0(Vector3d.cArrayUnwrap(exterior_ring), is_3d), true);
+  public static Geometry makePolygon(Vector[] exterior_ring, boolean is_3d) {
+    return new Geometry(MetashapeJNI.Geometry_makePolygon__SWIG_0(exterior_ring, is_3d), true);
   }
 
-  public static Geometry makePolygon(Vector3d[] exterior_ring) {
-    return new Geometry(MetashapeJNI.Geometry_makePolygon__SWIG_1(Vector3d.cArrayUnwrap(exterior_ring)), true);
+  public static Geometry makePolygon(Vector[] exterior_ring) {
+    return new Geometry(MetashapeJNI.Geometry_makePolygon__SWIG_1(exterior_ring), true);
   }
 
-  public static Geometry makePoint(Vector2d point) {
-    return new Geometry(MetashapeJNI.Geometry_makePoint__SWIG_2(Vector2d.getCPtr(point), point), true);
+  public static Geometry makePoint2D(Vector point) {
+    return new Geometry(MetashapeJNI.Geometry_makePoint2D(point), true);
   }
 
-  public static Geometry makeLineString(Vector2d[] vertices) {
-    return new Geometry(MetashapeJNI.Geometry_makeLineString__SWIG_2(Vector2d.cArrayUnwrap(vertices)), true);
+  public static Geometry makeLineString2D(Vector[] vertices) {
+    return new Geometry(MetashapeJNI.Geometry_makeLineString2D(vertices), true);
   }
 
-  public static Geometry makePolygon(Vector2d[] exterior_ring) {
-    return new Geometry(MetashapeJNI.Geometry_makePolygon__SWIG_2(Vector2d.cArrayUnwrap(exterior_ring)), true);
+  public static Geometry makePolygon2D(Vector[] exterior_ring) {
+    return new Geometry(MetashapeJNI.Geometry_makePolygon2D(exterior_ring), true);
   }
 
   public static Geometry makeMultiPoint(Geometry[] collection) {
-    return new Geometry(MetashapeJNI.Geometry_makeMultiPoint(Geometry.cArrayUnwrap(collection)), true);
+    return new Geometry(MetashapeJNI.Geometry_makeMultiPoint(SwigHelpers.cArrayUnwrap(collection, Geometry.class)), true);
   }
 
   public static Geometry makeMultiLineString(Geometry[] collection) {
-    return new Geometry(MetashapeJNI.Geometry_makeMultiLineString(Geometry.cArrayUnwrap(collection)), true);
+    return new Geometry(MetashapeJNI.Geometry_makeMultiLineString(SwigHelpers.cArrayUnwrap(collection, Geometry.class)), true);
   }
 
   public static Geometry makeMultiPolygon(Geometry[] collection) {
-    return new Geometry(MetashapeJNI.Geometry_makeMultiPolygon(Geometry.cArrayUnwrap(collection)), true);
+    return new Geometry(MetashapeJNI.Geometry_makeMultiPolygon(SwigHelpers.cArrayUnwrap(collection, Geometry.class)), true);
   }
 
   public static Geometry makeGeometryCollection(Geometry[] collection) {
-    return new Geometry(MetashapeJNI.Geometry_makeGeometryCollection(Geometry.cArrayUnwrap(collection)), true);
+    return new Geometry(MetashapeJNI.Geometry_makeGeometryCollection(SwigHelpers.cArrayUnwrap(collection, Geometry.class)), true);
   }
 
   public enum Type {

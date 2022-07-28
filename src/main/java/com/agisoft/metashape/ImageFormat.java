@@ -23,6 +23,7 @@ public enum ImageFormat {
   ImageFormatBIL,
   ImageFormatASCII,
   ImageFormatXYZ,
-  ImageFormatWebP;
+  ImageFormatWebP,
+  ImageFormatJXL;
 }
 

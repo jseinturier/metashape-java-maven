@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class OrthoProjection {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class OrthoProjection implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public OrthoProjection(long cPtr, boolean cMemoryOwn) {
+  protected OrthoProjection(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(OrthoProjection obj) {
+  protected static long getCPtr(OrthoProjection obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -36,12 +40,17 @@ public class OrthoProjection {
     }
   }
 
+  @Override
+  public void close() {
+    delete();
+  }
+
   public OrthoProjection() {
     this(MetashapeJNI.new_OrthoProjection__SWIG_0(), true);
   }
 
-  public OrthoProjection(OrthoProjection crs) {
-    this(MetashapeJNI.new_OrthoProjection__SWIG_1(OrthoProjection.getCPtr(crs), crs), true);
+  public OrthoProjection(OrthoProjection ortho_projection) {
+    this(MetashapeJNI.new_OrthoProjection__SWIG_1(OrthoProjection.getCPtr(ortho_projection), ortho_projection), true);
   }
 
   /**
@@ -61,16 +70,14 @@ public class OrthoProjection {
   /**
    *  Ortho transformation matrix.
    */
-  public void setTransform(Matrix4x4d transform) {
-    MetashapeJNI.OrthoProjection_setTransform(swigCPtr, this, Matrix4x4d.getCPtr(transform), transform);
+  public void setTransform(Matrix transform) {
+    MetashapeJNI.OrthoProjection_setTransform(swigCPtr, this, transform);
   }
 
   /**
    *  Ortho transformation matrix.
    */
-  public Matrix4x4d getTransform() {
-    return new Matrix4x4d(MetashapeJNI.OrthoProjection_getTransform(swigCPtr, this), true);
-  }
+  public Matrix getTransform() { return MetashapeJNI.OrthoProjection_getTransform(swigCPtr, this); }
 
   /**
    *  Projection type.
@@ -116,17 +123,11 @@ public class OrthoProjection {
     return MetashapeJNI.OrthoProjection_init(swigCPtr, this, wkt);
   }
 
-  public Vector3d project(Vector3d pt) {
-    return new Vector3d(MetashapeJNI.OrthoProjection_project(swigCPtr, this, Vector3d.getCPtr(pt), pt), true);
-  }
+  public Vector project(Vector pt) { return MetashapeJNI.OrthoProjection_project(swigCPtr, this, pt); }
 
-  public Vector3d unproject(Vector3d pt) {
-    return new Vector3d(MetashapeJNI.OrthoProjection_unproject(swigCPtr, this, Vector3d.getCPtr(pt), pt), true);
-  }
+  public Vector unproject(Vector pt) { return MetashapeJNI.OrthoProjection_unproject(swigCPtr, this, pt); }
 
-  public Matrix4x4d localframe(Vector3d pt) {
-    return new Matrix4x4d(MetashapeJNI.OrthoProjection_localframe(swigCPtr, this, Vector3d.getCPtr(pt), pt), true);
-  }
+  public Matrix localframe(Vector pt) { return MetashapeJNI.OrthoProjection_localframe(swigCPtr, this, pt); }
 
   /**
    * Transform point coordinates between coordinate systems.<br>
@@ -135,9 +136,7 @@ public class OrthoProjection {
    * @param target Target coordinate system.<br>
    * @return Transformed point coordinates.
    */
-  public static Vector3d transform(Vector3d point, OrthoProjection source, OrthoProjection target) {
-    return new Vector3d(MetashapeJNI.OrthoProjection_transform(Vector3d.getCPtr(point), point, OrthoProjection.getCPtr(source), source, OrthoProjection.getCPtr(target), target), true);
-  }
+  public static Vector transform(Vector point, OrthoProjection source, OrthoProjection target) { return MetashapeJNI.OrthoProjection_transform(point, OrthoProjection.getCPtr(source), source, OrthoProjection.getCPtr(target), target); }
 
   public enum Type {
     Planar,

@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Scalebar {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Scalebar implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Scalebar(long cPtr, boolean cMemoryOwn) {
+  protected Scalebar(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Scalebar obj) {
+  protected static long getCPtr(Scalebar obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -36,102 +40,69 @@ public class Scalebar {
     }
   }
 
-  public static long[] cArrayUnwrap(Scalebar[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Scalebar.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Scalebar[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Scalebar[] arrayWrapper = new Scalebar[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Scalebar(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public Scalebar(Scalebar scalebar) {
-    this(MetashapeJNI.new_Scalebar(Scalebar.getCPtr(scalebar), scalebar), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   static public class Reference {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Reference(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Reference obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Scalebar_Reference(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private Optional<Double> distance;
+    private Optional<Double> distance_accuracy;
+    private boolean enabled;
+
     public Reference() {
-      this(MetashapeJNI.new_Scalebar_Reference__SWIG_0(), true);
+      distance = Optional.empty();
+      distance_accuracy = Optional.empty();
+      enabled = false;
     }
-  
-    public Reference(Scalebar.Reference reference) {
-      this(MetashapeJNI.new_Scalebar_Reference__SWIG_1(Scalebar.Reference.getCPtr(reference), reference), true);
-    }
-  
+
     /**
      *  Enabled flag.
      */
     public void setEnabled(boolean state) {
-      MetashapeJNI.Scalebar_Reference_setEnabled(swigCPtr, this, state);
+      enabled = state;
     }
-  
+
     /**
      *  Enabled flag.
      */
     public boolean isEnabled() {
-      return MetashapeJNI.Scalebar_Reference_isEnabled(swigCPtr, this);
+      return enabled;
     }
-  
+
     /**
      *  Scale bar length, may be null.
      */
-    public void setDistance(Double distance) {
-      MetashapeJNI.Scalebar_Reference_setDistance(swigCPtr, this, distance);
+    public void setDistance(Optional<Double> distance) {
+      this.distance = distance;
     }
-  
+
     /**
      *  Scale bar length, may be null.
      */
-    public Double getDistance() {
-      return MetashapeJNI.Scalebar_Reference_getDistance(swigCPtr, this);
+    public Optional<Double> getDistance() {
+      return distance;
     }
-  
+
     /**
      *  Scale bar length accuracy, may be null.
      */
-    public void setDistanceAccuracy(Double accuracy) {
-      MetashapeJNI.Scalebar_Reference_setDistanceAccuracy(swigCPtr, this, accuracy);
+    public void setDistanceAccuracy(Optional<Double> accuracy) {
+      distance_accuracy = accuracy;
     }
-  
+
     /**
      *  Scale bar length accuracy, may be null.
      */
-    public Double getDistanceAccuracy() {
-      return MetashapeJNI.Scalebar_Reference_getDistanceAccuracy(swigCPtr, this);
+    public Optional<Double> getDistanceAccuracy() {
+      return distance_accuracy;
     }
-  
+
+  }
+
+  public Scalebar(Scalebar scalebar) {
+    this(MetashapeJNI.new_Scalebar(Scalebar.getCPtr(scalebar), scalebar), true);
   }
 
   /**
@@ -144,11 +115,11 @@ public class Scalebar {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Scalebar_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -182,29 +153,25 @@ public class Scalebar {
   /**
    *  Scale bar reference data.
    */
-  public Scalebar.Reference getReference() {
-    return new Scalebar.Reference(MetashapeJNI.Scalebar_getReference(swigCPtr, this), true);
-  }
+  public Scalebar.Reference getReference() { return MetashapeJNI.Scalebar_getReference(swigCPtr, this); }
 
   /**
    *  Scale bar reference data.
    */
   public void setReference(Scalebar.Reference reference) {
-    MetashapeJNI.Scalebar_setReference(swigCPtr, this, Scalebar.Reference.getCPtr(reference), reference);
+    MetashapeJNI.Scalebar_setReference(swigCPtr, this, reference);
   }
 
   /**
    *  Scale bar meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Scalebar_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Scalebar_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Scale bar meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Scalebar_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Scalebar_getMeta(swigCPtr, this); }
 
 }

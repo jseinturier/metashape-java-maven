@@ -6,11 +6,13 @@
  * the SWIG interface file instead.
  * ----------------------------------------------------------------------------- */
 
-package com.agisoft.metashape.tasks;
+package com.agisoft.metashape;
 
-import com.agisoft.metashape.*;
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
 
-public class Task {
+public class Task implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
@@ -32,114 +34,109 @@ public class Task {
     if (swigCPtr != 0) {
       if (swigCMemOwn) {
         swigCMemOwn = false;
-        TasksJNI.delete_Task(swigCPtr);
+        MetashapeJNI.delete_Task(swigCPtr);
       }
       swigCPtr = 0;
     }
   }
 
+  @Override
+  public void close() {
+    delete();
+  }
+
   public Task(Task task) {
-    this(TasksJNI.new_Task__SWIG_0(Task.getCPtr(task), task), true);
+    this(MetashapeJNI.new_Task__SWIG_0(Task.getCPtr(task), task), true);
   }
 
   public Task(String name) {
-    this(TasksJNI.new_Task__SWIG_1(name), true);
+    this(MetashapeJNI.new_Task__SWIG_1(name), true);
   }
 
   /**
    *  Task name.
    */
   public String getName() {
-    return TasksJNI.Task_getName(swigCPtr, this);
+    return MetashapeJNI.Task_getName(swigCPtr, this);
   }
 
   /**
    *  List of configured parameter names.
    */
-  public String[] getParameterNames() { return TasksJNI.Task_getParameterNames(swigCPtr, this); }
+  public String[] getParameterNames() { return MetashapeJNI.Task_getParameterNames(swigCPtr, this); }
 
   /**
    * Set parameter value.
    */
-  public void setParameter(String name, Variant value) {
-    TasksJNI.Task_setParameter(swigCPtr, this, name, Variant.getCPtr(value), value);
+  public void setParameter(String name, Object value) {
+    MetashapeJNI.Task_setParameter(swigCPtr, this, name, value);
   }
 
   /**
    * Get parameter value.
    */
-  public Variant getParameter(String name) {
-    return new Variant(TasksJNI.Task_getParameter(swigCPtr, this, name), true);
-  }
+  public Object getParameter(String name) { return MetashapeJNI.Task_getParameter(swigCPtr, this, name); }
 
   /**
    *  Task target.
    */
   public Task.TaskTarget getTarget() {
-    return Task.TaskTarget.class.getEnumConstants()[TasksJNI.Task_getTarget(swigCPtr, this)];
+    return Task.TaskTarget.class.getEnumConstants()[MetashapeJNI.Task_getTarget(swigCPtr, this)];
   }
 
   /**
    *  GPU supported flag.
    */
   public boolean isGPUSupported() {
-    return TasksJNI.Task_isGPUSupported(swigCPtr, this);
+    return MetashapeJNI.Task_isGPUSupported(swigCPtr, this);
   }
 
   /**
    *  Workitem count.
    */
   public int getWorkitemCount() {
-    return TasksJNI.Task_getWorkitemCount(swigCPtr, this);
+    return MetashapeJNI.Task_getWorkitemCount(swigCPtr, this);
   }
 
   /**
    *  Workitem count.
    */
   public void setWorkitemCount(int count) {
-    TasksJNI.Task_setWorkitemCount(swigCPtr, this, count);
+    MetashapeJNI.Task_setWorkitemCount(swigCPtr, this, count);
   }
 
   /**
    * Convert task to NetworkTask.
    */
-  public NetworkTask toNetworkTask() {
-    return new NetworkTask(TasksJNI.Task_toNetworkTask__SWIG_0(swigCPtr, this), true);
-  }
+  public NetworkTask toNetworkTask() { return MetashapeJNI.Task_toNetworkTask__SWIG_0(swigCPtr, this); }
 
   /**
    * Convert task to NetworkTask to be applied to the chunk.
    */
-  public NetworkTask toNetworkTask(Chunk chunk) {
-    return new NetworkTask(TasksJNI.Task_toNetworkTask__SWIG_1(swigCPtr, this, Chunk.getCPtr(chunk), chunk), true);
-  }
+  public NetworkTask toNetworkTask(Chunk chunk) { return MetashapeJNI.Task_toNetworkTask__SWIG_1(swigCPtr, this, Chunk.getCPtr(chunk), chunk); }
 
   /**
    * Convert task to NetworkTask to be applied to the list of chunks.
    */
-  public NetworkTask toNetworkTask(Chunk[] chunks) {
-    return new NetworkTask(TasksJNI.Task_toNetworkTask__SWIG_2(swigCPtr, this, Chunk.cArrayUnwrap(chunks)), true);
-  }
+  public NetworkTask toNetworkTask(Chunk[] chunks) { return MetashapeJNI.Task_toNetworkTask__SWIG_2(swigCPtr, this, SwigHelpers.cArrayUnwrap(chunks, Chunk.class)); }
 
   /**
    * Convert task to NetworkTask to be applied to the whole project.
    */
-  public NetworkTask toNetworkTask(Document doc) {
-    return new NetworkTask(TasksJNI.Task_toNetworkTask__SWIG_3(swigCPtr, this, Document.getCPtr(doc), doc), true);
-  }
+  public NetworkTask toNetworkTask(Document doc) { return MetashapeJNI.Task_toNetworkTask__SWIG_3(swigCPtr, this, Document.getCPtr(doc), doc); }
 
   /**
    * Apply task to chunk.
    */
   public void apply(Chunk chunk, Progress progress) {
-    TasksJNI.Task_apply__SWIG_0(swigCPtr, this, Chunk.getCPtr(chunk), chunk, progress);
+    MetashapeJNI.Task_apply__SWIG_0(swigCPtr, this, Chunk.getCPtr(chunk), chunk, progress);
   }
 
   /**
    * Apply task to document.
    */
   public void apply(Document doc, Progress progress) {
-    TasksJNI.Task_apply__SWIG_1(swigCPtr, this, Document.getCPtr(doc), doc, progress);
+    MetashapeJNI.Task_apply__SWIG_1(swigCPtr, this, Document.getCPtr(doc), doc, progress);
   }
 
   public enum TaskTarget {

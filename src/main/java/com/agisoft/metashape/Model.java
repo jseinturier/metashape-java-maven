@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Polygonal model.
  */
-public class Model {
+public class Model implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Model(long cPtr, boolean cMemoryOwn) {
+  protected Model(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Model obj) {
+  protected static long getCPtr(Model obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,38 +43,177 @@ public class Model {
     }
   }
 
-  public static long[] cArrayUnwrap(Model[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Model.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static Model[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Model[] arrayWrapper = new Model[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Model(cArray[i], cMemoryOwn);
-    return arrayWrapper;
+  static public class Face {
+
+    private int[] vertices;
+    private boolean selected;
+    private boolean hidden;
+
+    public Face() {
+      vertices = new int[3];
+      selected = false;
+      hidden = false;
+    }
+
+    /**
+     *  Face visibility flag.
+     */
+    public void setHidden(boolean on) {
+      this.hidden = on;
+    }
+
+    /**
+     *  Face visibility flag.
+     */
+    public boolean isHidden() {
+      return hidden;
+    }
+
+    /**
+     *  Face selection flag.
+     */
+    public void setSelected(boolean on) {
+      this.selected = on;
+    }
+
+    /**
+     *  Face selection flag.
+     */
+    public boolean isSelected() {
+      return selected;
+    }
+
+    /**
+     *  Vertex indices.
+     */
+    public void setVertices(int[] ids) {
+      this.vertices = ids;
+    }
+
+    /**
+     *  Vertex indices.
+     */
+    public int[] getVertices() { return vertices; }
+
   }
 
-  public Model() {
-    this(MetashapeJNI.new_Model__SWIG_0(), true);
+  static public class Vertex {
+
+    private Vector coord;
+    private float confidence;
+
+    public Vertex() {
+      coord = new Vector(0, 0);
+      confidence = 0;
+    }
+
+    /**
+     *  Vertex coordinates.
+     */
+    public void setCoord(Vector coord) {
+      this.coord = coord;
+    }
+
+    /**
+     *  Vertex coordinates.
+     */
+    public Vector getCoord() { return coord; }
+
+    /**
+     *  Vertex confidence.
+     */
+    public void setConfidence(float confidence) {
+      this.confidence = confidence;
+    }
+
+    /**
+     *  Vertex confidence.
+     */
+    public float getConfidence() {
+      return confidence;
+    }
+
+  }
+
+  static public class TexFace {
+
+    private int[] vertices;
+    private int texture_id;
+
+    public TexFace() {
+      vertices = new int[3];
+      texture_id = 0;
+    }
+
+    /**
+     *  Texture page index.
+     */
+    public void setTextureIndex(int index) {
+      this.texture_id = index;
+    }
+
+    /**
+     *  Texture page index.
+     */
+    public int getTextureIndex() {
+      return texture_id;
+    }
+
+    /**
+     *  Texture vertex indices.
+     */
+    public void setVertices(int[] ids) {
+      this.vertices = ids;
+    }
+
+    /**
+     *  Texture vertex indices.
+     */
+    public int[] getVertices() { return vertices; }
+
+  }
+
+  static public class TexVertex {
+
+    private Vector coord;
+
+    public TexVertex() {
+      coord = new Vector(0, 0);
+    }
+
+    /**
+     *  Vertex texture coordinates.
+     */
+    public void setCoord(Vector coord) {
+      this.coord = coord;
+    }
+
+    /**
+     *  Vertex texture coordinates.
+     */
+    public Vector getCoord() { return coord; }
+
   }
 
   public Model(Model model) {
-    this(MetashapeJNI.new_Model__SWIG_1(Model.getCPtr(model), model), true);
+    this(MetashapeJNI.new_Model(Model.getCPtr(model), model), true);
   }
 
-  static public class Texture {
+  static public class Texture implements AutoCloseable {
     private transient long swigCPtr;
     protected transient boolean swigCMemOwn;
   
-    public Texture(long cPtr, boolean cMemoryOwn) {
+    protected Texture(long cPtr, boolean cMemoryOwn) {
       swigCMemOwn = cMemoryOwn;
       swigCPtr = cPtr;
     }
   
-    public static long getCPtr(Texture obj) {
+    protected static long getCPtr(Texture obj) {
       return (obj == null) ? 0 : obj.swigCPtr;
     }
   
@@ -89,18 +232,9 @@ public class Model {
       }
     }
   
-    public static long[] cArrayUnwrap(Model.Texture[] arrayWrapper) {
-      long[] cArray = new long[arrayWrapper.length];
-      for (int i=0; i<arrayWrapper.length; i++)
-        cArray[i] = Model.Texture.getCPtr(arrayWrapper[i]);
-      return cArray;
-    }
-  
-    public static Model.Texture[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-      Model.Texture[] arrayWrapper = new Model.Texture[cArray.length];
-      for (int i=0; i<cArray.length; i++)
-        arrayWrapper[i] = new Model.Texture(cArray[i], cMemoryOwn);
-      return arrayWrapper;
+    @Override
+    public void close() {
+      delete();
     }
   
     /**
@@ -134,273 +268,27 @@ public class Model {
     /**
      *  Texture meta data.
      */
-    public void setMeta(MetaData meta) {
-      MetashapeJNI.Model_Texture_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+    public void setMeta(Map<String,String> meta) {
+      MetashapeJNI.Model_Texture_setMeta(swigCPtr, this, meta);
     }
   
     /**
      *  Texture meta data.
      */
-    public MetaData getMeta() {
-      return new MetaData(MetashapeJNI.Model_Texture_getMeta(swigCPtr, this), true);
-    }
+    public Map<String,String> getMeta() { return MetashapeJNI.Model_Texture_getMeta(swigCPtr, this); }
   
   }
 
-  static public class Face {
+  static public class Mesh implements AutoCloseable {
     private transient long swigCPtr;
     protected transient boolean swigCMemOwn;
   
-    public Face(long cPtr, boolean cMemoryOwn) {
+    protected Mesh(long cPtr, boolean cMemoryOwn) {
       swigCMemOwn = cMemoryOwn;
       swigCPtr = cPtr;
     }
   
-    public static long getCPtr(Face obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Model_Face(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    /**
-     *  Face visibility flag.
-     */
-    public void setHidden(boolean on) {
-      MetashapeJNI.Model_Face_setHidden(swigCPtr, this, on);
-    }
-  
-    /**
-     *  Face visibility flag.
-     */
-    public boolean isHidden() {
-      return MetashapeJNI.Model_Face_isHidden(swigCPtr, this);
-    }
-  
-    /**
-     *  Face selection flag.
-     */
-    public void setSelected(boolean on) {
-      MetashapeJNI.Model_Face_setSelected(swigCPtr, this, on);
-    }
-  
-    /**
-     *  Face selection flag.
-     */
-    public boolean isSelected() {
-      return MetashapeJNI.Model_Face_isSelected(swigCPtr, this);
-    }
-  
-    /**
-     *  Vertex indices.
-     */
-    public void setVertices(int[] ids) {
-      MetashapeJNI.Model_Face_setVertices(swigCPtr, this, ids);
-    }
-  
-    /**
-     *  Vertex indices.
-     */
-    public int[] getVertices() { return MetashapeJNI.Model_Face_getVertices(swigCPtr, this); }
-  
-    public Face() {
-      this(MetashapeJNI.new_Model_Face(), true);
-    }
-  
-  }
-
-  static public class Vertex {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Vertex(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Vertex obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Model_Vertex(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    /**
-     *  Vertex coordinates.
-     */
-    public void setCoord(Vector3d coord) {
-      MetashapeJNI.Model_Vertex_setCoord(swigCPtr, this, Vector3d.getCPtr(coord), coord);
-    }
-  
-    /**
-     *  Vertex coordinates.
-     */
-    public Vector3d getCoord() {
-      return new Vector3d(MetashapeJNI.Model_Vertex_getCoord(swigCPtr, this), true);
-    }
-  
-    /**
-     *  Vertex confidence.
-     */
-    public void setConfidence(float confidence) {
-      MetashapeJNI.Model_Vertex_setConfidence(swigCPtr, this, confidence);
-    }
-  
-    /**
-     *  Vertex confidence.
-     */
-    public float getConfidence() {
-      return MetashapeJNI.Model_Vertex_getConfidence(swigCPtr, this);
-    }
-  
-    public Vertex() {
-      this(MetashapeJNI.new_Model_Vertex(), true);
-    }
-  
-  }
-
-  static public class TexFace {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public TexFace(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(TexFace obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Model_TexFace(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    /**
-     *  Texture page index.
-     */
-    public void setTextureIndex(int index) {
-      MetashapeJNI.Model_TexFace_setTextureIndex(swigCPtr, this, index);
-    }
-  
-    /**
-     *  Texture page index.
-     */
-    public int getTextureIndex() {
-      return MetashapeJNI.Model_TexFace_getTextureIndex(swigCPtr, this);
-    }
-  
-    /**
-     *  Texture vertex indices.
-     */
-    public void setVertices(int[] ids) {
-      MetashapeJNI.Model_TexFace_setVertices(swigCPtr, this, ids);
-    }
-  
-    /**
-     *  Texture vertex indices.
-     */
-    public int[] getVertices() { return MetashapeJNI.Model_TexFace_getVertices(swigCPtr, this); }
-  
-    public TexFace() {
-      this(MetashapeJNI.new_Model_TexFace(), true);
-    }
-  
-  }
-
-  static public class TexVertex {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public TexVertex(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(TexVertex obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Model_TexVertex(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
-    /**
-     *  Vertex texture coordinates.
-     */
-    public void setCoord(Vector2d coord) {
-      MetashapeJNI.Model_TexVertex_setCoord(swigCPtr, this, Vector2d.getCPtr(coord), coord);
-    }
-  
-    /**
-     *  Vertex texture coordinates.
-     */
-    public Vector2d getCoord() {
-      return new Vector2d(MetashapeJNI.Model_TexVertex_getCoord(swigCPtr, this), true);
-    }
-  
-    public TexVertex() {
-      this(MetashapeJNI.new_Model_TexVertex(), true);
-    }
-  
-  }
-
-  static public class Mesh {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Mesh(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Mesh obj) {
+    protected static long getCPtr(Mesh obj) {
       return (obj == null) ? 0 : obj.swigCPtr;
     }
   
@@ -417,6 +305,11 @@ public class Model {
         }
         swigCPtr = 0;
       }
+    }
+  
+    @Override
+    public void close() {
+      delete();
     }
   
     public Mesh() {
@@ -459,43 +352,37 @@ public class Model {
      *  Mesh face.
      */
     public void setFace(int index, Model.Face f) {
-      MetashapeJNI.Model_Mesh_setFace(swigCPtr, this, index, Model.Face.getCPtr(f), f);
+      MetashapeJNI.Model_Mesh_setFace(swigCPtr, this, index, f);
     }
   
     /**
      *  Mesh face.
      */
-    public Model.Face getFace(int index) {
-      return new Model.Face(MetashapeJNI.Model_Mesh_getFace(swigCPtr, this, index), true);
-    }
+    public Model.Face getFace(int index) { return MetashapeJNI.Model_Mesh_getFace(swigCPtr, this, index); }
   
     /**
      *  Mesh vertex.
      */
     public void setVertex(int index, Model.Vertex v) {
-      MetashapeJNI.Model_Mesh_setVertex(swigCPtr, this, index, Model.Vertex.getCPtr(v), v);
+      MetashapeJNI.Model_Mesh_setVertex(swigCPtr, this, index, v);
     }
   
     /**
      *  Mesh vertex.
      */
-    public Model.Vertex getVertex(int index) {
-      return new Model.Vertex(MetashapeJNI.Model_Mesh_getVertex(swigCPtr, this, index), true);
+    public Model.Vertex getVertex(int index) { return MetashapeJNI.Model_Mesh_getVertex(swigCPtr, this, index); }
+  
+    /**
+     *  Mesh vertex color.
+     */
+    public void setVertexColor(int index, Color color) {
+      MetashapeJNI.Model_Mesh_setVertexColor(swigCPtr, this, index, color);
     }
   
     /**
      *  Mesh vertex color.
      */
-    public void setVertexColor(int index, Vector3uc color) {
-      MetashapeJNI.Model_Mesh_setVertexColor(swigCPtr, this, index, Vector3uc.getCPtr(color), color);
-    }
-  
-    /**
-     *  Mesh vertex color.
-     */
-    public Vector3uc getVertexColor(int index) {
-      return new Vector3uc(MetashapeJNI.Model_Mesh_getVertexColor(swigCPtr, this, index), true);
-    }
+    public Color getVertexColor(int index) { return MetashapeJNI.Model_Mesh_getVertexColor(swigCPtr, this, index); }
   
     /**
      *  Returns true if model has UV coordinates.
@@ -530,11 +417,11 @@ public class Model {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Model_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -554,33 +441,33 @@ public class Model {
   /**
    *  List of textures in the model.
    */
-  public Model.Texture[] getTextures() { return Model.Texture.cArrayWrap(MetashapeJNI.Model_getTextures(swigCPtr, this), true); }
+  public Model.Texture[] getTextures() { return SwigHelpers.cArrayWrap(MetashapeJNI.Model_getTextures(swigCPtr, this), true, Model.Texture.class); }
 
   /**
    *  Active texture of a given type, may be null.
    */
-  public Model.Texture getActiveTexture(Model.TextureType type) {
+  public Optional<Model.Texture> getActiveTexture(Model.TextureType type) {
     long ptr = MetashapeJNI.Model_getActiveTexture(swigCPtr, this, type.ordinal());
     if (ptr == 0)
-        return null;
-    return new Model.Texture(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Model.Texture(ptr, true));
   }
 
   /**
    *  Model mesh, may be null.
    */
-  public void setMesh(Model.Mesh mesh) {
-    MetashapeJNI.Model_setMesh(swigCPtr, this, mesh == null ? 0 : Model.Mesh.getCPtr(mesh));
+  public void setMesh(Optional<Model.Mesh> mesh) {
+    MetashapeJNI.Model_setMesh(swigCPtr, this, mesh.isPresent() ? Model.Mesh.getCPtr(mesh.get()) : 0);
   }
 
   /**
    *  Model mesh, may be null.
    */
-  public Model.Mesh getMesh() {
+  public Optional<Model.Mesh> getMesh() {
     long ptr = MetashapeJNI.Model_getMesh(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Model.Mesh(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Model.Mesh(ptr, true));
   }
 
   /**
@@ -593,16 +480,14 @@ public class Model {
   /**
    *  Model meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Model_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Model_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Model meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Model_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Model_getMeta(swigCPtr, this); }
 
   /**
    *  Face count.
@@ -645,12 +530,9 @@ public class Model {
    * @param target Point on the ray.<br>
    * @return Coordinates of the intersection point, may be null.
    */
-  public Vector3d pickPoint(Vector3d origin, Vector3d target) {
-    long ptr = MetashapeJNI.Model_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);
-    if (ptr == 0)
-        return null;
-    return new Vector3d(ptr, true);
-  }
+  public Optional<Vector> pickPoint(Vector origin, Vector target) {
+	Vector values = MetashapeJNI.Model_pickPoint(swigCPtr, this, origin, target);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    * Generate model preview image.<br>
@@ -659,8 +541,8 @@ public class Model {
    * @param transform 4x4 viewpoint transformation matrix.<br>
    * @return Preview image.
    */
-  public Image renderPreview(long width, long height, Matrix4x4d transform, Progress progress) {
-    return new Image(MetashapeJNI.Model_renderPreview(swigCPtr, this, width, height, Matrix4x4d.getCPtr(transform), transform, progress), true);
+  public Image renderPreview(long width, long height, Matrix transform, Progress progress) {
+    return new Image(MetashapeJNI.Model_renderPreview(swigCPtr, this, width, height, transform, progress), true);
   }
 
   public enum TextureType {

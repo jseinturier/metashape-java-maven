@@ -8,20 +8,24 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * MarkerGroup objects define groups of multiple markers. The grouping is established by<br>
  * assignment of a MarkerGroup instance to the Marker.group attribute of participating markers.
  */
-public class MarkerGroup {
+public class MarkerGroup implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public MarkerGroup(long cPtr, boolean cMemoryOwn) {
+  protected MarkerGroup(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(MarkerGroup obj) {
+  protected static long getCPtr(MarkerGroup obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -40,22 +44,13 @@ public class MarkerGroup {
     }
   }
 
-  public static long[] cArrayUnwrap(MarkerGroup[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = MarkerGroup.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static MarkerGroup[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    MarkerGroup[] arrayWrapper = new MarkerGroup[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new MarkerGroup(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public MarkerGroup(MarkerGroup group) {
-    this(MetashapeJNI.new_MarkerGroup(MarkerGroup.getCPtr(group), group), true);
+  public MarkerGroup(MarkerGroup marker_group) {
+    this(MetashapeJNI.new_MarkerGroup(MarkerGroup.getCPtr(marker_group), marker_group), true);
   }
 
   /**
@@ -68,11 +63,11 @@ public class MarkerGroup {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.MarkerGroup_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**

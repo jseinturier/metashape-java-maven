@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Palette {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Palette implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Palette(long cPtr, boolean cMemoryOwn) {
+  protected Palette(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Palette obj) {
+  protected static long getCPtr(Palette obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -34,6 +38,11 @@ public class Palette {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public Palette() {
@@ -72,13 +81,11 @@ public class Palette {
     return MetashapeJNI.Palette_getValue(swigCPtr, this, index);
   }
 
-  public void setColor(long index, Vector3uc color) {
-    MetashapeJNI.Palette_setColor(swigCPtr, this, index, Vector3uc.getCPtr(color), color);
+  public void setColor(long index, Color color) {
+    MetashapeJNI.Palette_setColor(swigCPtr, this, index, color);
   }
 
-  public Vector3uc getColor(long index) {
-    return new Vector3uc(MetashapeJNI.Palette_getColor(swigCPtr, this, index), true);
-  }
+  public Color getColor(long index) { return MetashapeJNI.Palette_getColor(swigCPtr, this, index); }
 
   public enum Preset {
     PresetNDVI,

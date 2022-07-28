@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Shapes {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Shapes implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Shapes(long cPtr, boolean cMemoryOwn) {
+  protected Shapes(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Shapes obj) {
+  protected static long getCPtr(Shapes obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -36,6 +40,11 @@ public class Shapes {
     }
   }
 
+  @Override
+  public void close() {
+    delete();
+  }
+
   public Shapes() {
     this(MetashapeJNI.new_Shapes__SWIG_0(), true);
   }
@@ -47,11 +56,11 @@ public class Shapes {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Shapes_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -64,26 +73,24 @@ public class Shapes {
   /**
    *  Shapes meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Shapes_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Shapes_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Shapes meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Shapes_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Shapes_getMeta(swigCPtr, this); }
 
   /**
    *  List of shapes.
    */
-  public Shape[] getShapes() { return Shape.cArrayWrap(MetashapeJNI.Shapes_getShapes(swigCPtr, this), true); }
+  public Shape[] getShapes() { return SwigHelpers.cArrayWrap(MetashapeJNI.Shapes_getShapes(swigCPtr, this), true, Shape.class); }
 
   /**
    *  List of shape groups.
    */
-  public ShapeGroup[] getGroups() { return ShapeGroup.cArrayWrap(MetashapeJNI.Shapes_getGroups(swigCPtr, this), true); }
+  public ShapeGroup[] getGroups() { return SwigHelpers.cArrayWrap(MetashapeJNI.Shapes_getGroups(swigCPtr, this), true, ShapeGroup.class); }
 
   /**
    *  Projection of shape data.

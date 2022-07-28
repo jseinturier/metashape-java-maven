@@ -8,22 +8,26 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Shape group.<br>
  * <br>
  * ShapeGroup objects define groups of multiple shapes. The grouping is established by<br>
  * assignment of a ShapeGroup instance to the Shape.group attribute of participating shapes.
  */
-public class ShapeGroup {
+public class ShapeGroup implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public ShapeGroup(long cPtr, boolean cMemoryOwn) {
+  protected ShapeGroup(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(ShapeGroup obj) {
+  protected static long getCPtr(ShapeGroup obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -42,22 +46,13 @@ public class ShapeGroup {
     }
   }
 
-  public static long[] cArrayUnwrap(ShapeGroup[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = ShapeGroup.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static ShapeGroup[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    ShapeGroup[] arrayWrapper = new ShapeGroup[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new ShapeGroup(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public ShapeGroup(ShapeGroup group) {
-    this(MetashapeJNI.new_ShapeGroup(ShapeGroup.getCPtr(group), group), true);
+  public ShapeGroup(ShapeGroup shape_group) {
+    this(MetashapeJNI.new_ShapeGroup(ShapeGroup.getCPtr(shape_group), shape_group), true);
   }
 
   /**
@@ -112,15 +107,13 @@ public class ShapeGroup {
   /**
    *  Shape group meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.ShapeGroup_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.ShapeGroup_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Shape group meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.ShapeGroup_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.ShapeGroup_getMeta(swigCPtr, this); }
 
 }

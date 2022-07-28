@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Orthomosaic.
  */
-public class Orthomosaic {
+public class Orthomosaic implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Orthomosaic(long cPtr, boolean cMemoryOwn) {
+  protected Orthomosaic(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Orthomosaic obj) {
+  protected static long getCPtr(Orthomosaic obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class Orthomosaic {
     }
   }
 
-  public static long[] cArrayUnwrap(Orthomosaic[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Orthomosaic.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Orthomosaic[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Orthomosaic[] arrayWrapper = new Orthomosaic[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Orthomosaic(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public Orthomosaic() {
-    this(MetashapeJNI.new_Orthomosaic__SWIG_0(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   public Orthomosaic(Orthomosaic orthomosaic) {
-    this(MetashapeJNI.new_Orthomosaic__SWIG_1(Orthomosaic.getCPtr(orthomosaic), orthomosaic), true);
+    this(MetashapeJNI.new_Orthomosaic(Orthomosaic.getCPtr(orthomosaic), orthomosaic), true);
   }
 
   /**
@@ -71,11 +62,11 @@ public class Orthomosaic {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Orthomosaic_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -102,16 +93,14 @@ public class Orthomosaic {
   /**
    *  Orthomosaic meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Orthomosaic_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Orthomosaic_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Orthomosaic meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Orthomosaic_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Orthomosaic_getMeta(swigCPtr, this); }
 
   /**
    *  Orthomosaic width.
@@ -130,16 +119,12 @@ public class Orthomosaic {
   /**
    *  Coordinates of the top left orthomosaic corner.
    */
-  public Vector2d getTopLeft() {
-    return new Vector2d(MetashapeJNI.Orthomosaic_getTopLeft(swigCPtr, this), true);
-  }
+  public Vector getTopLeft() { return MetashapeJNI.Orthomosaic_getTopLeft(swigCPtr, this); }
 
   /**
    *  Coordinates of the bottom right orthomosaic corner.
    */
-  public Vector2d getBottomRight() {
-    return new Vector2d(MetashapeJNI.Orthomosaic_getBottomRight(swigCPtr, this), true);
-  }
+  public Vector getBottomRight() { return MetashapeJNI.Orthomosaic_getBottomRight(swigCPtr, this); }
 
   /**
    *  Orthomosaic projection.

@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * n-channel image.
  */
-public class Image {
+public class Image implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Image(long cPtr, boolean cMemoryOwn) {
+  protected Image(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Image obj) {
+  protected static long getCPtr(Image obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -37,6 +41,11 @@ public class Image {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public Image() {

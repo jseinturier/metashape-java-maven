@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Tiled model.
  */
-public class TiledModel {
+public class TiledModel implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public TiledModel(long cPtr, boolean cMemoryOwn) {
+  protected TiledModel(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(TiledModel obj) {
+  protected static long getCPtr(TiledModel obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class TiledModel {
     }
   }
 
-  public static long[] cArrayUnwrap(TiledModel[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = TiledModel.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static TiledModel[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    TiledModel[] arrayWrapper = new TiledModel[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new TiledModel(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public TiledModel() {
-    this(MetashapeJNI.new_TiledModel__SWIG_0(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   public TiledModel(TiledModel tiled_model) {
-    this(MetashapeJNI.new_TiledModel__SWIG_1(TiledModel.getCPtr(tiled_model), tiled_model), true);
+    this(MetashapeJNI.new_TiledModel(TiledModel.getCPtr(tiled_model), tiled_model), true);
   }
 
   /**
@@ -71,11 +62,11 @@ public class TiledModel {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.TiledModel_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -102,46 +93,42 @@ public class TiledModel {
   /**
    *  Tiled model meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.TiledModel_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.TiledModel_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Tiled model meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.TiledModel_getMeta(swigCPtr, this), true);
+  public Map<String,String> getMeta() { return MetashapeJNI.TiledModel_getMeta(swigCPtr, this); }
+
+  /**
+   *  4x4 tiled model transformation matrix.
+   */
+  public void setTransform(Matrix transform) {
+    MetashapeJNI.TiledModel_setTransform(swigCPtr, this, transform);
   }
 
   /**
    *  4x4 tiled model transformation matrix.
    */
-  public void setTransform(Matrix4x4d transform) {
-    MetashapeJNI.TiledModel_setTransform(swigCPtr, this, Matrix4x4d.getCPtr(transform), transform);
-  }
+  public Matrix getTransform() { return MetashapeJNI.TiledModel_getTransform(swigCPtr, this); }
 
   /**
-   *  4x4 tiled model transformation matrix.
+   *  Reference coordinate system, may be null.
    */
-  public Matrix4x4d getTransform() {
-    return new Matrix4x4d(MetashapeJNI.TiledModel_getTransform(swigCPtr, this), true);
+  public void setCoordinateSystem(Optional<CoordinateSystem> crs) {
+    MetashapeJNI.TiledModel_setCoordinateSystem(swigCPtr, this, crs.isPresent() ? CoordinateSystem.getCPtr(crs.get()) : 0);
   }
 
   /**
    *  Reference coordinate system, may be null.
    */
-  public void setCoordinateSystem(CoordinateSystem crs) {
-    MetashapeJNI.TiledModel_setCoordinateSystem(swigCPtr, this, crs == null ? 0 : CoordinateSystem.getCPtr(crs), crs);
-  }
-
-  /**
-   *  Reference coordinate system, may be null.
-   */
-  public CoordinateSystem getCoordinateSystem() {
+  public Optional<CoordinateSystem> getCoordinateSystem() {
     long ptr = MetashapeJNI.TiledModel_getCoordinateSystem(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
@@ -150,12 +137,9 @@ public class TiledModel {
    * @param target Point on the ray.<br>
    * @return Coordinates of the intersection point, may be null.
    */
-  public Vector3d pickPoint(Vector3d origin, Vector3d target) {
-    long ptr = MetashapeJNI.TiledModel_pickPoint(swigCPtr, this, Vector3d.getCPtr(origin), origin, Vector3d.getCPtr(target), target);
-    if (ptr == 0)
-        return null;
-    return new Vector3d(ptr, true);
-  }
+  public Optional<Vector> pickPoint(Vector origin, Vector target) {
+	Vector values = MetashapeJNI.TiledModel_pickPoint(swigCPtr, this, origin, target);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    * Generate tiled model preview image.<br>
@@ -164,8 +148,8 @@ public class TiledModel {
    * @param transform 4x4 viewpoint transformation matrix.<br>
    * @return Preview image.
    */
-  public Image renderPreview(long width, long height, Matrix4x4d transform, Progress progress) {
-    return new Image(MetashapeJNI.TiledModel_renderPreview(swigCPtr, this, width, height, Matrix4x4d.getCPtr(transform), transform, progress), true);
+  public Image renderPreview(long width, long height, Matrix transform, Progress progress) {
+    return new Image(MetashapeJNI.TiledModel_renderPreview(swigCPtr, this, width, height, transform, progress), true);
   }
 
 }

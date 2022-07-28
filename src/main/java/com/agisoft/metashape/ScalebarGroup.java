@@ -8,20 +8,24 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * ScalebarGroup objects define groups of multiple scale bars. The grouping is established by<br>
  * assignment of a ScalebarGroup instance to the Scalebar.group attribute of participating scale bars.
  */
-public class ScalebarGroup {
+public class ScalebarGroup implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public ScalebarGroup(long cPtr, boolean cMemoryOwn) {
+  protected ScalebarGroup(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(ScalebarGroup obj) {
+  protected static long getCPtr(ScalebarGroup obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -40,22 +44,13 @@ public class ScalebarGroup {
     }
   }
 
-  public static long[] cArrayUnwrap(ScalebarGroup[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = ScalebarGroup.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static ScalebarGroup[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    ScalebarGroup[] arrayWrapper = new ScalebarGroup[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new ScalebarGroup(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public ScalebarGroup(ScalebarGroup group) {
-    this(MetashapeJNI.new_ScalebarGroup(ScalebarGroup.getCPtr(group), group), true);
+  public ScalebarGroup(ScalebarGroup scalebar_group) {
+    this(MetashapeJNI.new_ScalebarGroup(ScalebarGroup.getCPtr(scalebar_group), scalebar_group), true);
   }
 
   /**
@@ -68,11 +63,11 @@ public class ScalebarGroup {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.ScalebarGroup_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**

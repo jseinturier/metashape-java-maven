@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Digital elevation model.
  */
-public class Elevation {
+public class Elevation implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Elevation(long cPtr, boolean cMemoryOwn) {
+  protected Elevation(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Elevation obj) {
+  protected static long getCPtr(Elevation obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class Elevation {
     }
   }
 
-  public static long[] cArrayUnwrap(Elevation[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Elevation.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Elevation[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Elevation[] arrayWrapper = new Elevation[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Elevation(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public Elevation() {
-    this(MetashapeJNI.new_Elevation__SWIG_0(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   public Elevation(Elevation elevation) {
-    this(MetashapeJNI.new_Elevation__SWIG_1(Elevation.getCPtr(elevation), elevation), true);
+    this(MetashapeJNI.new_Elevation(Elevation.getCPtr(elevation), elevation), true);
   }
 
   /**
@@ -71,11 +62,11 @@ public class Elevation {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Elevation_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -102,16 +93,14 @@ public class Elevation {
   /**
    *  Elevation model meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Elevation_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Elevation_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Elevation model meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Elevation_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Elevation_getMeta(swigCPtr, this); }
 
   /**
    *  Elevation model width.
@@ -130,16 +119,12 @@ public class Elevation {
   /**
    *  Coordinates of the top left corner.
    */
-  public Vector2d getTopLeft() {
-    return new Vector2d(MetashapeJNI.Elevation_getTopLeft(swigCPtr, this), true);
-  }
+  public Vector getTopLeft() { return MetashapeJNI.Elevation_getTopLeft(swigCPtr, this); }
 
   /**
    *  Coordinates of the bottom right corner.
    */
-  public Vector2d getBottomRight() {
-    return new Vector2d(MetashapeJNI.Elevation_getBottomRight(swigCPtr, this), true);
-  }
+  public Vector getBottomRight() { return MetashapeJNI.Elevation_getBottomRight(swigCPtr, this); }
 
   /**
    *  Projection of elevation model.

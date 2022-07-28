@@ -8,6 +8,10 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * A Chunk object.<br>
  * <br>
@@ -18,16 +22,16 @@ package com.agisoft.metashape;
  * New components can be created using corresponding addXXX methods (addSensor, addCamera, addCameraGroup, addMarker, addScalebar, addFrame).<br>
  * Removal of components is performed using corresponding removeXXX methods.
  */
-public class Chunk {
+public class Chunk implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Chunk(long cPtr, boolean cMemoryOwn) {
+  protected Chunk(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Chunk obj) {
+  protected static long getCPtr(Chunk obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -46,18 +50,9 @@ public class Chunk {
     }
   }
 
-  public static long[] cArrayUnwrap(Chunk[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Chunk.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Chunk[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Chunk[] arrayWrapper = new Chunk[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Chunk(cArray[i], cMemoryOwn);
-    return arrayWrapper;
+  @Override
+  public void close() {
+    delete();
   }
 
   public Chunk(Chunk chunk) {
@@ -95,11 +90,11 @@ public class Chunk {
   /**
    *  Document container, may be null.
    */
-  public Document getDocument() {
+  public Optional<Document> getDocument() {
     long ptr = MetashapeJNI.Chunk_getDocument(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Document(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Document(ptr, true));
   }
 
   /**
@@ -147,47 +142,47 @@ public class Chunk {
   /**
    *  List of frames in the chunk.
    */
-  public Chunk[] getFrames() { return Chunk.cArrayWrap(MetashapeJNI.Chunk_getFrames(swigCPtr, this), true); }
+  public Chunk[] getFrames() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getFrames(swigCPtr, this), true, Chunk.class); }
 
   /**
    *  List of sensors in the chunk.
    */
-  public Sensor[] getSensors() { return Sensor.cArrayWrap(MetashapeJNI.Chunk_getSensors(swigCPtr, this), true); }
+  public Sensor[] getSensors() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getSensors(swigCPtr, this), true, Sensor.class); }
 
   /**
    *  List of camera groups in the chunk.
    */
-  public CameraGroup[] getCameraGroups() { return CameraGroup.cArrayWrap(MetashapeJNI.Chunk_getCameraGroups(swigCPtr, this), true); }
+  public CameraGroup[] getCameraGroups() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getCameraGroups(swigCPtr, this), true, CameraGroup.class); }
 
   /**
    *  List of marker groups in the chunk.
    */
-  public MarkerGroup[] getMarkerGroups() { return MarkerGroup.cArrayWrap(MetashapeJNI.Chunk_getMarkerGroups(swigCPtr, this), true); }
+  public MarkerGroup[] getMarkerGroups() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getMarkerGroups(swigCPtr, this), true, MarkerGroup.class); }
 
   /**
    *  List of scale bar groups in the chunk.
    */
-  public ScalebarGroup[] getScalebarGroups() { return ScalebarGroup.cArrayWrap(MetashapeJNI.Chunk_getScalebarGroups(swigCPtr, this), true); }
+  public ScalebarGroup[] getScalebarGroups() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getScalebarGroups(swigCPtr, this), true, ScalebarGroup.class); }
 
   /**
    *  List of Regular and Keyframe cameras in the chunk.
    */
-  public Camera[] getCameras() { return Camera.cArrayWrap(MetashapeJNI.Chunk_getCameras(swigCPtr, this), true); }
+  public Camera[] getCameras() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getCameras(swigCPtr, this), true, Camera.class); }
 
   /**
    *  List of Regular, Vertex and Fiducial markers in the chunk.
    */
-  public Marker[] getMarkers() { return Marker.cArrayWrap(MetashapeJNI.Chunk_getMarkers(swigCPtr, this), true); }
+  public Marker[] getMarkers() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getMarkers(swigCPtr, this), true, Marker.class); }
 
   /**
    *  List of scale bars in the chunk.
    */
-  public Scalebar[] getScalebars() { return Scalebar.cArrayWrap(MetashapeJNI.Chunk_getScalebars(swigCPtr, this), true); }
+  public Scalebar[] getScalebars() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getScalebars(swigCPtr, this), true, Scalebar.class); }
 
   /**
    *  List of camera tracks in the chunk.
    */
-  public CameraTrack[] getCameraTracks() { return CameraTrack.cArrayWrap(MetashapeJNI.Chunk_getCameraTracks(swigCPtr, this), true); }
+  public CameraTrack[] getCameraTracks() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getCameraTracks(swigCPtr, this), true, CameraTrack.class); }
 
   /**
    *  List of frame keys in the chunk.
@@ -237,91 +232,91 @@ public class Chunk {
   /**
    *  Frame with specified key, may be null.
    */
-  public Chunk getFrame(int key) {
+  public Optional<Chunk> getFrame(int key) {
     long ptr = MetashapeJNI.Chunk_getFrame(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
    *  Sensor with specified key, may be null.
    */
-  public Sensor getSensor(int key) {
+  public Optional<Sensor> getSensor(int key) {
     long ptr = MetashapeJNI.Chunk_getSensor(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Sensor(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Sensor(ptr, true));
   }
 
   /**
    *  Camera group with specified key, may be null.
    */
-  public CameraGroup getCameraGroup(int key) {
+  public Optional<CameraGroup> getCameraGroup(int key) {
     long ptr = MetashapeJNI.Chunk_getCameraGroup(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new CameraGroup(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CameraGroup(ptr, true));
   }
 
   /**
    *  Marker group with specified key, may be null.
    */
-  public MarkerGroup getMarkerGroup(int key) {
+  public Optional<MarkerGroup> getMarkerGroup(int key) {
     long ptr = MetashapeJNI.Chunk_getMarkerGroup(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new MarkerGroup(ptr, true);
+        return Optional.empty();
+    return Optional.of(new MarkerGroup(ptr, true));
   }
 
   /**
    *  Scale bar group with specified key, may be null.
    */
-  public ScalebarGroup getScalebarGroup(int key) {
+  public Optional<ScalebarGroup> getScalebarGroup(int key) {
     long ptr = MetashapeJNI.Chunk_getScalebarGroup(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new ScalebarGroup(ptr, true);
+        return Optional.empty();
+    return Optional.of(new ScalebarGroup(ptr, true));
   }
 
   /**
    *  Camera with specified key, may be null.
    */
-  public Camera getCamera(int key) {
+  public Optional<Camera> getCamera(int key) {
     long ptr = MetashapeJNI.Chunk_getCamera(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Camera(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Camera(ptr, true));
   }
 
   /**
    *  Marker with specified key, may be null.
    */
-  public Marker getMarker(int key) {
+  public Optional<Marker> getMarker(int key) {
     long ptr = MetashapeJNI.Chunk_getMarker(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Marker(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Marker(ptr, true));
   }
 
   /**
    *  Scale bar with specified key, may be null.
    */
-  public Scalebar getScalebar(int key) {
+  public Optional<Scalebar> getScalebar(int key) {
     long ptr = MetashapeJNI.Chunk_getScalebar(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new Scalebar(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Scalebar(ptr, true));
   }
 
   /**
    *  Camera track with specified key, may be null.
    */
-  public CameraTrack getCameraTrack(int key) {
+  public Optional<CameraTrack> getCameraTrack(int key) {
     long ptr = MetashapeJNI.Chunk_getCameraTrack(swigCPtr, this, key);
     if (ptr == 0)
-        return null;
-    return new CameraTrack(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CameraTrack(ptr, true));
   }
 
   /**
@@ -386,8 +381,8 @@ public class Chunk {
    * @param visibility Enables visibility check during projection assignment.<br>
    * @return Created marker.
    */
-  public Marker addMarker(Vector3d point, boolean visibility) {
-    return new Marker(MetashapeJNI.Chunk_addMarker__SWIG_1(swigCPtr, this, Vector3d.getCPtr(point), point, visibility), true);
+  public Marker addMarker(Vector point, boolean visibility) {
+    return new Marker(MetashapeJNI.Chunk_addMarker__SWIG_1(swigCPtr, this, point, visibility), true);
   }
 
   /**
@@ -499,50 +494,48 @@ public class Chunk {
   /**
    *  Coordinate system used for camera reference data, may be null.
    */
-  public void setCameraCoordinateSystem(CoordinateSystem crs) {
-    MetashapeJNI.Chunk_setCameraCoordinateSystem(swigCPtr, this, crs == null ? 0 : CoordinateSystem.getCPtr(crs), crs);
+  public void setCameraCoordinateSystem(Optional<CoordinateSystem> crs) {
+    MetashapeJNI.Chunk_setCameraCoordinateSystem(swigCPtr, this, crs.isPresent() ? CoordinateSystem.getCPtr(crs.get()) : 0);
   }
 
   /**
    *  Coordinate system used for camera reference data, may be null.
    */
-  public CoordinateSystem getCameraCoordinateSystem() {
+  public Optional<CoordinateSystem> getCameraCoordinateSystem() {
     long ptr = MetashapeJNI.Chunk_getCameraCoordinateSystem(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
    *  Coordinate system used for marker reference data, may be null.
    */
-  public void setMarkerCoordinateSystem(CoordinateSystem crs) {
-    MetashapeJNI.Chunk_setMarkerCoordinateSystem(swigCPtr, this, crs == null ? 0 : CoordinateSystem.getCPtr(crs), crs);
+  public void setMarkerCoordinateSystem(Optional<CoordinateSystem> crs) {
+    MetashapeJNI.Chunk_setMarkerCoordinateSystem(swigCPtr, this, crs.isPresent() ? CoordinateSystem.getCPtr(crs.get()) : 0);
   }
 
   /**
    *  Coordinate system used for marker reference data, may be null.
    */
-  public CoordinateSystem getMarkerCoordinateSystem() {
+  public Optional<CoordinateSystem> getMarkerCoordinateSystem() {
     long ptr = MetashapeJNI.Chunk_getMarkerCoordinateSystem(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
    *  Transformation parameters specifying chunk location in the world coordinate system.
    */
   public void setTransform(Transform transform) {
-    MetashapeJNI.Chunk_setTransform(swigCPtr, this, Transform.getCPtr(transform), transform);
+    MetashapeJNI.Chunk_setTransform(swigCPtr, this, transform);
   }
 
   /**
    *  Transformation parameters specifying chunk location in the world coordinate system.
    */
-  public Transform getTransform() {
-    return new Transform(MetashapeJNI.Chunk_getTransform(swigCPtr, this), true);
-  }
+  public Transform getTransform() { return MetashapeJNI.Chunk_getTransform(swigCPtr, this); }
 
   public void resetTransform() {
     MetashapeJNI.Chunk_resetTransform(swigCPtr, this);
@@ -563,15 +556,13 @@ public class Chunk {
    *  Reconstruction volume selection.
    */
   public void setRegion(Region region) {
-    MetashapeJNI.Chunk_setRegion(swigCPtr, this, Region.getCPtr(region), region);
+    MetashapeJNI.Chunk_setRegion(swigCPtr, this, region);
   }
 
   /**
    *  Reconstruction volume selection.
    */
-  public Region getRegion() {
-    return new Region(MetashapeJNI.Chunk_getRegion(swigCPtr, this), true);
-  }
+  public Region getRegion() { return MetashapeJNI.Chunk_getRegion(swigCPtr, this); }
 
   /**
    *  Reset reconstruction volume selector to default position.
@@ -583,19 +574,16 @@ public class Chunk {
   /**
    *  CIR calibration matrix, may be null.
    */
-  public void setCirCalibration(Matrix3x3d calibration) {
-    MetashapeJNI.Chunk_setCirCalibration(swigCPtr, this, calibration == null ? 0 : Matrix3x3d.getCPtr(calibration), calibration);
+  public void setCirCalibration(Optional<Matrix> calibration) {
+    MetashapeJNI.Chunk_setCirCalibration(swigCPtr, this, calibration.isPresent() ? calibration.get() : null);
   }
 
   /**
    *  CIR calibration matrix, may be null.
    */
-  public Matrix3x3d getCirCalibration() {
-    long ptr = MetashapeJNI.Chunk_getCirCalibration(swigCPtr, this);
-    if (ptr == 0)
-        return null;
-    return new Matrix3x3d(ptr, true);
-  }
+  public Optional<Matrix> getCirCalibration() {
+	Matrix values = MetashapeJNI.Chunk_getCirCalibration(swigCPtr, this);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    *  Estimate CIR calibration matrix.
@@ -607,61 +595,55 @@ public class Chunk {
   /**
    *  Raster transform, may be null.
    */
-  public void setRasterTransform(RasterTransform transform) {
-    MetashapeJNI.Chunk_setRasterTransform(swigCPtr, this, transform == null ? 0 : RasterTransform.getCPtr(transform), transform);
+  public void setRasterTransform(Optional<RasterTransform> transform) {
+    MetashapeJNI.Chunk_setRasterTransform(swigCPtr, this, transform.isPresent() ? RasterTransform.getCPtr(transform.get()) : 0);
   }
 
   /**
    *  Raster transform, may be null.
    */
-  public RasterTransform getRasterTransform() {
+  public Optional<RasterTransform> getRasterTransform() {
     long ptr = MetashapeJNI.Chunk_getRasterTransform(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new RasterTransform(ptr, true);
+        return Optional.empty();
+    return Optional.of(new RasterTransform(ptr, true));
   }
 
   /**
    *  Expected accuracy of camera coordinates in meters.
    */
-  public void setCameraLocationAccuracy(Vector3d accuracy) {
-    MetashapeJNI.Chunk_setCameraLocationAccuracy(swigCPtr, this, Vector3d.getCPtr(accuracy), accuracy);
+  public void setCameraLocationAccuracy(Vector accuracy) {
+    MetashapeJNI.Chunk_setCameraLocationAccuracy(swigCPtr, this, accuracy);
   }
 
   /**
    *  Expected accuracy of camera coordinates in meters.
    */
-  public Vector3d getCameraLocationAccuracy() {
-    return new Vector3d(MetashapeJNI.Chunk_getCameraLocationAccuracy(swigCPtr, this), true);
+  public Vector getCameraLocationAccuracy() { return MetashapeJNI.Chunk_getCameraLocationAccuracy(swigCPtr, this); }
+
+  /**
+   *  Expected accuracy of camera orientation angles in degrees.
+   */
+  public void setCameraOrientationAccuracy(Vector accuracy) {
+    MetashapeJNI.Chunk_setCameraOrientationAccuracy(swigCPtr, this, accuracy);
   }
 
   /**
    *  Expected accuracy of camera orientation angles in degrees.
    */
-  public void setCameraOrientationAccuracy(Vector3d accuracy) {
-    MetashapeJNI.Chunk_setCameraOrientationAccuracy(swigCPtr, this, Vector3d.getCPtr(accuracy), accuracy);
-  }
+  public Vector getCameraOrientationAccuracy() { return MetashapeJNI.Chunk_getCameraOrientationAccuracy(swigCPtr, this); }
 
   /**
-   *  Expected accuracy of camera orientation angles in degrees.
+   *  Expected accuracy of marker coordinates in meters.
    */
-  public Vector3d getCameraOrientationAccuracy() {
-    return new Vector3d(MetashapeJNI.Chunk_getCameraOrientationAccuracy(swigCPtr, this), true);
+  public void setMarkerLocationAccuracy(Vector accuracy) {
+    MetashapeJNI.Chunk_setMarkerLocationAccuracy(swigCPtr, this, accuracy);
   }
 
   /**
    *  Expected accuracy of marker coordinates in meters.
    */
-  public void setMarkerLocationAccuracy(Vector3d accuracy) {
-    MetashapeJNI.Chunk_setMarkerLocationAccuracy(swigCPtr, this, Vector3d.getCPtr(accuracy), accuracy);
-  }
-
-  /**
-   *  Expected accuracy of marker coordinates in meters.
-   */
-  public Vector3d getMarkerLocationAccuracy() {
-    return new Vector3d(MetashapeJNI.Chunk_getMarkerLocationAccuracy(swigCPtr, this), true);
-  }
+  public Vector getMarkerLocationAccuracy() { return MetashapeJNI.Chunk_getMarkerLocationAccuracy(swigCPtr, this); }
 
   /**
    *  Expected accuracy of marker projections in pixels.
@@ -766,97 +748,97 @@ public class Chunk {
   }
 
   /**
-   *  Generated sparse point cloud, may be null.
+   *  Generated tie point cloud, may be null.
    */
-  public void setPointCloud(PointCloud point_cloud) {
-    MetashapeJNI.Chunk_setPointCloud(swigCPtr, this, point_cloud == null ? 0 : PointCloud.getCPtr(point_cloud), point_cloud);
+  public void setPointCloud(Optional<PointCloud> point_cloud) {
+    MetashapeJNI.Chunk_setPointCloud(swigCPtr, this, point_cloud.isPresent() ? PointCloud.getCPtr(point_cloud.get()) : 0);
   }
 
   /**
-   *  Generated sparse point cloud, may be null.
+   *  Generated tie point cloud, may be null.
    */
-  public PointCloud getPointCloud() {
+  public Optional<PointCloud> getPointCloud() {
     long ptr = MetashapeJNI.Chunk_getPointCloud(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new PointCloud(ptr, true);
+        return Optional.empty();
+    return Optional.of(new PointCloud(ptr, true));
   }
 
   /**
    *  Default dense point cloud for the current frame, may be null.
    */
-  public DenseCloud getDenseCloud() {
+  public Optional<DenseCloud> getDenseCloud() {
     long ptr = MetashapeJNI.Chunk_getDenseCloud(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new DenseCloud(ptr, true);
+        return Optional.empty();
+    return Optional.of(new DenseCloud(ptr, true));
   }
 
   /**
    *  Default depth maps set for the current frame, may be null.
    */
-  public DepthMaps getDepthMaps() {
+  public Optional<DepthMaps> getDepthMaps() {
     long ptr = MetashapeJNI.Chunk_getDepthMaps(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new DepthMaps(ptr, true);
+        return Optional.empty();
+    return Optional.of(new DepthMaps(ptr, true));
   }
 
   /**
    *  Default model for the current frame, may be null.
    */
-  public Model getModel() {
+  public Optional<Model> getModel() {
     long ptr = MetashapeJNI.Chunk_getModel(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Model(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Model(ptr, true));
   }
 
   /**
    *  Default tiled model for the current frame, may be null.
    */
-  public TiledModel getTiledModel() {
+  public Optional<TiledModel> getTiledModel() {
     long ptr = MetashapeJNI.Chunk_getTiledModel(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new TiledModel(ptr, true);
+        return Optional.empty();
+    return Optional.of(new TiledModel(ptr, true));
   }
 
   /**
    *  Default elevation model for the current frame, may be null.
    */
-  public Elevation getElevation() {
+  public Optional<Elevation> getElevation() {
     long ptr = MetashapeJNI.Chunk_getElevation(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Elevation(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Elevation(ptr, true));
   }
 
   /**
    *  Default orthomosaic for the current frame, may be null.
    */
-  public Orthomosaic getOrthomosaic() {
+  public Optional<Orthomosaic> getOrthomosaic() {
     long ptr = MetashapeJNI.Chunk_getOrthomosaic(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Orthomosaic(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Orthomosaic(ptr, true));
   }
 
   /**
    *  Shapes for the current frame, may be null.
    */
-  public void setShapes(Shapes shapes) {
-    MetashapeJNI.Chunk_setShapes(swigCPtr, this, shapes == null ? 0 : Shapes.getCPtr(shapes), shapes);
+  public void setShapes(Optional<Shapes> shapes) {
+    MetashapeJNI.Chunk_setShapes(swigCPtr, this, shapes.isPresent() ? Shapes.getCPtr(shapes.get()) : 0);
   }
 
   /**
    *  Shapes for the current frame, may be null.
    */
-  public Shapes getShapes() {
+  public Optional<Shapes> getShapes() {
     long ptr = MetashapeJNI.Chunk_getShapes(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Shapes(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Shapes(ptr, true));
   }
 
   public void removePointCloud() {
@@ -894,32 +876,32 @@ public class Chunk {
   /**
    *  List of depth maps sets for the current frame.
    */
-  public DepthMaps[] getDepthMapsSets() { return DepthMaps.cArrayWrap(MetashapeJNI.Chunk_getDepthMapsSets(swigCPtr, this), true); }
+  public DepthMaps[] getDepthMapsSets() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getDepthMapsSets(swigCPtr, this), true, DepthMaps.class); }
 
   /**
    *  List of dense clouds for the current frame.
    */
-  public DenseCloud[] getDenseClouds() { return DenseCloud.cArrayWrap(MetashapeJNI.Chunk_getDenseClouds(swigCPtr, this), true); }
+  public DenseCloud[] getDenseClouds() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getDenseClouds(swigCPtr, this), true, DenseCloud.class); }
 
   /**
    *  List of models for the current frame.
    */
-  public Model[] getModels() { return Model.cArrayWrap(MetashapeJNI.Chunk_getModels(swigCPtr, this), true); }
+  public Model[] getModels() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getModels(swigCPtr, this), true, Model.class); }
 
   /**
    *  List of tiled models for the current frame.
    */
-  public TiledModel[] getTiledModels() { return TiledModel.cArrayWrap(MetashapeJNI.Chunk_getTiledModels(swigCPtr, this), true); }
+  public TiledModel[] getTiledModels() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getTiledModels(swigCPtr, this), true, TiledModel.class); }
 
   /**
    *  List of elevation models for the current frame.
    */
-  public Elevation[] getElevations() { return Elevation.cArrayWrap(MetashapeJNI.Chunk_getElevations(swigCPtr, this), true); }
+  public Elevation[] getElevations() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getElevations(swigCPtr, this), true, Elevation.class); }
 
   /**
    *  List of orthomosaics for the current frame.
    */
-  public Orthomosaic[] getOrthomosaics() { return Orthomosaic.cArrayWrap(MetashapeJNI.Chunk_getOrthomosaics(swigCPtr, this), true); }
+  public Orthomosaic[] getOrthomosaics() { return SwigHelpers.cArrayWrap(MetashapeJNI.Chunk_getOrthomosaics(swigCPtr, this), true, Orthomosaic.class); }
 
   public void setDepthMapsKey(int key) {
     MetashapeJNI.Chunk_setDepthMapsKey(swigCPtr, this, key);
@@ -948,16 +930,14 @@ public class Chunk {
   /**
    *  Chunk meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Chunk_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Chunk_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Chunk meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Chunk_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Chunk_getMeta(swigCPtr, this); }
 
   /**
    * Import camera locations from EXIF meta data.<br>
@@ -988,8 +968,8 @@ public class Chunk {
    * @param point_size Point size.<br>
    * @return Preview image.
    */
-  public Image renderPreview(long width, long height, Matrix4x4d transform, int point_size, Progress progress) {
-    return new Image(MetashapeJNI.Chunk_renderPreview(swigCPtr, this, width, height, Matrix4x4d.getCPtr(transform), transform, point_size, progress), true);
+  public Image renderPreview(long width, long height, Matrix transform, int point_size, Progress progress) {
+    return new Image(MetashapeJNI.Chunk_renderPreview(swigCPtr, this, width, height, transform, point_size, progress), true);
   }
 
 }

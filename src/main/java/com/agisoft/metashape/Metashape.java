@@ -19,22 +19,15 @@ public class Metashape {
   /**
    *  GPU device bit mask: 1 - use device, 0 - do not use (i.e. value 5 enables device number 0 and 2).
    */
-  public static long getGpuMask() {
-    return MetashapeJNI.getGpuMask();
-  }
-
-  /**
-   *  GPU device bit mask: 1 - use device, 0 - do not use (i.e. value 5 enables device number 0 and 2).
-   */
   public static void setGpuMask(long mask) {
     MetashapeJNI.setGpuMask(mask);
   }
 
   /**
-   *  Use CPU when GPU is active.
+   *  GPU device bit mask: 1 - use device, 0 - do not use (i.e. value 5 enables device number 0 and 2).
    */
-  public static boolean isCpuEnabled() {
-    return MetashapeJNI.isCpuEnabled();
+  public static long getGpuMask() {
+    return MetashapeJNI.getGpuMask();
   }
 
   /**
@@ -45,10 +38,38 @@ public class Metashape {
   }
 
   /**
-   *  Network data root path.
+   *  Use CPU when GPU is active.
    */
-  public static String getNetworkPath() {
-    return MetashapeJNI.getNetworkPath();
+  public static boolean isCpuEnabled() {
+    return MetashapeJNI.isCpuEnabled();
+  }
+
+  /**
+   *  Project compression level.
+   */
+  public static void setProjectCompression(int compression) {
+    MetashapeJNI.setProjectCompression(compression);
+  }
+
+  /**
+   *  Project compression level.
+   */
+  public static int getProjectCompression() {
+    return MetashapeJNI.getProjectCompression();
+  }
+
+  /**
+   *  Store absolute image paths in project files.
+   */
+  public static void setProjectAbsolutePaths(boolean enable) {
+    MetashapeJNI.setProjectAbsolutePaths(enable);
+  }
+
+  /**
+   *  Store absolute image paths in project files.
+   */
+  public static boolean getProjectAbsolutePaths() {
+    return MetashapeJNI.getProjectAbsolutePaths();
   }
 
   /**
@@ -56,6 +77,13 @@ public class Metashape {
    */
   public static void setNetworkPath(String path) {
     MetashapeJNI.setNetworkPath(path);
+  }
+
+  /**
+   *  Network data root path.
+   */
+  public static String getNetworkPath() {
+    return MetashapeJNI.getNetworkPath();
   }
 
   /**

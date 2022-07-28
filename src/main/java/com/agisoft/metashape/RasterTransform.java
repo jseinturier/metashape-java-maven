@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Raster transform definition.
  */
-public class RasterTransform {
+public class RasterTransform implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public RasterTransform(long cPtr, boolean cMemoryOwn) {
+  protected RasterTransform(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(RasterTransform obj) {
+  protected static long getCPtr(RasterTransform obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,12 +43,17 @@ public class RasterTransform {
     }
   }
 
+  @Override
+  public void close() {
+    delete();
+  }
+
   public RasterTransform() {
     this(MetashapeJNI.new_RasterTransform__SWIG_0(), true);
   }
 
-  public RasterTransform(RasterTransform transform) {
-    this(MetashapeJNI.new_RasterTransform__SWIG_1(RasterTransform.getCPtr(transform), transform), true);
+  public RasterTransform(RasterTransform raster_transform) {
+    this(MetashapeJNI.new_RasterTransform__SWIG_1(RasterTransform.getCPtr(raster_transform), raster_transform), true);
   }
 
   /**

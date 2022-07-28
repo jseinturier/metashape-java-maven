@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Sensor {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Sensor implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Sensor(long cPtr, boolean cMemoryOwn) {
+  protected Sensor(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Sensor obj) {
+  protected static long getCPtr(Sensor obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -36,156 +40,117 @@ public class Sensor {
     }
   }
 
-  public static long[] cArrayUnwrap(Sensor[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Sensor.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Sensor[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Sensor[] arrayWrapper = new Sensor[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Sensor(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public Sensor(Sensor sensor) {
-    this(MetashapeJNI.new_Sensor(Sensor.getCPtr(sensor), sensor), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   static public class Reference {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Reference(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Reference obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Sensor_Reference(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private Optional<Vector> location;
+    private Optional<Vector> rotation;
+    private Optional<Vector> location_accuracy;
+    private Optional<Vector> rotation_accuracy;
+    private boolean location_enabled;
+    private boolean rotation_enabled;
+
     public Reference() {
-      this(MetashapeJNI.new_Sensor_Reference__SWIG_0(), true);
+      location = Optional.empty();
+      rotation = Optional.empty();
+      location_accuracy = Optional.empty();
+      rotation_accuracy = Optional.empty();
+      location_enabled = false;
+      rotation_enabled = false;
     }
-  
-    public Reference(Sensor.Reference reference) {
-      this(MetashapeJNI.new_Sensor_Reference__SWIG_1(Sensor.Reference.getCPtr(reference), reference), true);
-    }
-  
+
     /**
      *  Location enabled flag.
      */
     public void setLocationEnabled(boolean state) {
-      MetashapeJNI.Sensor_Reference_setLocationEnabled(swigCPtr, this, state);
+      location_enabled = state;
     }
-  
+
     /**
      *  Location enabled flag.
      */
     public boolean isLocationEnabled() {
-      return MetashapeJNI.Sensor_Reference_isLocationEnabled(swigCPtr, this);
+      return location_enabled;
     }
-  
+
     /**
      *  Rotation enabled flag.
      */
     public void setRotationEnabled(boolean state) {
-      MetashapeJNI.Sensor_Reference_setRotationEnabled(swigCPtr, this, state);
+      rotation_enabled = state;
     }
-  
+
     /**
      *  Rotation enabled flag.
      */
     public boolean isRotationEnabled() {
-      return MetashapeJNI.Sensor_Reference_isRotationEnabled(swigCPtr, this);
+      return rotation_enabled;
     }
-  
+
     /**
      *  Sensor coordinates, may be null.
      */
-    public void setLocation(Vector3d location) {
-      MetashapeJNI.Sensor_Reference_setLocation(swigCPtr, this, location == null ? 0 : Vector3d.getCPtr(location), location);
+    public void setLocation(Optional<Vector> location) {
+      this.location = location;
     }
-  
+
     /**
      *  Sensor coordinates, may be null.
      */
-    public Vector3d getLocation() {
-      long ptr = MetashapeJNI.Sensor_Reference_getLocation(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getLocation() {
+      return location;
     }
-  
+
     /**
      *  Sensor rotation angles, may be null.
      */
-    public void setRotation(Vector3d rotation) {
-      MetashapeJNI.Sensor_Reference_setRotation(swigCPtr, this, rotation == null ? 0 : Vector3d.getCPtr(rotation), rotation);
+    public void setRotation(Optional<Vector> rotation) {
+      this.rotation = rotation;
     }
-  
+
     /**
      *  Sensor rotation angles, may be null.
      */
-    public Vector3d getRotation() {
-      long ptr = MetashapeJNI.Sensor_Reference_getRotation(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getRotation() {
+      return rotation;
     }
-  
+
     /**
      *  Sensor location accuracy, may be null.
      */
-    public void setLocationAccuracy(Vector3d accuracy) {
-      MetashapeJNI.Sensor_Reference_setLocationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
+    public void setLocationAccuracy(Optional<Vector> accuracy) {
+      location_accuracy = accuracy;
     }
-  
+
     /**
      *  Sensor location accuracy, may be null.
      */
-    public Vector3d getLocationAccuracy() {
-      long ptr = MetashapeJNI.Sensor_Reference_getLocationAccuracy(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getLocationAccuracy() {
+      return location_accuracy;
     }
-  
+
     /**
      *  Sensor rotation accuracy, may be null.
      */
-    public void setRotationAccuracy(Vector3d accuracy) {
-      MetashapeJNI.Sensor_Reference_setRotationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
+    public void setRotationAccuracy(Optional<Vector> accuracy) {
+      rotation_accuracy = accuracy;
     }
-  
+
     /**
      *  Sensor rotation accuracy, may be null.
      */
-    public Vector3d getRotationAccuracy() {
-      long ptr = MetashapeJNI.Sensor_Reference_getRotationAccuracy(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getRotationAccuracy() {
+      return rotation_accuracy;
     }
-  
+
+  }
+
+  public Sensor(Sensor sensor) {
+    this(MetashapeJNI.new_Sensor(Sensor.getCPtr(sensor), sensor), true);
   }
 
   /**
@@ -198,11 +163,11 @@ public class Sensor {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Sensor_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -271,18 +236,18 @@ public class Sensor {
   /**
    *  Custom calibration used as initial calibration during photo alignment, may be null.
    */
-  public void setUserCalib(Calibration calibration) {
-    MetashapeJNI.Sensor_setUserCalib(swigCPtr, this, calibration == null ? 0 : Calibration.getCPtr(calibration), calibration);
+  public void setUserCalib(Optional<Calibration> calibration) {
+    MetashapeJNI.Sensor_setUserCalib(swigCPtr, this, calibration.isPresent() ? Calibration.getCPtr(calibration.get()) : 0);
   }
 
   /**
    *  Custom calibration used as initial calibration during photo alignment, may be null.
    */
-  public Calibration getUserCalib() {
+  public Optional<Calibration> getUserCalib() {
     long ptr = MetashapeJNI.Sensor_getUserCalib(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Calibration(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Calibration(ptr, true));
   }
 
   /**
@@ -337,73 +302,67 @@ public class Sensor {
   /**
    *  Sensor master, may be null.
    */
-  public void setMaster(Sensor sensor) {
-    MetashapeJNI.Sensor_setMaster(swigCPtr, this, sensor == null ? 0 : Sensor.getCPtr(sensor), sensor);
+  public void setMaster(Optional<Sensor> sensor) {
+    MetashapeJNI.Sensor_setMaster(swigCPtr, this, sensor.isPresent() ? Sensor.getCPtr(sensor.get()) : 0);
   }
 
   /**
    *  Sensor master, may be null.
    */
-  public Sensor getMaster() {
+  public Optional<Sensor> getMaster() {
     long ptr = MetashapeJNI.Sensor_getMaster(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Sensor(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Sensor(ptr, true));
   }
 
   /**
    *  Sensor reference data.
    */
   public void setReference(Sensor.Reference reference) {
-    MetashapeJNI.Sensor_setReference(swigCPtr, this, Sensor.Reference.getCPtr(reference), reference);
+    MetashapeJNI.Sensor_setReference(swigCPtr, this, reference);
   }
 
   /**
    *  Sensor reference data.
    */
-  public Sensor.Reference getReference() {
-    return new Sensor.Reference(MetashapeJNI.Sensor_getReference(swigCPtr, this), true);
-  }
+  public Sensor.Reference getReference() { return MetashapeJNI.Sensor_getReference(swigCPtr, this); }
 
   /**
    *  GPS antenna correction.
    */
   public void setAntenna(Antenna antenna) {
-    MetashapeJNI.Sensor_setAntenna(swigCPtr, this, Antenna.getCPtr(antenna), antenna);
+    MetashapeJNI.Sensor_setAntenna(swigCPtr, this, antenna);
   }
 
   /**
    *  GPS antenna correction.
    */
-  public Antenna getAntenna() {
-    return new Antenna(MetashapeJNI.Sensor_getAntenna(swigCPtr, this), true);
-  }
+  public Antenna getAntenna() { return MetashapeJNI.Sensor_getAntenna(swigCPtr, this); }
 
   /**
    *  Vignetting for each band.
    */
   public void setVignetting(Vignetting[] vignetting) {
-    MetashapeJNI.Sensor_setVignetting(swigCPtr, this, Vignetting.cArrayUnwrap(vignetting));
+    MetashapeJNI.Sensor_setVignetting(swigCPtr, this, vignetting);
   }
 
   /**
    *  Vignetting for each band.
    */
-  public Vignetting[] getVignetting() { return Vignetting.cArrayWrap(MetashapeJNI.Sensor_getVignetting(swigCPtr, this), true); }
+  public Vignetting[] getVignetting() { return MetashapeJNI.Sensor_getVignetting(swigCPtr, this); }
 
   /**
    *  Sensor meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Sensor_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Sensor_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Sensor meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Sensor_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Sensor_getMeta(swigCPtr, this); }
 
   /**
    *  Make this sensor master in the multi-camera system.

@@ -8,6 +8,10 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * CameraGroup objects define groups of multiple cameras. The grouping is established by<br>
  * assignment of a CameraGroup instance to the Camera.group attribute of participating cameras.<br>
@@ -15,16 +19,16 @@ package com.agisoft.metashape;
  * The type attribute of CameraGroup instances defines the effect of such grouping on processing<br>
  * results and can be set to Folder (no effect) or Station (coincident projection centers).
  */
-public class CameraGroup {
+public class CameraGroup implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public CameraGroup(long cPtr, boolean cMemoryOwn) {
+  protected CameraGroup(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(CameraGroup obj) {
+  protected static long getCPtr(CameraGroup obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -43,22 +47,13 @@ public class CameraGroup {
     }
   }
 
-  public static long[] cArrayUnwrap(CameraGroup[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = CameraGroup.getCPtr(arrayWrapper[i]);
-    return cArray;
+  @Override
+  public void close() {
+    delete();
   }
 
-  public static CameraGroup[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    CameraGroup[] arrayWrapper = new CameraGroup[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new CameraGroup(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public CameraGroup(CameraGroup group) {
-    this(MetashapeJNI.new_CameraGroup(CameraGroup.getCPtr(group), group), true);
+  public CameraGroup(CameraGroup camera_group) {
+    this(MetashapeJNI.new_CameraGroup(CameraGroup.getCPtr(camera_group), camera_group), true);
   }
 
   /**
@@ -71,11 +66,11 @@ public class CameraGroup {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.CameraGroup_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**

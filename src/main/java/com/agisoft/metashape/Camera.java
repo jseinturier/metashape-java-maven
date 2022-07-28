@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Camera instance.
  */
-public class Camera {
+public class Camera implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Camera(long cPtr, boolean cMemoryOwn) {
+  protected Camera(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Camera obj) {
+  protected static long getCPtr(Camera obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,156 +43,117 @@ public class Camera {
     }
   }
 
-  public static long[] cArrayUnwrap(Camera[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Camera.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Camera[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Camera[] arrayWrapper = new Camera[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Camera(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public Camera(Camera camera) {
-    this(MetashapeJNI.new_Camera(Camera.getCPtr(camera), camera), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   static public class Reference {
-    private transient long swigCPtr;
-    protected transient boolean swigCMemOwn;
-  
-    public Reference(long cPtr, boolean cMemoryOwn) {
-      swigCMemOwn = cMemoryOwn;
-      swigCPtr = cPtr;
-    }
-  
-    public static long getCPtr(Reference obj) {
-      return (obj == null) ? 0 : obj.swigCPtr;
-    }
-  
-    @SuppressWarnings("deprecation")
-    protected void finalize() {
-      delete();
-    }
-  
-    public synchronized void delete() {
-      if (swigCPtr != 0) {
-        if (swigCMemOwn) {
-          swigCMemOwn = false;
-          MetashapeJNI.delete_Camera_Reference(swigCPtr);
-        }
-        swigCPtr = 0;
-      }
-    }
-  
+
+    private Optional<Vector> location;
+    private Optional<Vector> rotation;
+    private Optional<Vector> location_accuracy;
+    private Optional<Vector> rotation_accuracy;
+    private boolean location_enabled;
+    private boolean rotation_enabled;
+
     public Reference() {
-      this(MetashapeJNI.new_Camera_Reference__SWIG_0(), true);
+      location = Optional.empty();
+      rotation = Optional.empty();
+      location_accuracy = Optional.empty();
+      rotation_accuracy = Optional.empty();
+      location_enabled = false;
+      rotation_enabled = false;
     }
-  
-    public Reference(Camera.Reference reference) {
-      this(MetashapeJNI.new_Camera_Reference__SWIG_1(Camera.Reference.getCPtr(reference), reference), true);
-    }
-  
+
     /**
      *  Location enabled flag.
      */
     public void setLocationEnabled(boolean state) {
-      MetashapeJNI.Camera_Reference_setLocationEnabled(swigCPtr, this, state);
+      location_enabled = state;
     }
-  
+
     /**
      *  Location enabled flag.
      */
     public boolean isLocationEnabled() {
-      return MetashapeJNI.Camera_Reference_isLocationEnabled(swigCPtr, this);
+      return location_enabled;
     }
-  
+
     /**
      *  Rotation enabled flag.
      */
     public void setRotationEnabled(boolean state) {
-      MetashapeJNI.Camera_Reference_setRotationEnabled(swigCPtr, this, state);
+      rotation_enabled = state;
     }
-  
+
     /**
      *  Rotation enabled flag.
      */
     public boolean isRotationEnabled() {
-      return MetashapeJNI.Camera_Reference_isRotationEnabled(swigCPtr, this);
+      return rotation_enabled;
     }
-  
+
     /**
      *  Camera coordinates, may be null.
      */
-    public void setLocation(Vector3d location) {
-      MetashapeJNI.Camera_Reference_setLocation(swigCPtr, this, location == null ? 0 : Vector3d.getCPtr(location), location);
+    public void setLocation(Optional<Vector> location) {
+      this.location = location;
     }
-  
+
     /**
      *  Camera coordinates, may be null.
      */
-    public Vector3d getLocation() {
-      long ptr = MetashapeJNI.Camera_Reference_getLocation(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getLocation() {
+      return location;
     }
-  
+
     /**
      *  Camera rotation angles, may be null.
      */
-    public void setRotation(Vector3d rotation) {
-      MetashapeJNI.Camera_Reference_setRotation(swigCPtr, this, rotation == null ? 0 : Vector3d.getCPtr(rotation), rotation);
+    public void setRotation(Optional<Vector> rotation) {
+      this.rotation = rotation;
     }
-  
+
     /**
      *  Camera rotation angles, may be null.
      */
-    public Vector3d getRotation() {
-      long ptr = MetashapeJNI.Camera_Reference_getRotation(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getRotation() {
+      return rotation;
     }
-  
+
     /**
      *  Camera location accuracy, may be null.
      */
-    public void setLocationAccuracy(Vector3d accuracy) {
-      MetashapeJNI.Camera_Reference_setLocationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
+    public void setLocationAccuracy(Optional<Vector> accuracy) {
+      location_accuracy = accuracy;
     }
-  
+
     /**
      *  Camera location accuracy, may be null.
      */
-    public Vector3d getLocationAccuracy() {
-      long ptr = MetashapeJNI.Camera_Reference_getLocationAccuracy(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getLocationAccuracy() {
+      return location_accuracy;
     }
-  
+
     /**
      *  Camera rotation accuracy, may be null.
      */
-    public void setRotationAccuracy(Vector3d accuracy) {
-      MetashapeJNI.Camera_Reference_setRotationAccuracy(swigCPtr, this, accuracy == null ? 0 : Vector3d.getCPtr(accuracy), accuracy);
+    public void setRotationAccuracy(Optional<Vector> accuracy) {
+      rotation_accuracy = accuracy;
     }
-  
+
     /**
      *  Camera rotation accuracy, may be null.
      */
-    public Vector3d getRotationAccuracy() {
-      long ptr = MetashapeJNI.Camera_Reference_getRotationAccuracy(swigCPtr, this);
-      if (ptr == 0)
-          return null;
-      return new Vector3d(ptr, true);
+    public Optional<Vector> getRotationAccuracy() {
+      return rotation_accuracy;
     }
-  
+
+  }
+
+  public Camera(Camera camera) {
+    this(MetashapeJNI.new_Camera(Camera.getCPtr(camera), camera), true);
   }
 
   /**
@@ -201,11 +166,11 @@ public class Camera {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.Camera_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -281,208 +246,185 @@ public class Camera {
   /**
    *  Camera sensor, may be null.
    */
-  public void setSensor(Sensor sensor) {
-    MetashapeJNI.Camera_setSensor(swigCPtr, this, sensor == null ? 0 : Sensor.getCPtr(sensor), sensor);
+  public void setSensor(Optional<Sensor> sensor) {
+    MetashapeJNI.Camera_setSensor(swigCPtr, this, sensor.isPresent() ? Sensor.getCPtr(sensor.get()) : 0);
   }
 
   /**
    *  Camera sensor, may be null.
    */
-  public Sensor getSensor() {
+  public Optional<Sensor> getSensor() {
     long ptr = MetashapeJNI.Camera_getSensor(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Sensor(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Sensor(ptr, true));
   }
 
   /**
    *  Camera master, may be null.
    */
-  public void setMaster(Camera camera) {
-    MetashapeJNI.Camera_setMaster(swigCPtr, this, camera == null ? 0 : Camera.getCPtr(camera), camera);
+  public void setMaster(Optional<Camera> camera) {
+    MetashapeJNI.Camera_setMaster(swigCPtr, this, camera.isPresent() ? Camera.getCPtr(camera.get()) : 0);
   }
 
   /**
    *  Camera master, may be null.
    */
-  public Camera getMaster() {
+  public Optional<Camera> getMaster() {
     long ptr = MetashapeJNI.Camera_getMaster(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Camera(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Camera(ptr, true));
   }
 
   /**
    *  Camera group, may be null.
    */
-  public void setGroup(CameraGroup group) {
-    MetashapeJNI.Camera_setGroup(swigCPtr, this, group == null ? 0 : CameraGroup.getCPtr(group), group);
+  public void setGroup(Optional<CameraGroup> group) {
+    MetashapeJNI.Camera_setGroup(swigCPtr, this, group.isPresent() ? CameraGroup.getCPtr(group.get()) : 0);
   }
 
   /**
    *  Camera group, may be null.
    */
-  public CameraGroup getGroup() {
+  public Optional<CameraGroup> getGroup() {
     long ptr = MetashapeJNI.Camera_getGroup(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CameraGroup(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CameraGroup(ptr, true));
   }
 
   /**
    *  Camera photo, may be null.
    */
-  public void setPhoto(Photo photo) {
-    MetashapeJNI.Camera_setPhoto(swigCPtr, this, photo == null ? 0 : Photo.getCPtr(photo), photo);
+  public void setPhoto(Optional<Photo> photo) {
+    MetashapeJNI.Camera_setPhoto(swigCPtr, this, photo.isPresent() ? photo.get() : null);
   }
 
   /**
    *  Camera photo, may be null.
    */
-  public Photo getPhoto() {
-    long ptr = MetashapeJNI.Camera_getPhoto(swigCPtr, this);
-    if (ptr == 0)
-        return null;
-    return new Photo(ptr, true);
+  public Optional<Photo> getPhoto() {
+	Photo values = MetashapeJNI.Camera_getPhoto(swigCPtr, this);
+	return values == null ? Optional.empty() : Optional.of(values); }
+
+  /**
+   *  4x4 matrix describing photo location in the chunk coordinate system, may be null.
+   */
+  public void setTransform(Optional<Matrix> transform) {
+    MetashapeJNI.Camera_setTransform(swigCPtr, this, transform.isPresent() ? transform.get() : null);
   }
 
   /**
    *  4x4 matrix describing photo location in the chunk coordinate system, may be null.
    */
-  public void setTransform(Matrix4x4d transform) {
-    MetashapeJNI.Camera_setTransform(swigCPtr, this, transform == null ? 0 : Matrix4x4d.getCPtr(transform), transform);
-  }
+  public Optional<Matrix> getTransform() {
+	Matrix values = MetashapeJNI.Camera_getTransform(swigCPtr, this);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
-   *  4x4 matrix describing photo location in the chunk coordinate system, may be null.
+   *  Camera mask, may be null.
    */
-  public Matrix4x4d getTransform() {
-    long ptr = MetashapeJNI.Camera_getTransform(swigCPtr, this);
-    if (ptr == 0)
-        return null;
-    return new Matrix4x4d(ptr, true);
+  public void setMask(Optional<Image> mask) {
+    MetashapeJNI.Camera_setMask(swigCPtr, this, mask.isPresent() ? Image.getCPtr(mask.get()) : 0);
   }
 
   /**
    *  Camera mask, may be null.
    */
-  public void setMask(Image mask) {
-    MetashapeJNI.Camera_setMask(swigCPtr, this, mask == null ? 0 : Image.getCPtr(mask), mask);
-  }
-
-  /**
-   *  Camera mask, may be null.
-   */
-  public Image getMask() {
+  public Optional<Image> getMask() {
     long ptr = MetashapeJNI.Camera_getMask(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Image(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Image(ptr, true));
   }
 
   /**
    *  Camera thumbnail, may be null.
    */
-  public void setThumbnail(Image thumbnail) {
-    MetashapeJNI.Camera_setThumbnail(swigCPtr, this, thumbnail == null ? 0 : Image.getCPtr(thumbnail), thumbnail);
+  public void setThumbnail(Optional<Image> thumbnail) {
+    MetashapeJNI.Camera_setThumbnail(swigCPtr, this, thumbnail.isPresent() ? Image.getCPtr(thumbnail.get()) : 0);
   }
 
   /**
    *  Camera thumbnail, may be null.
    */
-  public Image getThumbnail() {
+  public Optional<Image> getThumbnail() {
     long ptr = MetashapeJNI.Camera_getThumbnail(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Image(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Image(ptr, true));
   }
 
   /**
    *  Camera shutter, may be null.
    */
-  public void setShutter(Shutter shutter) {
-    MetashapeJNI.Camera_setShutter(swigCPtr, this, shutter == null ? 0 : Shutter.getCPtr(shutter), shutter);
+  public void setShutter(Optional<Shutter> shutter) {
+    MetashapeJNI.Camera_setShutter(swigCPtr, this, shutter.isPresent() ? shutter.get() : null);
   }
 
   /**
    *  Camera shutter, may be null.
    */
-  public Shutter getShutter() {
-    long ptr = MetashapeJNI.Camera_getShutter(swigCPtr, this);
-    if (ptr == 0)
-        return null;
-    return new Shutter(ptr, true);
-  }
+  public Optional<Shutter> getShutter() {
+	Shutter values = MetashapeJNI.Camera_getShutter(swigCPtr, this);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    *  Vignetting for each band.
    */
   public void setVignetting(Vignetting[] vignetting) {
-    MetashapeJNI.Camera_setVignetting(swigCPtr, this, Vignetting.cArrayUnwrap(vignetting));
+    MetashapeJNI.Camera_setVignetting(swigCPtr, this, vignetting);
   }
 
   /**
    *  Vignetting for each band.
    */
-  public Vignetting[] getVignetting() { return Vignetting.cArrayWrap(MetashapeJNI.Camera_getVignetting(swigCPtr, this), true); }
+  public Vignetting[] getVignetting() { return MetashapeJNI.Camera_getVignetting(swigCPtr, this); }
 
-  public Vector3d getCenter() {
-    return new Vector3d(MetashapeJNI.Camera_getCenter(swigCPtr, this), true);
-  }
+  public Vector getCenter() { return MetashapeJNI.Camera_getCenter(swigCPtr, this); }
 
-  public Vector2d getError(Vector3d pt, Vector2d proj) {
-    return new Vector2d(MetashapeJNI.Camera_getError(swigCPtr, this, Vector3d.getCPtr(pt), pt, Vector2d.getCPtr(proj), proj), true);
-  }
+  public Vector getError(Vector pt, Vector proj) { return MetashapeJNI.Camera_getError(swigCPtr, this, pt, proj); }
 
-  public Vector2d project(Vector3d pt) {
-    return new Vector2d(MetashapeJNI.Camera_project(swigCPtr, this, Vector3d.getCPtr(pt), pt), true);
-  }
+  public Vector project(Vector pt) { return MetashapeJNI.Camera_project(swigCPtr, this, pt); }
 
-  public Vector3d unproject(Vector2d proj) {
-    return new Vector3d(MetashapeJNI.Camera_unproject__SWIG_0(swigCPtr, this, Vector2d.getCPtr(proj), proj), true);
-  }
+  public Vector unproject(Vector proj) { return MetashapeJNI.Camera_unproject(swigCPtr, this, proj); }
 
-  public Vector3d unproject(Vector3d proj) {
-    return new Vector3d(MetashapeJNI.Camera_unproject__SWIG_1(swigCPtr, this, Vector3d.getCPtr(proj), proj), true);
-  }
+  public Vector unproject3D(Vector proj) { return MetashapeJNI.Camera_unproject3D(swigCPtr, this, proj); }
 
   /**
    *  Camera image, may be null.
    */
-  public Image loadImage() {
+  public Optional<Image> loadImage() {
     long ptr = MetashapeJNI.Camera_loadImage(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Image(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Image(ptr, true));
   }
 
   /**
    *  Camera reference data.
    */
-  public Camera.Reference getReference() {
-    return new Camera.Reference(MetashapeJNI.Camera_getReference(swigCPtr, this), true);
-  }
+  public Camera.Reference getReference() { return MetashapeJNI.Camera_getReference(swigCPtr, this); }
 
   /**
    *  Camera reference data.
    */
   public void setReference(Camera.Reference reference) {
-    MetashapeJNI.Camera_setReference(swigCPtr, this, Camera.Reference.getCPtr(reference), reference);
+    MetashapeJNI.Camera_setReference(swigCPtr, this, reference);
   }
 
   /**
    *  Camera meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.Camera_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.Camera_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Camera meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.Camera_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.Camera_getMeta(swigCPtr, this); }
 
   public enum Type {
     TypeRegular,

@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Attached geometry definition.
  */
-public class AttachedGeometry {
+public class AttachedGeometry implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public AttachedGeometry(long cPtr, boolean cMemoryOwn) {
+  protected AttachedGeometry(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(AttachedGeometry obj) {
+  protected static long getCPtr(AttachedGeometry obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,18 +43,9 @@ public class AttachedGeometry {
     }
   }
 
-  public static long[] cArrayUnwrap(AttachedGeometry[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = AttachedGeometry.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static AttachedGeometry[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    AttachedGeometry[] arrayWrapper = new AttachedGeometry[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new AttachedGeometry(cArray[i], cMemoryOwn);
-    return arrayWrapper;
+  @Override
+  public void close() {
+    delete();
   }
 
   public AttachedGeometry() {
@@ -76,10 +71,10 @@ public class AttachedGeometry {
   public int[] getVertices() { return MetashapeJNI.AttachedGeometry_getVertices(swigCPtr, this); }
 
   public void setGeometries(AttachedGeometry[] geometries) {
-    MetashapeJNI.AttachedGeometry_setGeometries(swigCPtr, this, AttachedGeometry.cArrayUnwrap(geometries));
+    MetashapeJNI.AttachedGeometry_setGeometries(swigCPtr, this, SwigHelpers.cArrayUnwrap(geometries, AttachedGeometry.class));
   }
 
-  public AttachedGeometry[] getGeometries() { return AttachedGeometry.cArrayWrap(MetashapeJNI.AttachedGeometry_getGeometries(swigCPtr, this), true); }
+  public AttachedGeometry[] getGeometries() { return SwigHelpers.cArrayWrap(MetashapeJNI.AttachedGeometry_getGeometries(swigCPtr, this), true, AttachedGeometry.class); }
 
   public static AttachedGeometry makePoint(int point) {
     return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makePoint(point), true);
@@ -94,19 +89,19 @@ public class AttachedGeometry {
   }
 
   public static AttachedGeometry makeMultiPoint(AttachedGeometry[] collection) {
-    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiPoint(AttachedGeometry.cArrayUnwrap(collection)), true);
+    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiPoint(SwigHelpers.cArrayUnwrap(collection, AttachedGeometry.class)), true);
   }
 
   public static AttachedGeometry makeMultiLineString(AttachedGeometry[] collection) {
-    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiLineString(AttachedGeometry.cArrayUnwrap(collection)), true);
+    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiLineString(SwigHelpers.cArrayUnwrap(collection, AttachedGeometry.class)), true);
   }
 
   public static AttachedGeometry makeMultiPolygon(AttachedGeometry[] collection) {
-    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiPolygon(AttachedGeometry.cArrayUnwrap(collection)), true);
+    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeMultiPolygon(SwigHelpers.cArrayUnwrap(collection, AttachedGeometry.class)), true);
   }
 
   public static AttachedGeometry makeGeometryCollection(AttachedGeometry[] collection) {
-    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeGeometryCollection(AttachedGeometry.cArrayUnwrap(collection)), true);
+    return new AttachedGeometry(MetashapeJNI.AttachedGeometry_makeGeometryCollection(SwigHelpers.cArrayUnwrap(collection, AttachedGeometry.class)), true);
   }
 
 }

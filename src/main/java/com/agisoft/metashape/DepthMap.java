@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * Depth map data.
  */
-public class DepthMap {
+public class DepthMap implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public DepthMap(long cPtr, boolean cMemoryOwn) {
+  protected DepthMap(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(DepthMap obj) {
+  protected static long getCPtr(DepthMap obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -37,6 +41,11 @@ public class DepthMap {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public DepthMap() {
@@ -57,11 +66,11 @@ public class DepthMap {
   /**
    *  Depth map calibration, may be null.
    */
-  public Calibration getCalibration(int level) {
+  public Optional<Calibration> getCalibration(int level) {
     long ptr = MetashapeJNI.DepthMap_getCalibration(swigCPtr, this, level);
     if (ptr == 0)
-        return null;
-    return new Calibration(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Calibration(ptr, true));
   }
 
   /**
@@ -74,11 +83,11 @@ public class DepthMap {
   /**
    *  Image object with depth map data, may be null.
    */
-  public Image getImage(int level) {
+  public Optional<Image> getImage(int level) {
     long ptr = MetashapeJNI.DepthMap_getImage(swigCPtr, this, level);
     if (ptr == 0)
-        return null;
-    return new Image(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Image(ptr, true));
   }
 
 }

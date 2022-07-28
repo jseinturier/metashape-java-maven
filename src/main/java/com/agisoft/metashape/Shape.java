@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class Shape {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class Shape implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public Shape(long cPtr, boolean cMemoryOwn) {
+  protected Shape(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(Shape obj) {
+  protected static long getCPtr(Shape obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -36,18 +40,9 @@ public class Shape {
     }
   }
 
-  public static long[] cArrayUnwrap(Shape[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = Shape.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static Shape[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    Shape[] arrayWrapper = new Shape[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new Shape(cArray[i], cMemoryOwn);
-    return arrayWrapper;
+  @Override
+  public void close() {
+    delete();
   }
 
   public Shape(Shape shape) {

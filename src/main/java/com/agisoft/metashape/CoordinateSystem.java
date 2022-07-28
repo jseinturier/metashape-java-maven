@@ -8,16 +8,20 @@
 
 package com.agisoft.metashape;
 
-public class CoordinateSystem {
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
+public class CoordinateSystem implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public CoordinateSystem(long cPtr, boolean cMemoryOwn) {
+  protected CoordinateSystem(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(CoordinateSystem obj) {
+  protected static long getCPtr(CoordinateSystem obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -34,6 +38,11 @@ public class CoordinateSystem {
       }
       swigCPtr = 0;
     }
+  }
+
+  @Override
+  public void close() {
+    delete();
   }
 
   public CoordinateSystem() {
@@ -78,48 +87,42 @@ public class CoordinateSystem {
    * @param point 3D point in geocentric coordinates.<br>
    * @return 3D point in projected coordinates.
    */
-  public Vector3d project(Vector3d point) {
-    return new Vector3d(MetashapeJNI.CoordinateSystem_project(swigCPtr, this, Vector3d.getCPtr(point), point), true);
-  }
+  public Vector project(Vector point) { return MetashapeJNI.CoordinateSystem_project(swigCPtr, this, point); }
 
   /**
    * Unprojects point from projected coordinates to geocentric coordinates.<br>
    * @param point 3D point in projected coordinate system.<br>
    * @return 3D point in geocentric coordinates.
    */
-  public Vector3d unproject(Vector3d point) {
-    return new Vector3d(MetashapeJNI.CoordinateSystem_unproject(swigCPtr, this, Vector3d.getCPtr(point), point), true);
-  }
+  public Vector unproject(Vector point) { return MetashapeJNI.CoordinateSystem_unproject(swigCPtr, this, point); }
 
   /**
    * Returns 4x4 transformation matrix to LSE coordinates at the given point.<br>
    * @param point Coordinates of the origin in the geocentric coordinates.<br>
    * @return Transformation from geocentric coordinates to local coordinates.
    */
-  public Matrix4x4d localframe(Vector3d point) {
-    return new Matrix4x4d(MetashapeJNI.CoordinateSystem_localframe(swigCPtr, this, Vector3d.getCPtr(point), point), true);
-  }
+  public Matrix localframe(Vector point) { return MetashapeJNI.CoordinateSystem_localframe(swigCPtr, this, point); }
 
   /**
    * Construct geographic coordinate system using coordinate system datum.<br>
    * @return Geographic coordinate system, may be null.
    */
-  public CoordinateSystem makeGeographic() {
+  public Optional<CoordinateSystem> makeGeographic() {
     long ptr = MetashapeJNI.CoordinateSystem_makeGeographic(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
    * Construct geocentric coordinate system using coordinate system datum.<br>
    * @return Geocentric coordinate system, may be null.
    */
-  public CoordinateSystem makeGeocentric() {
+  public Optional<CoordinateSystem> makeGeocentric() {
     long ptr = MetashapeJNI.CoordinateSystem_makeGeocentric(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new CoordinateSystem(ptr, true);
+        return Optional.empty();
+    return Optional.of(new CoordinateSystem(ptr, true));
   }
 
   /**
@@ -128,12 +131,9 @@ public class CoordinateSystem {
    * @param target Target coordinate system.<br>
    * @return Transformation matrix, may be null.
    */
-  public static Matrix4x4d datumTransform(CoordinateSystem source, CoordinateSystem target) {
-    long ptr = MetashapeJNI.CoordinateSystem_datumTransform(CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target);
-    if (ptr == 0)
-        return null;
-    return new Matrix4x4d(ptr, true);
-  }
+  public static Optional<Matrix> datumTransform(CoordinateSystem source, CoordinateSystem target) {
+	Matrix values = MetashapeJNI.CoordinateSystem_datumTransform(CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target);
+	return values == null ? Optional.empty() : Optional.of(values); }
 
   /**
    * Transform point coordinates between coordinate systems.<br>
@@ -142,9 +142,7 @@ public class CoordinateSystem {
    * @param target Target coordinate system.<br>
    * @return Transformed point coordinates.
    */
-  public static Vector3d transform(Vector3d point, CoordinateSystem source, CoordinateSystem target) {
-    return new Vector3d(MetashapeJNI.CoordinateSystem_transform(Vector3d.getCPtr(point), point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target), true);
-  }
+  public static Vector transform(Vector point, CoordinateSystem source, CoordinateSystem target) { return MetashapeJNI.CoordinateSystem_transform(point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target); }
 
   /**
    * Local approximation of coordinate transformation from source to target coordinate system at the given point.<br>
@@ -153,9 +151,7 @@ public class CoordinateSystem {
    * @param target Target coordinate system.<br>
    * @return Transformation matrix.
    */
-  public static Matrix4x4d transformationMatrix(Vector3d point, CoordinateSystem source, CoordinateSystem target) {
-    return new Matrix4x4d(MetashapeJNI.CoordinateSystem_transformationMatrix(Vector3d.getCPtr(point), point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target), true);
-  }
+  public static Matrix transformationMatrix(Vector point, CoordinateSystem source, CoordinateSystem target) { return MetashapeJNI.CoordinateSystem_transformationMatrix(point, CoordinateSystem.getCPtr(source), source, CoordinateSystem.getCPtr(target), target); }
 
   /**
    * Register geoid model.<br>

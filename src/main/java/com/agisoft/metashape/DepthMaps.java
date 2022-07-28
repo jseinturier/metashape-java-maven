@@ -8,19 +8,23 @@
 
 package com.agisoft.metashape;
 
+import java.lang.AutoCloseable;
+import java.util.Optional;
+import java.util.Map;
+
 /**
  * A set of generated depth maps.
  */
-public class DepthMaps {
+public class DepthMaps implements AutoCloseable {
   private transient long swigCPtr;
   protected transient boolean swigCMemOwn;
 
-  public DepthMaps(long cPtr, boolean cMemoryOwn) {
+  protected DepthMaps(long cPtr, boolean cMemoryOwn) {
     swigCMemOwn = cMemoryOwn;
     swigCPtr = cPtr;
   }
 
-  public static long getCPtr(DepthMaps obj) {
+  protected static long getCPtr(DepthMaps obj) {
     return (obj == null) ? 0 : obj.swigCPtr;
   }
 
@@ -39,26 +43,13 @@ public class DepthMaps {
     }
   }
 
-  public static long[] cArrayUnwrap(DepthMaps[] arrayWrapper) {
-    long[] cArray = new long[arrayWrapper.length];
-    for (int i=0; i<arrayWrapper.length; i++)
-      cArray[i] = DepthMaps.getCPtr(arrayWrapper[i]);
-    return cArray;
-  }
-
-  public static DepthMaps[] cArrayWrap(long[] cArray, boolean cMemoryOwn) {
-    DepthMaps[] arrayWrapper = new DepthMaps[cArray.length];
-    for (int i=0; i<cArray.length; i++)
-      arrayWrapper[i] = new DepthMaps(cArray[i], cMemoryOwn);
-    return arrayWrapper;
-  }
-
-  public DepthMaps() {
-    this(MetashapeJNI.new_DepthMaps__SWIG_0(), true);
+  @Override
+  public void close() {
+    delete();
   }
 
   public DepthMaps(DepthMaps depth_maps) {
-    this(MetashapeJNI.new_DepthMaps__SWIG_1(DepthMaps.getCPtr(depth_maps), depth_maps), true);
+    this(MetashapeJNI.new_DepthMaps(DepthMaps.getCPtr(depth_maps), depth_maps), true);
   }
 
   /**
@@ -71,11 +62,11 @@ public class DepthMaps {
   /**
    *  Chunk container, may be null.
    */
-  public Chunk getChunk() {
+  public Optional<Chunk> getChunk() {
     long ptr = MetashapeJNI.DepthMaps_getChunk(swigCPtr, this);
     if (ptr == 0)
-        return null;
-    return new Chunk(ptr, true);
+        return Optional.empty();
+    return Optional.of(new Chunk(ptr, true));
   }
 
   /**
@@ -95,18 +86,18 @@ public class DepthMaps {
   /**
    *  Depth map for the camera, may be null.
    */
-  public void setDepthMap(int camera, DepthMap depth_map) {
-    MetashapeJNI.DepthMaps_setDepthMap(swigCPtr, this, camera, depth_map == null ? 0 : DepthMap.getCPtr(depth_map), depth_map);
+  public void setDepthMap(int camera, Optional<DepthMap> depth_map) {
+    MetashapeJNI.DepthMaps_setDepthMap(swigCPtr, this, camera, depth_map.isPresent() ? DepthMap.getCPtr(depth_map.get()) : 0);
   }
 
   /**
    *  Depth map for the camera, may be null.
    */
-  public DepthMap getDepthMap(int camera) {
+  public Optional<DepthMap> getDepthMap(int camera) {
     long ptr = MetashapeJNI.DepthMaps_getDepthMap(swigCPtr, this, camera);
     if (ptr == 0)
-        return null;
-    return new DepthMap(ptr, true);
+        return Optional.empty();
+    return Optional.of(new DepthMap(ptr, true));
   }
 
   /**
@@ -119,15 +110,13 @@ public class DepthMaps {
   /**
    *  Depth maps meta data.
    */
-  public void setMeta(MetaData meta) {
-    MetashapeJNI.DepthMaps_setMeta(swigCPtr, this, MetaData.getCPtr(meta), meta);
+  public void setMeta(Map<String,String> meta) {
+    MetashapeJNI.DepthMaps_setMeta(swigCPtr, this, meta);
   }
 
   /**
    *  Depth maps meta data.
    */
-  public MetaData getMeta() {
-    return new MetaData(MetashapeJNI.DepthMaps_getMeta(swigCPtr, this), true);
-  }
+  public Map<String,String> getMeta() { return MetashapeJNI.DepthMaps_getMeta(swigCPtr, this); }
 
 }

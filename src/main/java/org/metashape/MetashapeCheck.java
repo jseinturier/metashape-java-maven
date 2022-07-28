@@ -41,7 +41,7 @@ public class MetashapeCheck {
 			
 			try {
 				Document doc = new Document();
-				doc.save("project.psx", new int[0], 0, false, null);
+				doc.save("project.psx", null);
 				File f = new File("project.psx");
 				f.delete();
 			} catch (Throwable t) {
