@@ -40,34 +40,6 @@ public class ConvertImages extends Task {
 	}
 
 	/**
-	 *  Fix pixel aspect.
-	 */
-	public void setFixPixelAspect(boolean value) {
-		setParameter("fix_pixel_aspect", (Object) value);
-	}
-
-	/**
-	 *  Fix pixel aspect.
-	 */
-	public boolean getFixPixelAspect() {
-		return (boolean) getParameter("fix_pixel_aspect");
-	}
-
-	/**
-	 *  Fix principal point.
-	 */
-	public void setFixPrincipalPoint(boolean value) {
-		setParameter("fix_principal_point", (Object) value);
-	}
-
-	/**
-	 *  Fix principal point.
-	 */
-	public boolean getFixPrincipalPoint() {
-		return (boolean) getParameter("fix_principal_point");
-	}
-
-	/**
 	 *  Image compression parameters.
 	 */
 	public void setImageCompression(ImageCompression value) {
@@ -107,20 +79,6 @@ public class ConvertImages extends Task {
 	 */
 	public String getPath() {
 		return (String) getParameter("path");
-	}
-
-	/**
-	 *  Remove distortions.
-	 */
-	public void setRemoveDistortions(boolean value) {
-		setParameter("remove_distortions", (Object) value);
-	}
-
-	/**
-	 *  Remove distortions.
-	 */
-	public boolean getRemoveDistortions() {
-		return (boolean) getParameter("remove_distortions");
 	}
 
 	/**

@@ -23,6 +23,7 @@ public enum CamerasFormat {
   CamerasFormatRZML,
   CamerasFormatVisionMap,
   CamerasFormatBlocksExchange,
-  CamerasFormatNVM;
+  CamerasFormatNVM,
+  CamerasFormatMA;
 }
 

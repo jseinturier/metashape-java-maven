@@ -82,6 +82,20 @@ public class ExportRaster extends Task {
 	}
 
 	/**
+	 *  Use global profile (GeoPackage format only).
+	 */
+	public void setGlobalProfile(boolean value) {
+		setParameter("global_profile", (Object) value);
+	}
+
+	/**
+	 *  Use global profile (GeoPackage format only).
+	 */
+	public boolean getGlobalProfile() {
+		return (boolean) getParameter("global_profile");
+	}
+
+	/**
 	 *  Raster height. Default: 0
 	 */
 	public void setHeight(int value) {
@@ -138,28 +152,28 @@ public class ExportRaster extends Task {
 	}
 
 	/**
-	 *  Maximum zoom level (Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
+	 *  Maximum zoom level (GeoPackage, Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
 	 */
 	public void setMaxZoomLevel(int value) {
 		setParameter("max_zoom_level", (Object) value);
 	}
 
 	/**
-	 *  Maximum zoom level (Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
+	 *  Maximum zoom level (GeoPackage, Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
 	 */
 	public int getMaxZoomLevel() {
 		return (int) getParameter("max_zoom_level");
 	}
 
 	/**
-	 *  Minimum zoom level (Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
+	 *  Minimum zoom level (GeoPackage, Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
 	 */
 	public void setMinZoomLevel(int value) {
 		setParameter("min_zoom_level", (Object) value);
 	}
 
 	/**
-	 *  Minimum zoom level (Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
+	 *  Minimum zoom level (GeoPackage, Google Map Tiles, MBTiles and World Wind Tiles formats only). Default: -1
 	 */
 	public int getMinZoomLevel() {
 		return (int) getParameter("min_zoom_level");

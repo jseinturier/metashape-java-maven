@@ -95,4 +95,74 @@ public class ImportPoints extends Task {
 		return (Vector) getParameter("shift");
 	}
 
+	/**
+	 *  Trajectory file delimiter.
+	 */
+	public void setTrajColumns(String value) {
+		setParameter("traj_columns", (Object) value);
+	}
+
+	/**
+	 *  Trajectory file delimiter.
+	 */
+	public String getTrajColumns() {
+		return (String) getParameter("traj_columns");
+	}
+
+	/**
+	 *  Trajectory file column order in csv format (t - time, x/y/z - coordinates).
+	 */
+	public void setTrajDelimiter(String value) {
+		setParameter("traj_delimiter", (Object) value);
+	}
+
+	/**
+	 *  Trajectory file column order in csv format (t - time, x/y/z - coordinates).
+	 */
+	public String getTrajDelimiter() {
+		return (String) getParameter("traj_delimiter");
+	}
+
+	/**
+	 *  Trajectory file path.
+	 */
+	public void setTrajPath(String value) {
+		setParameter("traj_path", (Object) value);
+	}
+
+	/**
+	 *  Trajectory file path.
+	 */
+	public String getTrajPath() {
+		return (String) getParameter("traj_path");
+	}
+
+	/**
+	 *  Trajectory file number of rows to skip. Default: 0
+	 */
+	public void setTrajSkipRows(int value) {
+		setParameter("traj_skip_rows", (Object) value);
+	}
+
+	/**
+	 *  Trajectory file number of rows to skip. Default: 0
+	 */
+	public int getTrajSkipRows() {
+		return (int) getParameter("traj_skip_rows");
+	}
+
+	/**
+	 *  Use trajectory file or origin.
+	 */
+	public void setUseTrajectory(boolean value) {
+		setParameter("use_trajectory", (Object) value);
+	}
+
+	/**
+	 *  Use trajectory file or origin.
+	 */
+	public boolean getUseTrajectory() {
+		return (boolean) getParameter("use_trajectory");
+	}
+
 }

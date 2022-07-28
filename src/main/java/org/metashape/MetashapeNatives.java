@@ -20,7 +20,7 @@ public class MetashapeNatives {
 
 	private static boolean available = false;
 
-	private static String[] linuxX64Libs = new String[] {"libgfortran.so.3", "libgmp.so.10", "libmetashape.so", "libmpfr.so.4", "libopenblas.so.0", "libstdc++.so.6"};
+	private static String[] linuxX64Libs = new String[] {"libgfortran.so.3", "libgmp.so.10", "libmetashape.so", "libmpfr.so.4", "libopenblas.so.0", "libstdc++.so.6.compat"};
 	private static String[] macosX64Libs = new String[] {"libgmp.10.dylib", "libmetashape.jnilib", "libomp.dylib"};
 	private static String[] winX32Libs   = new String[] {"libgmp-10.dll", "libopenblas.dll", "metashape.dll"};
 	private static String[] winX64Libs   = new String[] {"libgmp-10.dll", "libopenblas.dll", "metashape.dll"};

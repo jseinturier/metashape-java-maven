@@ -23,7 +23,9 @@
   
 8. Upload to repository
 
-9. Publish a new release:
+9. Commit and push
+
+10. Publish a new release:
 
   Tag: vX.Y.Z
 
