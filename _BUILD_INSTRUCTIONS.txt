@@ -23,7 +23,9 @@
   
 8. Upload to repository
 
-9. Commit and push
+9. Commit and push: 
+
+    git.exe push --progress "origin" master:master
 
 10. Publish a new release:
 
