@@ -750,4 +750,20 @@ class MetashapeJNI {
   public final static native String NetworkClient_dumpBatches(long jarg1, NetworkClient jarg1_, int[] jarg2);
   public final static native void NetworkClient_loadBatches(long jarg1, NetworkClient jarg1_, String jarg2);
   public final static native void delete_NetworkClient(long jarg1);
+  public final static native void CloudClient_setUsername(long jarg1, CloudClient jarg1_, String jarg2);
+  public final static native String CloudClient_getUsername(long jarg1, CloudClient jarg1_);
+  public final static native void CloudClient_setPassword(long jarg1, CloudClient jarg1_, String jarg2);
+  public final static native String CloudClient_getPassword(long jarg1, CloudClient jarg1_);
+  public final static native void CloudClient_setClientId(long jarg1, CloudClient jarg1_, String jarg2);
+  public final static native String CloudClient_getClientId(long jarg1, CloudClient jarg1_);
+  public final static native void CloudClient_setClientSecret(long jarg1, CloudClient jarg1_, String jarg2);
+  public final static native String CloudClient_getClientSecret(long jarg1, CloudClient jarg1_);
+  public final static native void CloudClient_uploadProject(long jarg1, CloudClient jarg1_, long jarg2, Document jarg2_, Progress jarg3);
+  public final static native void CloudClient_downloadProject(long jarg1, CloudClient jarg1_, long jarg2, Document jarg2_, Progress jarg3);
+  public final static native void CloudClient_processProject(long jarg1, CloudClient jarg1_, long jarg2, Document jarg2_, NetworkTask[] jarg3);
+  public final static native CloudClient.ProcessingStatus CloudClient_getProcessingStatus(long jarg1, CloudClient jarg1_, long jarg2, Document jarg2_);
+  public final static native void CloudClient_abortProcessing(long jarg1, CloudClient jarg1_, long jarg2, Document jarg2_);
+  public final static native CloudClient.ProjectInfo[] CloudClient_getProjectList(long jarg1, CloudClient jarg1_);
+  public final static native long new_CloudClient();
+  public final static native void delete_CloudClient(long jarg1);
 }

@@ -8,19 +8,14 @@
 
 package com.agisoft.metashape;
 
-public enum CalibrationFormat {
-  CalibrationFormatXML,
-  CalibrationFormatAustralis,
-  CalibrationFormatAustralisV7,
-  CalibrationFormatPhotoModeler,
-  CalibrationFormatCalibCam,
-  CalibrationFormatCalCam,
-  CalibrationFormatInpho,
-  CalibrationFormatUSGS,
-  CalibrationFormatPix4D,
-  CalibrationFormatOpenCV,
-  CalibrationFormatPhotomod,
-  CalibrationFormatGrid,
-  CalibrationFormatSTMap;
+public enum ServiceType {
+  ServiceSketchfab,
+  ServiceMapbox,
+  Service4DMapper,
+  ServicePointscene,
+  ServiceMelown,
+  ServicePointbox,
+  ServicePicterra,
+  ServiceCesium;
 }
 
