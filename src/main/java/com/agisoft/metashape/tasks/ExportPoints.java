@@ -138,6 +138,20 @@ public class ExportPoints extends Task {
 	}
 
 	/**
+	 *  Tileset subdivision depth (Cesium format only). Default: 5
+	 */
+	public void setFolderDepth(int value) {
+		setParameter("folder_depth", (Object) value);
+	}
+
+	/**
+	 *  Tileset subdivision depth (Cesium format only). Default: 5
+	 */
+	public int getFolderDepth() {
+		return (int) getParameter("folder_depth");
+	}
+
+	/**
 	 *  Export format. Default: PointsFormat.PointsFormatNone
 	 */
 	public void setFormat(PointsFormat value) {

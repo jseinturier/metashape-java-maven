@@ -53,4 +53,18 @@ public class ImportLaserScans extends Task {
 		return (String) getParameter("image_path");
 	}
 
+	/**
+	 *  Import as a multi-camera system
+	 */
+	public void setMultiplane(boolean value) {
+		setParameter("multiplane", (Object) value);
+	}
+
+	/**
+	 *  Import as a multi-camera system
+	 */
+	public boolean getMultiplane() {
+		return (boolean) getParameter("multiplane");
+	}
+
 }

@@ -154,4 +154,11 @@ public class Elevation implements AutoCloseable {
     return MetashapeJNI.Elevation_getMaxElevation(swigCPtr, this);
   }
 
+  /**
+   *  Get elevation value at the specified point.
+   */
+  public float getElevation(Vector pt) {
+    return MetashapeJNI.Elevation_getElevation(swigCPtr, this, pt);
+  }
+
 }

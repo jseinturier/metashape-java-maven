@@ -96,28 +96,28 @@ public class ImportPoints extends Task {
 	}
 
 	/**
-	 *  Trajectory file delimiter.
+	 *  Trajectory file column order (t - time, x/y/z - coordinates, 0 - skip column).
 	 */
 	public void setTrajColumns(String value) {
 		setParameter("traj_columns", (Object) value);
 	}
 
 	/**
-	 *  Trajectory file delimiter.
+	 *  Trajectory file column order (t - time, x/y/z - coordinates, 0 - skip column).
 	 */
 	public String getTrajColumns() {
 		return (String) getParameter("traj_columns");
 	}
 
 	/**
-	 *  Trajectory file column order in csv format (t - time, x/y/z - coordinates).
+	 *  Trajectory file delimiter.
 	 */
 	public void setTrajDelimiter(String value) {
 		setParameter("traj_delimiter", (Object) value);
 	}
 
 	/**
-	 *  Trajectory file column order in csv format (t - time, x/y/z - coordinates).
+	 *  Trajectory file delimiter.
 	 */
 	public String getTrajDelimiter() {
 		return (String) getParameter("traj_delimiter");

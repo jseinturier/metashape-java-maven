@@ -449,6 +449,7 @@ class MetashapeJNI {
   public final static native double Elevation_getResolution(long jarg1, Elevation jarg1_);
   public final static native float Elevation_getMinElevation(long jarg1, Elevation jarg1_);
   public final static native float Elevation_getMaxElevation(long jarg1, Elevation jarg1_);
+  public final static native float Elevation_getElevation(long jarg1, Elevation jarg1_, Vector jarg2);
   public final static native void delete_Elevation(long jarg1);
   public final static native long new_Orthomosaic(long jarg1, Orthomosaic jarg1_);
   public final static native int Orthomosaic_getKey(long jarg1, Orthomosaic jarg1_);

@@ -40,6 +40,20 @@ public class ExportTiledModel extends Task {
 	}
 
 	/**
+	 *  Tileset subdivision depth (Cesium format only). Default: 5
+	 */
+	public void setFolderDepth(int value) {
+		setParameter("folder_depth", (Object) value);
+	}
+
+	/**
+	 *  Tileset subdivision depth (Cesium format only). Default: 5
+	 */
+	public int getFolderDepth() {
+		return (int) getParameter("folder_depth");
+	}
+
+	/**
 	 *  Export format. Default: TiledModelFormat.TiledModelFormatNone
 	 */
 	public void setFormat(TiledModelFormat value) {

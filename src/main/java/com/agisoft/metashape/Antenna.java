@@ -7,8 +7,8 @@ import java.util.Optional;
  */
 public class Antenna {
 
-	private Optional<Vector> location;
-	private Optional<Vector> rotation;
+	private Vector location;
+	private Vector rotation;
 	private Optional<Vector> location_reference;
 	private Optional<Vector> rotation_reference;
 	private Vector location_accuracy;
@@ -16,8 +16,8 @@ public class Antenna {
 	private boolean fixed;
 
 	public Antenna() {
-		location = Optional.empty();
-		rotation = Optional.empty();
+		location = new Vector(0, 0, 0);
+		rotation = new Vector(0, 0, 0);
 		location_reference = Optional.empty();
 		rotation_reference = Optional.empty();
 		location_accuracy = new Vector(0.05, 0.05, 0.05);
@@ -40,30 +40,30 @@ public class Antenna {
 	}
 
 	/**
-	 *  Antenna coordinates, may be null.
+	 *  Antenna coordinates.
 	 */
-	public void setLocation(Optional<Vector> location) {
+	public void setLocation(Vector location) {
 		this.location = location;
 	}
 
 	/**
-	 *  Antenna coordinates, may be null.
+	 *  Antenna coordinates.
 	 */
-	public Optional<Vector> getLocation() {
+	public Vector getLocation() {
 		return location;
 	}
 
 	/**
-	 *  Antenna rotation angles, may be null.
+	 *  Antenna rotation angles.
 	 */
-	public void setRotation(Optional<Vector> rotation) {
+	public void setRotation(Vector rotation) {
 		this.rotation = rotation;
 	}
 
 	/**
-	 *  Antenna rotation angles, may be null.
+	 *  Antenna rotation angles.
 	 */
-	public Optional<Vector> getRotation() {
+	public Vector getRotation() {
 		return rotation;
 	}
 

@@ -23,7 +23,12 @@ public enum ImageFormat {
   ImageFormatBIL,
   ImageFormatASCII,
   ImageFormatXYZ,
+  ImageFormatARA,
+  ImageFormatTGA,
+  ImageFormatDDS,
+  ImageFormatJP2,
   ImageFormatWebP,
-  ImageFormatJXL;
+  ImageFormatJXL,
+  ImageFormatKTX;
 }
 
